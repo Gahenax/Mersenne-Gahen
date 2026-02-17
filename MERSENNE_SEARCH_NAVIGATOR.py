@@ -31,13 +31,14 @@ class SearchNavigator:
         return self.found_candidates
 
 if __name__ == "__main__":
-    # Range of interesting unknown (or less common) exponents
-    # Let's search a window where we know there's a prime to verify discovery logic
+    import sys
     engine = MersenneEngine()
     nav = SearchNavigator(engine)
     
-    # Range around 1250-1300 (contains 1279)
-    found = nav.scan_range(1200, 1300)
+    start_p = int(sys.argv[1]) if len(sys.argv) > 1 else 1200
+    end_p = int(sys.argv[2]) if len(sys.argv) > 2 else 1300
+    
+    found = nav.scan_range(start_p, end_p)
     
     if found:
         print("\n[SCENARIO]: Writing findings to Mission Control...")

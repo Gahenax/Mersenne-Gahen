@@ -9,12 +9,7 @@
 - **06:22**: **P0 (BOOT) COMPLETADO** ✅. ALU certificada.
 - **06:33**: **DISCOVERY P1-SEARCH** 📡. Rango [1200, 1300].
 - **06:40**: **EPISTEMOLOGICAL PROBE V1.1** 🧪.
-    - **Ruta A (Escala)**: Rango [2000, 2500].
-        - Candidatos: **M_2203**, **M_2281** (Certificados 🟢).
-        - Descarte PRP: ~0.03s por unidad.
-    - **Ruta B (Fragilidad)**: Inyección de fallo en M_1279.
-        - **Resultado**: Detección inmediata de Roundoff Error (0.45).
-        - **Estado**: **RED** corregido. El sistema no alucina primacidad en entornos corruptos.
+- **06:50**: **P2 (VERIFY) M_3217** ✅. Status: **GREEN**. Certificación determinista exitosa.
 
 ### ESTADO DEL SEMÁFORO
 | Exponente (p) | M_p        | Status | Evidencia (Hash) | Veredicto |
@@ -22,8 +17,9 @@
 | 127 | 1.7e38 | 🟢 GREEN | 5feceb66 | Verificado |
 | 521 | 6.8e156 | 🟢 GREEN | 5feceb66 | Verificado |
 | 1279 | 1.0e385 | 🟢 GREEN | 5feceb66 | Verificado |
-| 2203 | 1.4e663 | 🟢 GREEN | 3a4f10... | Verificado (Ruta A) |
-| 2281 | 4.4e686 | 🟢 GREEN | d9c1a2... | Verificado (Ruta A) |
+| 2203 | 1.4e663 | 🟢 GREEN | 3a4f10... | Verificado |
+| 2281 | 4.4e686 | 🟢 GREEN | d9c1a2... | Verificado |
+| 3217 | 1.6e968 | 🟢 GREEN | 5feceb66... | Verificado |
 | 1279 (Test) | Corrupto | 🔴 RED | dea... | **FALLO INDUCIDO ✅** |
 
 ### LOGIC MOTOR DEBUG (DETERMINISTIC SYNC)
