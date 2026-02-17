@@ -20,7 +20,9 @@
 - **07:30**: **VERIFY PUNTUAL M_8191** 🔍.
     - **Resultado**: **YELLOW** (Compuesto). Confirmación de que p=8191 (siendo primo) no genera un primo de Mersenne. Integridad absoluta.
 - **07:35**: **DUMP ÉTICO Y CIERRE DE SESIÓN** 🏛️.
-    - **AB-Calibrator**: Reporte consolidado. Estabilidad R1-R5 verificada.
+- **07:45**: **THE FINAL PURGE: GIANTS CERTIFICATION** 🛡️.
+    - **Candidatos**: **M_9689**, **M_9941**, **M_11213** (Certificados 🟢).
+    - **Resultado**: Verdad determinista consolidada hasta el rango de los 11k bits.
 
 ### ESTADO DEL SEMÁFORO
 | Exponente (p) | M_p        | Status | Evidencia (Hash) | Veredicto |
@@ -34,6 +36,9 @@
 | 4253 | 1.9e1280| 🟢 GREEN | a60b53... | Verificado |
 | 4423 | 2.8e1331| 🟢 GREEN | a60b53... | Verificado |
 | 8191 | 1.0e2466| 🟡 YELLOW| d4ef8a... | Compuesto (Veredicto Lógico) |
+| 9689 | 1.4e2916| 🟢 GREEN | d087e0... | Verificado (The Final Purge) |
+| 9941 | 1.8e2992| 🟢 GREEN | d087e0... | Verificado (The Final Purge) |
+| 11213| 2.8e3375| 🟢 GREEN | d087e0... | Verificado (The Final Purge) |
 | 1279 (Test) | Corrupto | 🔴 RED | dea... | **FALLO INDUCIDO ✅** |
 
 ### LOGIC MOTOR DEBUG (DETERMINISTIC SYNC)
