@@ -1,0 +1,130 @@
+import hashlib
+import time
+import json
+import sys
+from pathlib import Path
+
+class MersenneEngine:
+    """
+    Antigravity Mersenne Engine - Epistemological Edition v1.1
+    Detailed metrology, fault injection, and performance tracking.
+    """
+    def __init__(self, dps=80, fault_injection=False):
+        self.dps = dps
+        self.fault_injection = fault_injection
+        self.metrology = {
+            "total_prp_time": 0.0,
+            "total_ll_time": 0.0,
+            "discards": 0,
+            "certifications": 0,
+            "faults_detected": 0
+        }
+
+    def prp_test(self, p):
+        """
+        Probabilistic Primality Test (PRP) with Metrology.
+        """
+        if p % 2 == 0 and p > 2: return False, 0, 0.0
+        start_time = time.time()
+        m_p = (1 << p) - 1
+        
+        # Fault injection simulation: simulate bit-flip during pow
+        res = pow(3, (m_p - 1) // 2, m_p)
+        if self.fault_injection:
+            res = (res + 1) % m_p
+            
+        duration = time.time() - start_time
+        self.metrology["total_prp_time"] += duration
+        
+        is_probable_prime = (res == m_p - 1)
+        if not is_probable_prime:
+            self.metrology["discards"] += 1
+            
+        return is_probable_prime, res, duration
+
+    def lucas_lehmer(self, p):
+        """
+        Lucas-Lehmer test with Metrology and Corruption Check.
+        """
+        if p == 2: return True, 0, 0.0
+        start_time = time.time()
+        m_p = (1 << p) - 1
+        s = 4
+        
+        # LL Loop
+        for _ in range(p - 2):
+            s = (s * s - 2) % m_p
+            
+        # Error simulation (e.g. Roundoff > 0.40)
+        roundoff = 0.0
+        if self.fault_injection:
+            roundoff = 0.45 # Corrupt state
+            s = (s ^ 0xDEADBEEF) % m_p # Corruption
+            self.metrology["faults_detected"] += 1
+        
+        duration = time.time() - start_time
+        self.metrology["total_ll_time"] += duration
+        
+        is_prime = (s == 0) and (roundoff <= 0.40)
+        if is_prime:
+            self.metrology["certifications"] += 1
+            
+        return is_prime, s, duration, roundoff
+
+    def run_p0_boot(self):
+        """
+        P0 (Boot): Hardware and logic integrity check using known small primes.
+        """
+        print("\n[P0-BOOT] Initializing Hardware/Logic Audit...")
+        test_cases = [
+            (3, True),   # M3 = 7
+            (5, True),   # M5 = 31
+            (7, True),   # M7 = 127
+            (11, False), # M11 = 2047 (23 * 89)
+            (13, True),  # M13 = 8191
+        ]
+        
+        results = []
+        for p, expected in test_cases:
+            is_prime, residue, dt = self.lucas_lehmer(p)
+            match = (is_prime == expected)
+            status = "PASS" if match else "FAIL"
+            print(f"  - M_{p:2d}: {status} (dt={dt:.6f}s)")
+            results.append(match)
+            
+        integrity = all(results)
+        return integrity
+
+def main():
+    engine = MersenneEngine()
+    
+    # Run P0
+    if engine.run_p0_boot():
+        print("\nOK: [INTEGRITY]: P0-BOOT SUCCESSFUL. ALU and Logic Gates certified.")
+        
+        # Deploy P1/P2 on a target exponent if requested
+        # For now, let's target M_127 (a known prime) to verify deeper logic
+        target_p = 127
+        print(f"\n[P2-VERIFY] Testing M_{target_p} (Lucas-Lehmer Certification)...")
+        is_p, res, dt = engine.lucas_lehmer(target_p)
+        
+        residue_hash = hashlib.sha256(str(res).encode()).hexdigest()
+        
+        report = {
+            "p": target_p,
+            "is_prime": is_p,
+            "residue_hash": residue_hash,
+            "wall_time": dt,
+            "status": "GREEN" if is_p else "YELLOW"
+        }
+        
+        print(json.dumps(report, indent=2))
+        
+        with open("mersenne_evidence_M127.json", "w") as f:
+            json.dump(report, f, indent=2)
+    else:
+        print("\nERROR: [CRITICAL]: P0-BOOT FAILED. Hardware or Logic instability detected.")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,11 @@
+{
+  "schema": "mersenne-v1",
+  "required_fields": [
+    "p",
+    "residue",
+    "residue_hash",
+    "engine_version",
+    "wall_time",
+    "roundoff_max"
+  ]
+}
