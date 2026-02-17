@@ -4,6 +4,10 @@ import json
 import sys
 from pathlib import Path
 
+# Increase limit for integer string conversion (M_19937+ compatibility)
+if hasattr(sys, 'set_int_max_str_digits'):
+    sys.set_int_max_str_digits(20000)
+
 class MersenneEngine:
     """
     Antigravity Mersenne Engine - Epistemological Edition v1.1
