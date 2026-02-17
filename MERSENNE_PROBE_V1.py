@@ -42,34 +42,75 @@ class MersenneEngine:
             
         return is_probable_prime, res, duration
 
-    def lucas_lehmer(self, p):
+    def lucas_lehmer(self, p, checkpoint_cadence=1000):
         """
-        Lucas-Lehmer test with Metrology and Corruption Check.
+        Lucas-Lehmer test with Persistence and Dual-Path Verification.
         """
         if p == 2: return True, 0, 0.0
         start_time = time.time()
         m_p = (1 << p) - 1
         s = 4
         
-        # LL Loop
-        for _ in range(p - 2):
-            s = (s * s - 2) % m_p
-            
-        # Error simulation (e.g. Roundoff > 0.40)
-        roundoff = 0.0
-        if self.fault_injection:
-            roundoff = 0.45 # Corrupt state
-            s = (s ^ 0xDEADBEEF) % m_p # Corruption
-            self.metrology["faults_detected"] += 1
+        # Persistence Logic
+        cp_file = Path(f"checkpoint_p{p}.json")
+        start_iter = 0
         
+        if cp_file.exists():
+            print(f"  -> Resuming from checkpoint: {cp_file}")
+            with open(cp_file, "r") as f:
+                data = json.load(f)
+                # Verify Hash to prevent corruption (Audit B2)
+                recorded_hash = data.get("hash")
+                payload = f"{data['s']}-{data['iter']}"
+                if recorded_hash != hashlib.sha256(payload.encode()).hexdigest():
+                    print(f"  !!! [RED]: Checkpoint CORRUPTION detected.")
+                    return False, -1, 0.0, 1.0 # RED State
+                s = data["s"]
+                start_iter = data["iter"]
+
+        # LL Loop
+        for i in range(start_iter, p - 2):
+            # Dual-Path Verification (Audit B3)
+            # Path A: Standard
+            s_next_a = (s * s - 2) % m_p
+            
+            # Path B: Bitwise Optimization (Mersenne property: x % (2^p-1) == (x & (2^p-1)) + (x >> p))
+            sq = s * s - 2
+            s_next_b = (sq & m_p) + (sq >> p)
+            if s_next_b >= m_p: s_next_b -= m_p
+            
+            if s_next_a != s_next_b:
+                print(f"  !!! [RED]: Dual-Path MISMATCH at iter {i}")
+                return False, -2, 0.0, 1.0 # RED State
+                
+            s = s_next_a
+            
+            # Checkpointing
+            if (i + 1) % checkpoint_cadence == 0:
+                self.save_checkpoint(p, s, i + 1)
+
         duration = time.time() - start_time
         self.metrology["total_ll_time"] += duration
         
-        is_prime = (s == 0) and (roundoff <= 0.40)
+        is_prime = (s == 0)
         if is_prime:
             self.metrology["certifications"] += 1
+            if cp_file.exists(): cp_file.unlink() # Clean up on success
             
-        return is_prime, s, duration, roundoff
+        return is_prime, s, duration, 0.0
+
+    def save_checkpoint(self, p, s, itinerary):
+        cp_file = Path(f"checkpoint_p{p}.json")
+        payload = f"{s}-{itinerary}"
+        data = {
+            "p": p,
+            "s": s,
+            "iter": itinerary,
+            "hash": hashlib.sha256(payload.encode()).hexdigest(),
+            "timestamp": time.time()
+        }
+        with open(cp_file, "w") as f:
+            json.dump(data, f)
 
     def run_p0_boot(self):
         """

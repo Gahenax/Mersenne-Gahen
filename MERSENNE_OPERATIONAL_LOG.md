@@ -9,7 +9,13 @@
 - **06:22**: **P0 (BOOT) COMPLETADO** ✅. ALU certificada.
 - **06:33**: **DISCOVERY P1-SEARCH** 📡. Rango [1200, 1300].
 - **06:40**: **EPISTEMOLOGICAL PROBE V1.1** 🧪.
-- **06:50**: **P2 (VERIFY) M_3217** ✅. Status: **GREEN**. Certificación determinista exitosa.
+- **06:50**: **P2 (VERIFY) M_3217** ✅. Status: **GREEN**.
+- **06:55**: **RUTA B (CRASH-TEST) COMPLETADA** 🛡️.
+    - **Audit B2**: Corrupción de checkpoint detectada (Status RED).
+    - **Audit B3**: Doble Ruta (Bitwise vs Modular) Match 100%.
+- **07:05**: **RUTA A (ESCALADO) Rango 4k-5k** 📡.
+    - **Candidatos**: **M_4253**, **M_4423** (Certificados 🟢).
+    - **Rendimiento**: Escalado lineal de latencia LL confirmado.
 
 ### ESTADO DEL SEMÁFORO
 | Exponente (p) | M_p        | Status | Evidencia (Hash) | Veredicto |
@@ -20,6 +26,8 @@
 | 2203 | 1.4e663 | 🟢 GREEN | 3a4f10... | Verificado |
 | 2281 | 4.4e686 | 🟢 GREEN | d9c1a2... | Verificado |
 | 3217 | 1.6e968 | 🟢 GREEN | 5feceb66... | Verificado |
+| 4253 | 1.9e1280| 🟢 GREEN | a60b53... | Verificado (Ruta A) |
+| 4423 | 2.8e1331| 🟢 GREEN | a60b53... | Verificado (Ruta A) |
 | 1279 (Test) | Corrupto | 🔴 RED | dea... | **FALLO INDUCIDO ✅** |
 
 ### LOGIC MOTOR DEBUG (DETERMINISTIC SYNC)

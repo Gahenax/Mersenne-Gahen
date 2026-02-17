@@ -1,9 +1,9 @@
 {
   "p": 1279,
-  "residue": "3735928559",
-  "residue_hash": "148c6b1a021b20de2753856c1ddeedab904c5290b36c94dcae4451cbbaf2620e",
-  "roundoff_max": 0.45,
-  "wall_time": 0.006911516189575195,
+  "residue": "-1",
+  "residue_hash": "1bad6b8cf97131fceab8543e81f7757195fbb1d36b376ee994ad1cf17699c464",
+  "roundoff_max": 1.0,
+  "wall_time": 0.0,
   "status": "RED",
-  "timestamp": "2026-02-17T11:31:11Z"
+  "timestamp": "2026-02-17T11:59:43Z"
 }
