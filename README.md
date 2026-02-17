@@ -1,4 +1,4 @@
-# Mersenne Lab
+# MERSENE GAHENAX
 
 Este repositorio está dedicado a la **Certificación Determinista de Primos de Mersenne** ($M_p = 2^p - 1$) utilizando el motor de alta integridad Antigravity.
 
