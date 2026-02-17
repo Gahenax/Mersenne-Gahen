@@ -16,6 +16,7 @@ Este log documenta la transición tecnológica de la investigación Riemann haci
 - **T1 (Boot)**: Ejecución de P0. Certificación de la ALU mediante exponentes conocidos ($p < 127$).
 - **T2 (Escala)**: Procesamiento del rango [1200, 2500]. Identificación y certificación de $M_{1279}, M_{2203}, M_{2281}$.
 - **T3 (Fragilidad)**: Inyección de fallo en $M_{1279}$. Validación del estado **RED**.
+- **T4 (Deep Space)**: Activación del "Sentinel Protocol" para el rango $[20k, 50k]$. Transición a modo de escucha de baja frecuencia y alta certeza.
 
 ## 5. Criterio de Cierre
 El proyecto se considera estable al demostrar un hit-rate de integridad del 100% en pruebas de inyección de fallo y una escalabilidad lineal en el coste computacional por bit procesado.

@@ -12,6 +12,12 @@ Se prohíbe el uso de heurísticas para declarar primacidad. El sistema debe est
 ## 3. Ética de la Transparencia Asintótica
 Toda misión de búsqueda debe declarar su "coste de certidumbre". No se debe prometer descubrimiento masivo sacrificando la verificación individual de cada candidato mediante LL.
 
+## 4. Ética del Centinela (Deep Space Scanning)
+Se establece el protocolo de "Baja Frecuencia y Alta Certeza" para barridos en rangos de alta energía ($p > 20,000$):
+- **Invariante de Silencio**: El silencio se registra como evidencia positiva de honestidad instrumental. La ausencia de eventos es el estado correcto.
+- **Invariante de Alerta (AMBER)**: Cualquier candidato detectado por PRP se clasifica como AMBER. Se prohíbe el uso de términos como "descubrimiento" hasta que se complete un doble cierre determinista LL independiente.
+- **Invariante de Rigidez Paramétrica**: Queda prohibido el ajuste oportunista de umbrales para forzar hallazgos. La paciencia matemática es el único motor válido.
+
 ---
 ### Declaración de Continuidad
-Cualquier sucesor de la misión **MERSENE GAHENAX** hereda la responsabilidad de no degradar el filtro de integridad de 0.40, incluso ante la presión de optimizar el throughput de cómputo.
+Cualquier sucesor de la misión **MERSENE GAHENAX** hereda la responsabilidad de no degradar el filtro de integridad de 0.40, ni romper los invariantes del Centinela, incluso ante la presión del vacío prolongado.
