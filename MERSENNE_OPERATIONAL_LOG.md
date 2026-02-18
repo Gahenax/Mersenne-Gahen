@@ -131,3 +131,8 @@
     - **Acción**: Ingesta de `mersenne.org/report_recent_results`.
     - **Resultado**: `gimps_state.jsonl` generado con éxitos y factores recientes.
     - **Mapa de Verdad**: `policy.json` emitido. El radar ahora es consciente de la frontera externa.
+- **10:33**: **DRIVER DE ELEGIBILIDAD ACTIVO** 🛡️.
+    - **Módulo**: `eligibility.py` desplegado.
+    - **Filtro**: `BLACKLIST.json` (37 exponentes bloqueados por GIMPS).
+    - **Modo**: `AUTO` (Switch modular entre HARD/SOFT).
+    - **Veredicto**: El minero Warp V2.1 ahora ahorra UA al ignorar candidatos resueltos globalmente.
