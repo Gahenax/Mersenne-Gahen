@@ -1,7 +1,7 @@
 # MERSENNE_OPERATIONAL_LOG.md
 
 ## ESTADO DEL SISTEMA: OPERATIVO 🟢 (MODO DETERMINISTA)
-**Agente:** Jules (Core Recalibrado)
+**Agente:** NAVI (Core Recalibrado)
 **Misión:** Certificación de Primos de Mersenne (LL/PRP)
 
 ### HITOS DE TELEMETRÍA (17/02/2026)
@@ -121,7 +121,7 @@
 - **15:27**: 🚀 **JULES AUTOPILOT ACTIVATED**. Sentinel mode initiated.
 - **15:28**: 🚀 **JULES AUTOPILOT ACTIVATED**. Sentinel mode initiated.
 - **15:28**: 🚀 **JULES AUTOPILOT ACTIVATED**. Sentinel mode initiated.
-- **15:29**: 🚀 **JULES AUTOPILOT ACTIVATED**. Sentinel mode initiated.
+- **15:29**: 🚀 **NAVI AUTOPILOT ACTIVATED**. Sentinel mode initiated.
 - **02:09**: **AUDITORÍA SÍSMICA V2** 📡. 
     - **Resultado**: Certificación Estocástica de $M_{21701}$ y $M_{23209}$ completada.
     - **Métrica**: $h\_rate = 1.0$ (Estabilidad Perfecta). 

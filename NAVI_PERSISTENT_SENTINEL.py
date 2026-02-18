@@ -9,7 +9,7 @@ from MERSENNE_MISSION_CONTROL import MissionControl
 from MERSENNE_SEARCH_NAVIGATOR import SearchNavigator
 from ab_calibrator import ABCalibrator
 
-class JulesSentinel:
+class NaviSentinel:
     def __init__(self, start_p=20000, end_p=1000000, block_size=1000):
         self.start_p = start_p
         self.end_p = end_p
@@ -48,8 +48,8 @@ class JulesSentinel:
             print(f"SYNC_ERROR: {e}")
 
     def run_autopilot(self):
-        self.log_to_markdown("🚀 **JULES AUTOPILOT ACTIVATED**. Sentinel mode initiated.")
-        self.git_sync("Jules Sentinel: Autopilot activated.")
+        self.log_to_markdown("🚀 **NAVI AUTOPILOT ACTIVATED**. Sentinel mode initiated.")
+        self.git_sync("Navi Sentinel: Autopilot activated.")
         
         current_p = self.start_p
         while current_p < self.end_p:
@@ -71,12 +71,12 @@ class JulesSentinel:
                     r_hash = res.get("residue_hash", "N/A")
                     
                     self.log_to_markdown(f"✅ **CERTIFICATION COMPLETE** for M_{p}. Status: {status}")
-                    self.update_semaphore_table(p, status, r_hash, "Jules Autopilot Discovery")
-                    self.git_sync(f"Jules Sentinel: M_{p} verified as {status}")
+                    self.update_semaphore_table(p, status, r_hash, "Navi Autopilot Discovery")
+                    self.git_sync(f"Navi Sentinel: M_{p} verified as {status}")
             else:
                 # Heartbeat every 10 blocks (10,000 bits) to GitHub
                 if (current_p - self.start_p) % (self.block_size * 10) == 0 and current_p != self.start_p:
-                    self.git_sync(f"Jules Sentinel: Reach p={current_p}. Silence confirmed.")
+                    self.git_sync(f"Navi Sentinel: Reach p={current_p}. Silence confirmed.")
 
             current_p = next_p
             time.sleep(0.1)
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # Persistence wrapper
     while True:
         try:
-            sentinel = JulesSentinel(start_p=20000, end_p=1000000)
+            sentinel = NaviSentinel(start_p=20000, end_p=1000000)
             sentinel.run_autopilot()
         except Exception as e:
             print(f"CRITICAL ERROR: {e}. Restarting Sentinel in 60s...")
