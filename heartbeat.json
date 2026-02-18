@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-02-18T09:03:37.188289",
+  "timestamp": "2026-02-18T10:42:58.986463",
   "status": "RUNNING",
   "active_workers": "7/8",
-  "last_p_processed": 25505,
+  "last_p_processed": 26149,
   "error_count": 0,
   "memory_usage_mb": 10208
 }

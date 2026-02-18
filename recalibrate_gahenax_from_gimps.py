@@ -38,6 +38,7 @@ KIND_RULES = [
     ("ECM", re.compile(r"\bECM\b", re.IGNORECASE)),
     ("P-1", re.compile(r"\bP-1\b", re.IGNORECASE)),
     ("CERT", re.compile(r"\bcertif", re.IGNORECASE)),
+    ("COMP", re.compile(r":\s*[0-9A-F,]+|Composite", re.IGNORECASE)),
 ]
 
 def utc_now_iso() -> str:
@@ -259,12 +260,20 @@ def main():
     safe_write_jsonl("gimps_recent_events.jsonl", events)
 
     state_map = build_state_map(events)
+    # state jsonl
     state_rows = [{"timestamp": utc_now_iso(), **v} for v in state_map.values()]
     safe_write_jsonl("gimps_state.jsonl", state_rows)
+
+    # 1.5) Generate BLACKLIST.json (Filtered candidates)
+    # Filter p where COMP exists or UNKNOWN might be a result line
+    blacklist_ps = [p for p, s in state_map.items() if "COMP" in s["kinds"] or "TF" in s["kinds"]]
+    with open("BLACKLIST.json", "w", encoding="utf-8") as f:
+        json.dump({"blacklist": sorted(blacklist_ps)}, f, indent=2)
 
     print(f"[OK] snapshot: {raw_snapshot_path}")
     print(f"[OK] events: gimps_recent_events.jsonl ({len(events)} rows)")
     print(f"[OK] state:  gimps_state.jsonl ({len(state_rows)} unique p)")
+    print(f"[OK] filter: BLACKLIST.json ({len(blacklist_ps)} p blocked)")
 
     try:
         # Note: Changed from cert_ledger.jsonl to cert_ledger_seismic.jsonl to match Step 1760 output

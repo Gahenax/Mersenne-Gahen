@@ -127,5 +127,7 @@
     - **Métrica**: $h\_rate = 1.0$ (Estabilidad Perfecta). 
     - **Hallazgo**: La coherencia espectral en números de 7k dígitos es total bajo ruido $\epsilon=0.03$.
 - **08:42**: **REINICIO DE OPERACIONES (STAGE 1)** ⚡.
-    - **Frontera**: $p \in [25,367, 50,000]$.
-    - **Aislamiento**: Fusible #1 (Isolated Directories) activo.
+- **14:04**: **INTEGRACIÓN GIMPS (PULSO DE RECALIBRACIÓN)** 📡.
+    - **Acción**: Ingesta de `mersenne.org/report_recent_results`.
+    - **Resultado**: `gimps_state.jsonl` generado con éxitos y factores recientes.
+    - **Mapa de Verdad**: `policy.json` emitido. El radar ahora es consciente de la frontera externa.

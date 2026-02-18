@@ -4,7 +4,9 @@ import time
 import concurrent.futures
 import os
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
+import random
+from eligibility import EligibilityPolicy, EligibilityConfig, load_blacklist
 from MERSENNE_PROBE_V1 import MersenneEngine
 from MERSENNE_MISSION_CONTROL import MissionControl
 from ab_calibrator import ABCalibrator
@@ -25,6 +27,11 @@ class MersenneWarpMinerV2:
         self.mc = MissionControl("./mersenne_lab_recalibration")
         self.calibrator = ABCalibrator()
         self.vitals_file = Path("heartbeat.json")
+        
+        # Load Eligibility Policy
+        blacklist = load_blacklist("BLACKLIST.json")
+        self.policy = EligibilityPolicy(blacklist, EligibilityConfig(mode="AUTO"))
+        print(f"[*] Eligibility Policy active. Mode: {self.policy.cfg.mode}. Blacklist size: {len(self.policy.blacklist)}")
 
     def emit_heartbeat(self, active_workers, last_p, error_count=0):
         vitals = {
@@ -75,9 +82,18 @@ class MersenneWarpMinerV2:
                 
                 for future in concurrent.futures.as_completed(futures):
                     p, is_probable, dt = future.result()
-                    if is_probable:
-                        print(f"   [!] AMBER SIGNAL: p={p} (PRP match) dt={dt:.4f}s")
-                        candidates_found.append(p)
+                    if not is_probable:
+                        # print(f"   [SKIP] p={p} is not prime, ignoring.") # This line was in the diff, but it's redundant if we only process is_probable
+                        continue
+                    
+                    # Eligibility Gate
+                    decision = self.policy.allow(p, {"ua_remaining": 1.0, "calibration": is_canary})
+                    if not decision["allow"]:
+                        print(f"   [FILTERED] p={p} skipped. Reason: {decision['reason']}")
+                        continue
+
+                    print(f"   [!] AMBER SIGNAL: p={p} (PRP match) dt={dt:.4f}s")
+                    candidates_found.append(p)
                     
                     # Heartbeat update
                     self.emit_heartbeat(search_workers, p)
