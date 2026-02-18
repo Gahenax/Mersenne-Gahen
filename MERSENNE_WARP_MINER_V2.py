@@ -84,10 +84,11 @@ class MersenneWarpMinerV2:
 
             # Verification Phase (The Dedicated Queue)
             if candidates_found:
-                print(f"   [PRIORITY] Verifying {len(candidates_found)} signals...")
+                print(f"   [PRIORITY] Verifying {len(candidates_found)} signals with isolation...")
                 for p in sorted(candidates_found):
-                    # Dedicated verification logic
-                    self.mc.execute_p2_verify(p)
+                    # Fusible #1 Fix: Isolated proof dir per candidate/job
+                    isolated_mc = MissionControl(self.artifact_root / f"verify_{p}_{int(time.time())}")
+                    isolated_mc.execute_p2_verify(p)
             
             # AB-Calibration Gate
             if is_canary or candidates_found:
