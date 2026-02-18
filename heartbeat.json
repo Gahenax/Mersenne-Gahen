@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-02-18T00:49:51.538866",
+  "status": "RUNNING",
+  "active_workers": "7/8",
+  "last_p_processed": 24765,
+  "error_count": 0,
+  "memory_usage_mb": 4284
+}

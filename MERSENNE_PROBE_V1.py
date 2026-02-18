@@ -6,16 +6,17 @@ from pathlib import Path
 
 # Increase limit for integer string conversion (M_19937+ compatibility)
 if hasattr(sys, 'set_int_max_str_digits'):
-    sys.set_int_max_str_digits(20000)
+    sys.set_int_max_str_digits(50000)
 
 class MersenneEngine:
     """
     Antigravity Mersenne Engine - Epistemological Edition v1.1
     Detailed metrology, fault injection, and performance tracking.
     """
-    def __init__(self, dps=80, fault_injection=False):
+    def __init__(self, dps=80, fault_injection=False, artifact_base="artifacts"):
         self.dps = dps
         self.fault_injection = fault_injection
+        self.artifact_base = Path(artifact_base)
         self.metrology = {
             "total_prp_time": 0.0,
             "total_ll_time": 0.0,
@@ -23,6 +24,15 @@ class MersenneEngine:
             "certifications": 0,
             "faults_detected": 0
         }
+
+    def get_artifact_path(self, p, file_type="evidence"):
+        path = self.artifact_base / str(p)
+        path.mkdir(parents=True, exist_ok=True)
+        if file_type == "evidence":
+            return path / f"evidence_{p}.json"
+        elif file_type == "checkpoint":
+            return path / f"checkpoint_{p}.json"
+        return path / f"{file_type}_{p}.json"
 
     def prp_test(self, p):
         """
@@ -56,7 +66,7 @@ class MersenneEngine:
         s = 4
         
         # Persistence Logic
-        cp_file = Path(f"checkpoint_p{p}.json")
+        cp_file = self.get_artifact_path(p, "checkpoint")
         start_iter = 0
         
         if cp_file.exists():
@@ -104,7 +114,7 @@ class MersenneEngine:
         return is_prime, s, duration, 0.0
 
     def save_checkpoint(self, p, s, itinerary):
-        cp_file = Path(f"checkpoint_p{p}.json")
+        cp_file = self.get_artifact_path(p, "checkpoint")
         payload = f"{s}-{itinerary}"
         data = {
             "p": p,
