@@ -136,3 +136,10 @@
     - **Filtro**: `BLACKLIST.json` (37 exponentes bloqueados por GIMPS).
     - **Modo**: `AUTO` (Switch modular entre HARD/SOFT).
     - **Veredicto**: El minero Warp V2.1 ahora ahorra UA al ignorar candidatos resueltos globalmente.
+- **22:45**: **DEACTIVATION: WARP MODE** 🛑.
+    - **Acción**: Cierre de `MERSENNE_WARP_MINER_V2.py` (PID 19852).
+    - **Razón**: Consolidación de recursos Athena (UA) para la frontera de millón.
+- **22:46**: **EXPEDITION STATUS: DEEP SPACE FOCUS** 🌌.
+    - **Status**: El único proceso activo es `deep_space_probe.py` (PID 5540).
+    - **Objetivo**: Certificación de $M_{1,000,003}$.
+    - **Nota**: Experimentos de Riemann zona baja declarados CONCLUIDOS.
