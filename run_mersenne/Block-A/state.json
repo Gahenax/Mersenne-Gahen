@@ -1,0 +1,36 @@
+{
+  "done": 3,
+  "failed": 0,
+  "jobs": {
+    "p_127": {
+      "attempts": 0,
+      "job_id": "p_127",
+      "last_error": null,
+      "status": "DONE",
+      "stride": 0,
+      "t_end": 127.0,
+      "t_start": 127.0
+    },
+    "p_129": {
+      "attempts": 0,
+      "job_id": "p_129",
+      "last_error": null,
+      "status": "DONE",
+      "stride": 0,
+      "t_end": 129.0,
+      "t_start": 129.0
+    },
+    "p_131": {
+      "attempts": 0,
+      "job_id": "p_131",
+      "last_error": null,
+      "status": "DONE",
+      "stride": 0,
+      "t_end": 131.0,
+      "t_start": 131.0
+    }
+  },
+  "rejected": 0,
+  "run_id": "Mersenne_BlockA_1771684901",
+  "seq": 3
+}

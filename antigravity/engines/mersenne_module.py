@@ -5,8 +5,10 @@ import time
 import sys
 from pathlib import Path
 
-# Add the specific playground path to import logic
-sys.path.append(r"c:\Users\USUARIO\.gemini\antigravity\playground\mersene-gahenax")
+# Add the project root to import logic
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.append(str(PROJECT_ROOT))
 
 from antigravity.core.contracts import AntigravityModule, ExecutionResult, Auditable, HodgeAuditable
 from antigravity.core.roles import Simulator
