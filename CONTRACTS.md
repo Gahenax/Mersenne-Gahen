@@ -68,6 +68,12 @@ When a **Research Engine** (L2) completes a task, it must pass a result to the *
 - **Validation**: No result from Jules is "Canonical" until the local Kernel validates its `h_rigidity` and registers it in `ua_ledger.sqlite`.
 - **Latency Tolerance**: The Orquestador must handle Jules as an asynchronous worker with potential high-latency loopback.
 
+## 5. Skill-First Mandate (Anti-Monolith Protocol)
+
+- **Mandate**: Every new experiment MUST be preceded by the creation of a Skill in `.agent/skills/`.
+- **Modularity**: Code that does not belong to a defined Skill or violates its domain-specific contract will be flagged as "UNSTRUCTURED" and blocked from the Ledger.
+- **Auto-Documentation**: The Agent must update the `SKILL.md` of a domain as new findings or tools are integrated.
+
 ---
 
 *This contract is legally binding for all Antigravity instances operating in this workspace.*
