@@ -1,0 +1,46 @@
+{
+  "payload": {
+    "miner_result": {
+      "p": 127,
+      "is_prime": true,
+      "residue_hash": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "wall_time": 0.0006878376007080078,
+      "roundoff_error": 0.0,
+      "stability": {
+        "H": 0.0,
+        "M": 0.0,
+        "S": 1.0
+      }
+    },
+    "chaos_result": {
+      "mean_level_spacing_ratio": 0.5165376959194213,
+      "stability": {
+        "H": 0.0,
+        "M": 0.0,
+        "S": 1.0
+      },
+      "dimension": 256,
+      "params": {
+        "L": 8,
+        "J": 1.0,
+        "g": 0.5,
+        "W": 0.5
+      }
+    },
+    "amalgamation_status": "COMPLETED",
+    "certification": {
+      "semaforo_color": "VERDE (STRUCTURAL)",
+      "metrics": {
+        "H": 0.0,
+        "M": 0.0,
+        "S": 1.0,
+        "C": true
+      },
+      "hallucination_probability": 0.0,
+      "verdict": "STRUCTURAL (Confirmed Mass / Canon)",
+      "governance_status": "APPROVED"
+    }
+  },
+  "evidence_hash": "bb3d0c33311ae7033417b5a7794d4110a578fb2e69904043d662d92388232c1d",
+  "ua_spent": 31.950000000000003
+}
