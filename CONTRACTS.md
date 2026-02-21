@@ -61,6 +61,13 @@ When a **Research Engine** (L2) completes a task, it must pass a result to the *
 - **Naming Conventions**: Scripts must follow the `<DOMAIN>_<TOOL>_<VERSION>.py` format.
 - **Dependency Cleanliness**: No circular imports between `riemann` and `mersenne` modules.
 
+## 4. External Lab Delegation (Jules)
+
+- **Role**: Jules is the canonical remote compute provider.
+- **Protocol**: All data sent to Jules must be cryptographically hashed.
+- **Validation**: No result from Jules is "Canonical" until the local Kernel validates its `h_rigidity` and registers it in `ua_ledger.sqlite`.
+- **Latency Tolerance**: The Orquestador must handle Jules as an asynchronous worker with potential high-latency loopback.
+
 ---
 
 *This contract is legally binding for all Antigravity instances operating in this workspace.*
