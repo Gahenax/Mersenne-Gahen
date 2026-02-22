@@ -1,0 +1,24 @@
+{
+  "flags": [],
+  "generated_at": "2026-02-21T18:24:37",
+  "groups": {
+    "anchor:127:r5": {
+      "H_mean": 0.7,
+      "H_stdev": 0.458257569495584,
+      "H_zero_rate": 0.3,
+      "n": 10,
+      "wall_time_mean_s": 0.0015810728073120117,
+      "wall_time_stdev_s": 0.0008982827437435436
+    },
+    "anchor:521:r5": {
+      "H_mean": 0.8,
+      "H_stdev": 0.4,
+      "H_zero_rate": 0.2,
+      "n": 10,
+      "wall_time_mean_s": 0.003340458869934082,
+      "wall_time_stdev_s": 0.0013823153452803731
+    }
+  },
+  "n_rows": 20,
+  "tolerance_H": 1e-12
+}

@@ -1,0 +1,14 @@
+{
+  "probe_id": 41,
+  "probe_alpha": "X-41",
+  "range": [
+    8200000000,
+    8380000000
+  ],
+  "status": "ACTIVE",
+  "progress": 0.0,
+  "strategy": "GALACTIC-DOMINO-10B",
+  "active_power": 1,
+  "space_optimized": true,
+  "last_heartbeat": "2026-02-21T22:54:26.251981"
+}

@@ -1,0 +1,13 @@
+{
+  "probe_id": 9,
+  "probe_alpha": "I",
+  "range": [
+    120000000,
+    130000000
+  ],
+  "status": "COMPLETED",
+  "progress": 1.0,
+  "strategy": "DOMINO-WAVE-200M",
+  "active_power": 1,
+  "last_heartbeat": "2026-02-21T22:48:08.478217"
+}

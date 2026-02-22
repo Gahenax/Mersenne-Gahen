@@ -1,0 +1,103 @@
+{
+  "protocol": {
+    "dataset_version": "mersenne_invariance_ndjson_v1.0",
+    "protocol_version": "I(p)-Rigidity-Calibrated-v1.0",
+    "i_observable_id": "I_PHENOTYPE_COMPOUND",
+    "i_observable_commit": "v1.0-release",
+    "collapse_eps": 1e-12,
+    "attacks": [
+      {
+        "name": "Identity",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Reverse-Bits",
+        "strength": "REPRESENTATION",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Endian-Swap-64",
+        "strength": "REPRESENTATION",
+        "should_break_artifacts": true,
+        "description": ""
+      },
+      {
+        "name": "Chunk-Rotate-8",
+        "strength": "STRONG",
+        "should_break_artifacts": true,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k1",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k2",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k3",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k5",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k8",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k13",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k21",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      },
+      {
+        "name": "Rotate-k32",
+        "strength": "BASIC",
+        "should_break_artifacts": false,
+        "description": ""
+      }
+    ],
+    "protocol_hash": "d22764fa51ac26b3b2fbe2468673b88b0d04118a873b170dc3ec2a3ed58cce36"
+  },
+  "runtime": {
+    "run_id": "RUN_MIGRATION_2026_02_12",
+    "created_ts": 1771728080.3737664,
+    "software_name": "Antigravity",
+    "software_version": "4.5",
+    "git_commit": "unknown",
+    "hardware_id": "LOCAL_HOST_WIN",
+    "device_kind": "CPU",
+    "driver_version": "unknown",
+    "os": "Windows",
+    "precision_mode": "unknown",
+    "fft_len": null,
+    "fft_impl": "unknown"
+  },
+  "canary_ps": [
+    1259,
+    2500000
+  ],
+  "manifest_hash": "a50bf6d9da42ee8bebafef76d46f223193c182c2f2fb163b6939fd34265cb753"
+}

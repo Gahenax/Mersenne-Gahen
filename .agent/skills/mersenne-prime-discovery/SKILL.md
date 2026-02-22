@@ -3,29 +3,24 @@ name: mersenne-prime-discovery
 description: Logic for Mersenne prime search, GIMPS synchronization, and Hodge-PCP proof verification.
 ---
 
-# Mersenne Prime Discovery Skill
+# 🚀 Mission: Path to 100,000,000
 
-This skill governs the high-performance search for Mersenne primes ($2^p - 1$) and the verification of existing claims using the LUCAS-LEHMER test and spectral analysis.
+This skill governs the systematic mapping of the Mersenne exponent space from the current certified frontier towards the 100M mark ($p=10^8$).
 
-## 🛠️ Core Capabilities
-1. **Lucas-Lehmer Warp**: Optimized LL test with periodic checkpointing and GPU/Distributed delegation hints.
-2. **GIMPS Sync**: Pulling recent results from the GIMPS network to calibrate the local "Seismograph".
-3. **Probabilistic Seismography**: Detecting "anomalies" in the exponent space before full LL-test execution to prioritize computational resources.
+## 🛠️ Mission Objectives
+1. **Block-Wise Scanning**: Dividing the range $[23209, 100,000,000]$ into manageable blocks (1M exponents each).
+2. **Deterministic Certification**: Applying the Lucas-Lehmer test with Dual-Path Verification to every candidate.
+3. **Spectral Profiling**: Recording the $H$ (Hodge Rigidity) for every exponent to detect "Ghost Loci" and structural trends.
+4. **Jules Delegation**: Offloading high-energy blocks ($p > 5M$) to the distributed lab.
 
-## 📜 Laws & Contracts
-- **Verification Law**: A prime is not "found" until it has two independent LL-test residues matching perfectly.
-- **Evidence Schema**: Every candidate must generate an `evidence_p<exp>.json` file containing the residue, duration, and hardware fingerprint.
-- **Checkpointing**: In-progress tests must save state every $10^5$ iterations.
+## 📜 Governing Laws
+- **Continuity Law**: No block can be certified unless the previous block has been fully audited and ledgered.
+- **Evidence Law**: Every discovery must be accompanied by its LL-residue hash and wall-time metrology.
+- **Fail-Closed**: If a hardware bit-flip is detected (Mismatch in Path A/B), the block is invalidated and re-scheduled.
 
-## 🚀 Key Scripts
-- `MERSENNE_SEISMOGRAPH_V2.py`: Analyzes exponent density for potential "hot zones".
-- `mersenne_production_w3.py`: The production-grade worker for the Lucas-Lehmer sweep.
-
-## 📊 Verdicts
-- **PRIME**: Confirmed Mersenne prime.
-- **COMPOSITE**: Confirmed composite via LL-test.
-- **STALLED**: Process halted (check hardware thermal/power).
-- **DRIFT**: Unexpected residue variance (possible cosmic ray or bit-flip).
+## 🚀 Execution Tools
+- `research/mersenne/MERSENNE_PROBE_V1.py`: Core engine.
+- `jules_orders/JULES_MAP_100M_BLOCK_XXX.json`: Work orders for the path to 100M.
 
 ---
-*Skill injected via Antigravity Oracle protocol.*
+*Mission blueprint by Antigravity Oracle v4.0*

@@ -1,0 +1,82 @@
+[
+  {
+    "p": 5,
+    "anchor": 3,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0061126
+  },
+  {
+    "p": 7,
+    "anchor": 3,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0067978
+  },
+  {
+    "p": 9,
+    "anchor": 3,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "205",
+    "timestamp": 1771723114.007517
+  },
+  {
+    "p": 11,
+    "anchor": 3,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "1736",
+    "timestamp": 1771723114.0082307
+  },
+  {
+    "p": 13,
+    "anchor": 3,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0092425
+  },
+  {
+    "p": 15,
+    "anchor": 3,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "20400",
+    "timestamp": 1771723114.0099013
+  },
+  {
+    "p": 17,
+    "anchor": 3,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0103347
+  },
+  {
+    "p": 19,
+    "anchor": 3,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0106566
+  },
+  {
+    "p": 21,
+    "anchor": 3,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "840107",
+    "timestamp": 1771723114.0110877
+  },
+  {
+    "p": 23,
+    "anchor": 3,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "6107895",
+    "timestamp": 1771723114.0114212
+  }
+]

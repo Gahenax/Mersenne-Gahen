@@ -59,13 +59,21 @@ def scan_neighborhood(certified_p: int, radius: int = 50) -> List[Dict]:
     return results
 
 def main():
-    # Load certified primes from results/mersenne/
-    certified = [1279, 2203, 2281, 3217, 4253, 4423, 9689, 9941, 11213, 19937, 21701, 23209]
+    # The First 25 Mersenne Primes (GIMPS Canon)
+    certified = [
+        2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 
+        2281, 3217, 4253, 4423, 9689, 9941, 11213, 19937, 21701
+    ]
     
     out_dir = Path("results/mersenne/neighborhoods")
     out_dir.mkdir(parents=True, exist_ok=True)
     
     for p in certified:
+        # SAFETY GATE: Exponents over 5M digits are delegated to Jules
+        if p > 5000000:
+            print(f"\n[DELEGATED] Anchor p={p} is too massive for local hardware. See JULES_ORDER_M136M_FRONTIER.json")
+            continue
+            
         report = scan_neighborhood(p, radius=20) # Smaller radius for local test
         if report:
             out_file = out_dir / f"ghost_hunt_p{p}.json"

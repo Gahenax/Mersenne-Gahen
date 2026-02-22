@@ -1,0 +1,13 @@
+{
+  "probe_id": 41,
+  "range": [
+    46000000000,
+    46900000000
+  ],
+  "status": "ACTIVE",
+  "progress": 0.0,
+  "strategy": "TITAN-DOMINO-100B",
+  "active_power": 3,
+  "memory_mode": "ZERO-STORAGE",
+  "timestamp": "2026-02-21T22:56:37.993701"
+}
