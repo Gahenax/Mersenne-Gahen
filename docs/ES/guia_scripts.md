@@ -120,6 +120,47 @@ python scripts/layer_c_adversarial.py
 
 ---
 
+### `phase3_prereg.py`
+**Preregistración ejecutable de Phase-3**
+
+Codifica toda la configuración de Phase-3 como un objeto Python inmutable (`frozen=True`), con checksum SHA-256. El objetivo es que hipótesis, métricas, ventanas, modelos de nulo y gates queden **congelados antes de ver un solo dato** — sin posibilidad de ajuste post-hoc.
+
+**Estructura del objeto `Phase3Prereg`:**
+
+| Campo | Valor congelado |
+|:------|:----------------|
+| `T_global` | `[7000, 15000]` — ventana global |
+| `T_windows` | W1 `[7000,15000]`, W2 `[8000,14000]`, W3 `[9000,13000]` |
+| `target_n_zeros_min` / `ideal` | 10,000 / 12,000 |
+| `statistic_name` | $S(u)$ suma exponencial normalizada |
+| `kernels` | `["hann", "tukey"]` — ambos obligatorios |
+| `null_primary` | Aleatorización de fase ($B=400$) |
+| `null_secondary` | Permutación de bloques ($B=400$, sensibilidad) |
+| `eval_sets` | 12 Mersenne $k \leq 127$ vs 12 controles congelados |
+| `gates` | Gates 0–3 con PASS/FAIL explícitas |
+| `forbidden_claims` | Lista de afirmaciones prohibidas |
+| `checksum` | SHA-256 del JSON completo sin el propio checksum |
+
+**Por qué es un script y no solo un JSON:**
+Al importar `default_phase3_prereg()` directamente en los scripts de análisis, se garantiza que nunca hay divergencia entre la preregistración y lo que realmente ejecuta el pipeline.
+
+**Artefactos generados:**
+```
+reports/prereg/PHASE3_PREREG.json   ← preregistración completa, machine-readable
+reports/prereg/PHASE3_PREREG.md     ← preregistración en Markdown, human-readable
+```
+
+**Checksum fijo (v1.0.0):** `559984d9e4fae96b284b04348ef695fa2f690df9d0c0f61f89f80e71319a61f3`
+
+> Si cualquier parámetro cambia, el checksum cambia — evidencia inmediata de manipulación post-hoc.
+
+**Cómo ejecutar:**
+```bash
+python scripts/phase3_prereg.py --out reports/prereg --print
+```
+
+---
+
 ## 3. Auditoría y validación
 
 ### `audit_dataset.py`
