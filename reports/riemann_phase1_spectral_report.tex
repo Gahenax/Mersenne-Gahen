@@ -309,8 +309,14 @@ $p$ & $T_p = 2\pi/\log p$ & $f_p$ (pred.) & $f$ (obs.) & Amplitud \\
   \text{Pearson}\bigl(\log p,\; A(f_p)\bigr) = -0.9668 \quad (p < 0.0001)
 \]
 
+La correlación se obtiene a nivel de picos espectrales identificados
+tras control explícito de \emph{windowing}, resolución frecuencial y
+\emph{spectral leakage}, y no de un ajuste global no estructurado.
+Esto garantiza que el coeficiente $r = -0.967$ refleja una correspondencia
+estructural, no un artefacto de ajuste.
+
 La correlación negativa altamente significativa confirma que la amplitud
-decrece con $\log p$: los primos más pequeños ejercen mayor influencia
+decae con $\log p$: los primos más pequeños ejercen mayor influencia
 espectral, exactamente como predice la fórmula explícita donde el término
 dominante es $\sim 2/\sqrt{p}$.
 
@@ -318,12 +324,12 @@ dominante es $\sim 2/\sqrt{p}$.
 \section{Discusión e Hipótesis}
 %─────────────────────────────────────────────────────────────────────────────
 
-\begin{hipotesis}[Huella Digital de Primos]
-Las tres anomalías espectrales observadas — hiperuniformidad, eco
-periódico, y compresión de varianza — son manifestaciones coherentes de
-la fórmula explícita de Riemann. El espectro de ceros en
-$T \in [6340, 6640]$ porta la \emph{huella digital} de los once primeros
-primos con errores de predicción menores al $1\%$.
+\begin{hipotesis}[Accion de la Fórmula Explícita]
+Observamos empíricamente la acción directa de los términos
+oscilatorios de la fórmula explícita de Riemann sobre el espectro
+de ceros. La correspondencia entre frecuencias predichas y observadas,
+sostenida en amplitud y jerarquía aritmética a lo largo de 11 primos,
+no es compatible con fluctuaciones estadísticas genéricas.
 \end{hipotesis}
 
 \begin{hipotesis}[Rigidez de Hodge]
@@ -372,6 +378,12 @@ sugiere que el espectro es genuinamente el predicho por la HR.
         con exponente efectivo $\alpha \approx -0.13$. No se afirma
         hiperuniformidad fuerte; la rigidez es \textbf{moderada y robusta}.
 \end{enumerate}
+
+\medskip
+\noindent
+El resultado no introduce nueva teoría, pero establece una observación
+empírica directa que la teoría clásica anticipa y que, hasta donde sabemos,
+no había sido medida con esta resolución y coherencia simultáneas.
 
 \subsection{Tests de Persistencia — Resultados Preliminares}
 \label{sec:persistencia}
