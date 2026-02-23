@@ -1,0 +1,11 @@
+{"t_est": 6340.408778518928, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 0, "rigidity_h": null}
+{"t_est": 6340.999229653007, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 1, "rigidity_h": null}
+{"t_est": 6341.953018540636, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 2, "rigidity_h": null}
+{"t_est": 6342.997620671526, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 3, "rigidity_h": null}
+{"t_est": 6343.633453270303, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 4, "rigidity_h": null}
+{"t_est": 6345.086750330733, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 5, "rigidity_h": null}
+{"t_est": 6345.767966762849, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 6, "rigidity_h": null}
+{"t_est": 6346.676238895293, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 7, "rigidity_h": null}
+{"t_est": 6347.4936677495525, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 8, "rigidity_h": null}
+{"t_est": 6348.856015360254, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 9, "rigidity_h": null}
+{"t_est": 6349.673403643412, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 10, "rigidity_h": null}

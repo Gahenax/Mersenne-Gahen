@@ -1,0 +1,31 @@
+{
+    "order_id": "JO-2026-RIEMANN-SURGE-10K",
+    "skill": "jules-heavy-compute",
+    "target": "FULL_SPECTRUM_CAPTURE_10K",
+    "parameters": {
+        "t_start": 6640.0,
+        "t_end": 10000.0,
+        "band_width": 200.0,
+        "precision": {
+            "alpha": 0.01,
+            "dps": 150
+        },
+        "strategy": {
+            "name": "DOMINO-WAVE-V2",
+            "cascading_reinforcement": true,
+            "redundancy": 1.1,
+            "drift_compensation": "ACCELERATED"
+        },
+        "governance": {
+            "ua_budget": 5000000,
+            "falsifiability_gate": "GATE_H_RIGIDITY_V3",
+            "must_stop_on": [
+                "DRIFT_WARN_RED",
+                "ENTROPY_EXPLOSION"
+            ]
+        }
+    },
+    "priority": "ULTRA_CRITICAL",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Direct jump to 10k. High resolution (dps=150) to detect fine-grained alpha mass variations. Domino-Wave-V2 enabled for maximum throughput."
+}
