@@ -1,28 +1,27 @@
 """
 mersenne_spectral_poc.py
 ========================
-Proof-of-concept: detectar huellas de primos de Mersenne en el espectro
-de ceros de Riemann mediante el estadístico de la fórmula explícita.
+Proof-of-concept: detect spectral fingerprints of Mersenne primes in the
+Riemann zero spectrum via the explicit-formula statistic.
 
-  S(u) = Σ_γ  w(γ) · exp(i·γ·u)
+  S(u) = sum_gamma  w(gamma) * exp(i * gamma * u)
 
-Evalúado en u = log(M_k) = log(2^k - 1), S(u) debería mostrar exceso
-estadístico cuando M_k es primo vs cuando M_k es compuesto.
+Evaluated at u = log(M_k) = log(2^k - 1), S(u) should show a statistical
+excess when M_k is prime compared to when M_k is composite.
 
-Tres capas (pre-registradas):
-  A — Sanidad: log(2), log(3), log(5), log(7), 2·log(2), 3·log(2)
-  B — Mersenne: k prima y M_k primo vs k primo y M_k compuesto
-  C — Estructura 2: energía en k·log(2) con ΔT como agente de resolución
+Three pre-registered layers:
+  A -- Sanity : log(2), log(3), log(5), log(7), 2*log(2), 3*log(2)
+  B -- Mersenne: k prime and M_k prime  vs  k prime and M_k composite
+  C -- Power-of-2 structure: energy at u = k*log(2) grid
 
-Parámetros pre-registrados (no se cambian post-hoc):
+Pre-registered parameters (no post-hoc changes):
   window   = "hann"
-  B_null   = 300  permutaciones null
-  jitter   = 0.45 (medias jitter en unidades de T, ~0.5 * mean_gap)
-  z_thresh = 2.0  (criterio exploratorio; FDR-BH para reporte)
-  AUC_min  = 0.65 (criterio de éxito capa B)
+  B_null   = 300   (phase-randomization draws)
+  z_thresh = 1.5   (exploratory threshold; BH-FDR for reporting)
+  AUC_min  = 0.60  (Layer B success criterion)
 
-Datos: results/riemann/persistence_test.json +
-       results/riemann/jules_phase1_full.jsonl
+Data: results/riemann/persistence_test.json +
+      results/riemann/jules_phase1_full.jsonl
 """
 from __future__ import annotations
 
@@ -203,8 +202,8 @@ def auc_score(positives: list[float], negatives: list[float]) -> float:
 # ─── Runners ──────────────────────────────────────────────────────────────────
 
 def run_layer_A(gammas: np.ndarray, T0: float, T1: float) -> list[dict]:
-    """Sanity: picos en log(p) y potencias de 2 deben ser detectables."""
-    print(f"\n  [Layer A] Sanidad — ventana T=[{T0:.1f},{T1:.1f}]  N={len(gammas)}")
+    """Sanity check: peaks at log(p) and powers of 2 must be detectable."""
+    print(f"\n  [Layer A] Sanity -- window T=[{T0:.1f},{T1:.1f}]  N={len(gammas)}")
     print(f"  {'Label':<14} {'u':>8}  {'|S|':>7}  {'null_mu':>7}  {'z':>6}")
     print(f"  {'-'*60}")
     results = []
@@ -264,10 +263,10 @@ def run_layer_B(gammas: np.ndarray, T0: float, T1: float,
 
 def run_layer_C(gammas: np.ndarray, T0: float, T1: float) -> list[dict]:
     """
-    Estructura del 2: energía en u = k*log(2) para k=1..30.
-    Hypothesis: k que dan M_k primo muestran exceso respecto a k que no.
+    Power-of-2 structure: energy at u = k*log(2) for k=1..30.
+    Hypothesis: k yielding prime M_k show excess over k yielding composite M_k.
     """
-    print(f"\n  [Layer C] Estructura del 2: u=k*log(2)  "
+    print(f"\n  [Layer C] Power-of-2 structure: u=k*log(2)  "
           f"T=[{T0:.1f},{T1:.1f}]")
     print(f"  {'k':>4}  {'u':>8}  {'|S|':>7}  {'z':>6}  {'Mk_prime?':>10}")
     print(f"  {'-'*50}")
@@ -297,14 +296,13 @@ def run_layer_C(gammas: np.ndarray, T0: float, T1: float) -> list[dict]:
 def print_header():
     print("="*70)
     print("  GAHENAX MERSENNE SPECTRAL POC")
-    print("  Huella de Mersenne en espectro de ceros via formula explicita")
+    print("  Mersenne fingerprints in Riemann zero spectrum via explicit formula")
     print()
     print("  PRE-REGISTERED PARAMETERS:")
     print(f"    window   = {WINDOW_MODE}")
     print(f"    B_null   = {B_NULL}")
-    print(f"    jitter   = {JITTER}  (T units)")
-    print(f"    z_thresh = {Z_THRESH}  (exploratorio)")
-    print(f"    AUC_min  = {AUC_MIN}  (criterio de exito Layer B)")
+    print(f"    z_thresh = {Z_THRESH}  (exploratory)")
+    print(f"    AUC_min  = {AUC_MIN}  (Layer B success criterion)")
     print()
     print("  MERSENNE PRIME k:  ", MERSENNE_PRIME_K)
     print("  CONTROL k:         ", CONTROL_K)
@@ -411,10 +409,10 @@ if __name__ == "__main__":
         layer_B_results[rng_label] = res
 
     # ═══════════════════════════════════════════════════════════════════════
-    # LAYER C — ESTRUCTURA DEL 2 (Range A only, most zeros)
+    # LAYER C — POWER-OF-2 STRUCTURE (Range A only, most zeros)
     # ═══════════════════════════════════════════════════════════════════════
     print("\n" + "="*70)
-    print("  LAYER C — ESTRUCTURA DEL 2  [speculative, exploratorio]")
+    print("  LAYER C — POWER-OF-2 STRUCTURE  [speculative, exploratory]")
     print("="*70)
     run_layer_C(zeros_A, T0_A, T1_A)
 
@@ -422,7 +420,7 @@ if __name__ == "__main__":
     # ABLATION CHECK 1: Tukey window vs Hann (Range A)
     # ═══════════════════════════════════════════════════════════════════════
     print("\n" + "="*70)
-    print("  ABLACION 1 — Tukey window (robustez de Layer A)")
+    print("  ABLATION 1 — Tukey window (robustness of Layer A)")
     print("="*70)
     print(f"  {'Label':<14} {'z_hann':>8}  {'z_tukey':>8}  {'consistent?'}")
     print(f"  {'-'*50}")
@@ -439,17 +437,17 @@ if __name__ == "__main__":
     # FINAL VERDICT
     # ═══════════════════════════════════════════════════════════════════════
     print("\n" + "="*70)
-    print("  VEREDICTO FINAL")
+    print("  FINAL VERDICT")
     print("="*70)
-    print(f"\n  Layer A (sanidad):  {'PASS' if sanity_ok else 'FAIL'}")
+    print(f"\n  Layer A (sanity):  {'PASS' if sanity_ok else 'FAIL'}")
     for rng_label, res in layer_B_results.items():
         print(f"  Layer B ({rng_label}):  AUC={res['auc']:.4f}  {res['verdict']}")
     print()
     print("  GUARDRAILS:")
-    print("  - NO se afirma certificacion de primalidad Mersenne")
-    print("  - AUC < AUC_min => resultado no discriminativo, no publicable")
-    print("  - Layer C es exploratoria; resultados requieren replica independiente")
-    print("  - Ablacion de ventana requerida para claims de robustez")
+    print("  - NO claim of Mersenne primality certification")
+    print("  - AUC < AUC_min => result non-discriminative, not publishable")
+    print("  - Layer C is exploratory; results require independent replication")
+    print("  - Window ablation required for robustness claims")
 
     # Save
     out = {

@@ -1,6 +1,6 @@
 """
-audit_dataset.py  — Gahenax Full Dataset Audit
-Carga todos los shards del ledger, deduplica, y calcula estadisticas completas.
+audit_dataset.py  -- Gahenax Full Dataset Audit
+Loads all ledger shards, deduplicates, and computes complete statistics.
 """
 import json, os, math, sys
 import numpy as np
@@ -73,12 +73,12 @@ def audit(zeros, label):
     print(f"\n{'='*62}")
     print(f"  GAHENAX FULL AUDIT — {label}")
     print(f"{'='*62}")
-    print(f"  Ceros totales (unicos):  {n}")
-    print(f"  Rango T:                 [{zeros[0]:.4f}, {zeros[-1]:.4f}]")
-    print(f"  Largo del intervalo:     {zeros[-1]-zeros[0]:.2f}")
+    print(f"  Total zeros (unique): {n}")
+    print(f"  T range:              [{zeros[0]:.4f}, {zeros[-1]:.4f}]")
+    print(f"  Interval width:       {zeros[-1]-zeros[0]:.2f}")
 
     if n < 50:
-        print("  [!] Muestra insuficiente para estadisticas robustas.")
+        print("  [!] Insufficient sample for robust statistics.")
         return
 
     # ── 1. Gaps en T-natural ─────────────────────────────────────────────────
@@ -176,26 +176,25 @@ def audit(zeros, label):
         clues.append(f"Eco espectral f={peak_f:.3f} (P={peak_P:.1f})")
 
     if len(clues) >= 2:
-        print(f"  STATUS: [ANOMALIA ESPECTRAL DETECTADA]")
+        print(f"  STATUS: [SPECTRAL ANOMALY DETECTED]")
         for c in clues:
             print(f"    - {c}")
-        print(f"\n  HIPOTESIS: El espectro en T=[{zeros[0]:.0f},{zeros[-1]:.0f}]")
-        print(f"  muestra rigidez SUPERIOR a GUE con eco periodico en ~{periodo} ceros.")
-        print(f"  Esto es consistente con influencia de primos pequenos (p=2,3,5)")
-        print(f"  resonando en la funcion xi a este nivel de T.")
+        print(f"\n  HYPOTHESIS: Spectrum at T=[{zeros[0]:.0f},{zeros[-1]:.0f}]")
+        print(f"  shows rigidity ABOVE GUE with periodic echo at ~{periodo} zeros.")
+        print(f"  Consistent with influence of small primes (p=2,3,5)")
+        print(f"  resonating in xi at this T level.")
     elif len(clues) == 1:
-        print(f"  STATUS: [COMPATIBLE CON GUE — anomalia debil]")
-        print(f"    Nota: {clues[0]}")
+        print(f"  STATUS: [COMPATIBLE WITH GUE -- weak anomaly]")
+        print(f"    Note: {clues[0]}")
     else:
-        print(f"  STATUS: [GREEN] Comportamiento GUE estandar")
+        print(f"  STATUS: [GREEN] Standard GUE behaviour")
     print(f"{'='*62}\n")
 
 
 if __name__ == "__main__":
-    # Carga principal: jules_phase1_full.jsonl
-    print("Cargando datos...")
+    print("Loading data...")
     zeros_full = load_from_jsonl(FULL_JSONL)
-    print(f"  jules_phase1_full.jsonl: {len(zeros_full)} ceros")
+    print(f"  jules_phase1_full.jsonl: {len(zeros_full)} zeros")
 
     # Carga desde ledger de shards
     zeros_shard, shard_report = load_ledger(LEDGER_PATH)

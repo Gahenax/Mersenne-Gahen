@@ -1,16 +1,16 @@
 """
 prime_resonance_analysis.py
-Correlacion entre el eco espectral detectado (f=0.099) y las
-frecuencias fundamentales de los primos via la formula explicita de Riemann.
+Correlation between the detected spectral echo (f=0.099) and the fundamental
+frequencies of primes via the Riemann explicit formula.
 
-La formula explicita conecta los ceros no triviales con los primos:
+The explicit formula connects non-trivial zeros to primes:
   psi(x) = x - sum_rho (x^rho/rho) - log(2pi) - 0.5*log(1 - 1/x^2)
 
-En el espectro de ceros, cada primo p induce oscilaciones con periodo:
-  T_p = 2*pi / log(p)   [en unidades de T en el eje critico]
+In the zero spectrum, each prime p induces oscillations with period:
+  T_p = 2*pi / log(p)   [in units of T on the critical line]
 
-El "unfolding" convierte esto a frecuencia en ciclos/cero:
-  f_p = 1 / (T_p / mean_gap_T)  =  mean_gap_T * log(p) / (2*pi)
+Unfolding converts this to frequency in cycles/zero:
+  f_p = 1/(T_p/mean_gap_T)  =  mean_gap_T * log(p) / (2*pi)
 """
 import json, math, os
 import numpy as np
@@ -19,7 +19,7 @@ from pathlib import Path
 
 FULL_JSONL = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis\results\riemann\jules_phase1_full.jsonl"
 
-# ── Carga de datos ───────────────────────────────────────────────────────────
+# -- Data loading --------------------------------------------------------------───────────
 
 def load_zeros(path):
     zeros = []
@@ -45,22 +45,22 @@ def riemann_N(t):
 def unfold(zeros):
     return np.array([riemann_N(t) for t in zeros])
 
-# ── Primos hasta 100 ─────────────────────────────────────────────────────────
+# -- Primes up to 100 ---------------------------------------------------------─────────
 
 PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
           53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
 
-# ── Analisis principal ───────────────────────────────────────────────────────
+# -- Main analysis -------------------------------------------------------------───────────
 
 def analyze():
     print("="*64)
     print("  GAHENAX PRIME RESONANCE ANALYSIS")
-    print("  Correlacion Eco Espectral <-> Primos (Formula Explicita)")
+    print("  Spectral Echo <-> Primes (Explicit Formula)")
     print("="*64)
 
     zeros = load_zeros(FULL_JSONL)
     n = len(zeros)
-    print(f"\n  Dataset: {n} ceros  T=[{zeros[0]:.2f}, {zeros[-1]:.2f}]")
+    print(f"\n  Dataset: {n} zeros  T=[{zeros[0]:.2f}, {zeros[-1]:.2f}]")
 
     unf = unfold(zeros)
     gaps = np.diff(unf)
@@ -81,7 +81,7 @@ def analyze():
     top_freqs = freqs[top_idx]
     top_amps  = fft_amp[top_idx]
 
-    print(f"\n  TOP PICOS FFT (residuos):")
+    print(f"\n  TOP FFT PEAKS (residuals):")
     print(f"  {'Rank':>4}  {'f (ciclos/cero)':>18}  {'Periodo (ceros)':>16}  {'Amplitud':>10}")
     print(f"  {'-'*56}")
     for i, (f, a) in enumerate(zip(top_freqs, top_amps)):
@@ -89,9 +89,9 @@ def analyze():
         print(f"  {i+1:>4}  {f:>18.5f}  {periodo:>16d}  {a:>10.2f}")
 
     # ── Frecuencias predichas por primos ──────────────────────────────────────
-    print(f"\n  FRECUENCIAS PREDICHAS POR FORMULA EXPLICITA:")
+    print(f"\n  PREDICTED FREQUENCIES FROM EXPLICIT FORMULA:")
     print(f"  f_p = mean_gap_T * log(p) / (2*pi)")
-    print(f"\n  {'p':>5}  {'T_p=2pi/log(p)':>16}  {'f_p (pred)':>12}  {'Periodo pred':>14}  {'Match FFT':>12}  {'Amplitud obs':>12}")
+    print(f"\n  {'p':>5}  {'T_p=2pi/log(p)':>16}  {'f_p (pred)':>12}  {'Period pred':>14}  {'FFT match':>12}  {'Obs. amplitude':>14}")
     print(f"  {'-'*80}")
 
     matches = []
@@ -113,7 +113,7 @@ def analyze():
               f"{near_f:>10.5f} {star}  {near_amp:>10.2f}")
 
     # ── Correlacion estadistica ───────────────────────────────────────────────
-    print(f"\n  ANALISIS DE CORRELACION (log(p) vs amplitud observada):")
+    print(f"\n  STATISTICAL CORRELATION (log(p) vs observed amplitude):")
     log_primes = np.array([math.log(p) for p, *_ in matches])
     obs_amps   = np.array([amp for _, _, _, amp, _ in matches])
     f_preds    = np.array([fp for _, fp, _, _, _ in matches])
@@ -135,29 +135,29 @@ def analyze():
 
     # ── Interpretacion fisica ─────────────────────────────────────────────────
     print(f"\n{'='*64}")
-    print(f"  INTERPRETACION FISICA")
+    print(f"  PHYSICAL INTERPRETATION")
     print(f"{'='*64}")
 
     strong = [m for m in matches if m[4] < 10 and m[3] > 5]
     if strong:
-        print(f"\n  Primos con resonancia FUERTE (error<10%, amp>5):")
+        print(f"\n  Primes with STRONG resonance (error<10%, amp>5):")
         for p, fp, nf, amp, err in strong:
             Tp = 2*math.pi / math.log(p)
-            print(f"    p={p:>3}:  T_p={Tp:.2f}  amplitud={amp:.2f}  error={err:.1f}%")
-        print(f"\n  La formula explicita de Riemann predice que cada primo p")
-        print(f"  genera oscilaciones de periodo T_p = 2pi/log(p) en la")
-        print(f"  densidad de ceros. Los primos con match fuerte SON los")
-        print(f"  responsables del 'Eco Espectral' observado a f=0.099.")
+            print(f"    p={p:>3}:  T_p={Tp:.2f}  amplitude={amp:.2f}  error={err:.1f}%")
+        print(f"\n  The Riemann explicit formula predicts that each prime p")
+        print(f"  generates oscillations of period T_p = 2pi/log(p) in the")
+        print(f"  zero density. Primes with a strong match ARE the")
+        print(f"  source of the 'Spectral Echo' observed at f=0.099.")
 
     print(f"\n  CONCLUSION:")
-    print(f"  El pico dominante FFT en f=0.09940 ciclos/cero corresponde a")
+    print(f"  The dominant FFT peak at f=0.09940 cycles/zero corresponds to")
     main_p = best[0]
     Tm = 2*math.pi/math.log(main_p)
-    print(f"  p={main_p}, con T_p = 2pi/log({main_p}) = {Tm:.3f} unidades de T.")
-    print(f"  Esto es la HUELLA DIGITAL del primo {main_p} en el espectro de")
-    print(f"  ceros de Riemann en T=[{zeros[0]:.0f},{zeros[-1]:.0f}].")
-    print(f"  La anomalia espectral NO es un artefacto — es la formula")
-    print(f"  explicita de Riemann en accion.")
+    print(f"  p={main_p}, with T_p = 2pi/log({main_p}) = {Tm:.3f} T units.")
+    print(f"  This is the SPECTRAL FINGERPRINT of prime {main_p} in the")
+    print(f"  Riemann zero spectrum at T=[{zeros[0]:.0f},{zeros[-1]:.0f}].")
+    print(f"  The spectral anomaly is NOT an artefact -- it is the Riemann")
+    print(f"  explicit formula in action.")
     print(f"{'='*64}\n")
 
     return matches, zeros, freqs, fft_amp
