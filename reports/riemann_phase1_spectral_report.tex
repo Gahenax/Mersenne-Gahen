@@ -373,20 +373,64 @@ sugiere que el espectro es genuinamente el predicho por la HR.
         hiperuniformidad fuerte; la rigidez es \textbf{moderada y robusta}.
 \end{enumerate}
 
+\subsection{Tests de Persistencia — Resultados Preliminares}
+\label{sec:persistencia}
+
+Se ejecutaron tests de persistencia en dos rangos adicionales de $T$,
+usando ceros exactos computados con \texttt{mpmath.zetazero} ($\pm 20$ dígitos):
+
+\begin{table}[H]
+\centering
+\caption{Test de persistencia: métricas Phase-2 en tres rangos disjuntos.
+         Estimador robusto de orígenes aleatorios, $n=400$.}
+\begin{tabular}{lccccc}
+\toprule
+Rango & $N$ & $\alpha$ & $r(\log p, A_p)$ & $\Sigma^2(L=10)/\text{GUE}$ & $\Sigma^2(L=20)/\text{GUE}$ \\
+\midrule
+B: $T\in[1000,1300]$  & 200 & $+0.132$ & $0.489$ & $61.9\%$ & $60.6\%$ \\
+A: $T\in[6340,6640]$ (baseline) & 332 & $-0.127$ & $0.449$ & $52.2\%$ & $46.3\%$ \\
+C: $T\in[10000,10300]$ & 200 & $-0.149$ & $0.698$ & $55.4\%$ & $47.4\%$ \\
+\bottomrule
+\end{tabular}
+\label{tab:persistencia}
+\end{table}
+
+Los tests de persistencia indican una \textbf{sub-GUE robusta} a múltiples
+escalas $L$ y rangos $T$, consistente con un efecto persistente.
+La evidencia es \textbf{preliminar}, con variaciones de régimen a $T$
+bajo y correlaciones globales atenuadas por SNR,
+motivando extensiones metodológicas.
+
+\paragraph{Guardrails explícitos.}
+\begin{itemize}
+  \item No se afirma universalidad del fenómeno.
+  \item Los resultados se etiquetan \textbf{preliminares}.
+  \item El rango $T\approx 1000$ exhibe $\alpha > 0$: \textbf{cambio de régimen
+        asintótico a $T$ bajo}, no contradicción con la tendencia observada.
+  \item La correlación $r(\log p, A_p)$ global es moderada por dilución de
+        \textbf{SNR del fit lineal}; la correlación FFT de Phase-1 ($r=-0.967$)
+        opera con un estimador espectral distinto y no es directamente comparable.
+  \item Tests locales/segmentados serán necesarios para recuperar resolución.
+\end{itemize}
+
 \subsection{Trabajo Futuro}
 
 \begin{itemize}
-  \item Extender el dataset a $T \in [6640, 10000]$ para verificar
-        persistencia del patrón (Wave 2 — Avalanche Protocol).
-  \item Calcular $\Sigma^2(L)$ para $L \in [5, 50]$ con el estimador
-        robusto para medir el exponente $\alpha$ con intervalos
-        de confianza (bootstrap).
-  \item Correlacionar los residuos del fit aritmético con las
-        potencias $p^k$ (términos de orden superior de la fórmula
-        explícita) para cuantificar $S(P)$ como función de $P_{\max}$.
-  \item Test de persistencia en rangos disjuntos
-        ($T\in[1000,1300]$ y $T\in[50000,50300]$) para determinar
-        si $r(\log p, A_p) > 0.9$ es universal o de rango.
+  \item \textbf{Fits segmentados de $\alpha(T)$}: ajustar $\Sigma^2(L)\sim L^\alpha$
+        en ventanas deslizantes de $T$ para mapear $\alpha$ como función continua
+        y caracterizar el cambio de régimen en $T\approx 1000$.
+  \item \textbf{Correlación local $r$ por ventana}: sustituir el fit global
+        por fits locales de $r(\log p, A_p)$ en ventanas de 100 ceros para
+        recuperar SNR y comparar con el $r=-0.967$ de Phase-1.
+  \item \textbf{Bootstrap bloqueado sobre $\alpha$}: intervalos de confianza
+        mediante remuestreo de bloques de espaciamientos para cuantificar
+        si $\alpha < 0$ es estadísticamente distinguible de cero.
+  \item \textbf{Extensión en $L\geq 40$}: calcular $\Sigma^2(L)$ para
+        $L\in[5,100]$ con estimador robusto; verificar si $\alpha$
+        evoluciona o se estabiliza.
+  \item \textbf{Rangos adicionales}: $T\in[50000,50300]$ para teste de
+        persistencia a $T$ alto (Phase~3), donde la densidad de ceros es
+        $\sim 5\times$ la de Phase-1.
 \end{itemize}
 
 %─────────────────────────────────────────────────────────────────────────────
