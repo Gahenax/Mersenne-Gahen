@@ -1,0 +1,25 @@
+{
+  "experiment": "mersenne_spectral_poc",
+  "params": {
+    "window": "hann",
+    "B_null": 300,
+    "jitter": 0.05,
+    "z_thresh": 1.5,
+    "AUC_min": 0.6
+  },
+  "sanity_ok": true,
+  "layer_B": {
+    "A: T=[6340,6640]": {
+      "auc": 0.5416666666666666,
+      "verdict": "FAIL"
+    },
+    "B: T=[1000,1243]": {
+      "auc": 0.5416666666666666,
+      "verdict": "FAIL"
+    },
+    "C: T=[10000,10169]": {
+      "auc": 0.4930555555555556,
+      "verdict": "FAIL"
+    }
+  }
+}

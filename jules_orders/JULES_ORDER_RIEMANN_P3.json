@@ -1,0 +1,299 @@
+{
+    "order_id": "JO-2026-RIEMANN-P3-MERSENNE-POC",
+    "version": "1.0.0",
+    "created": "2026-02-23T00:34:00-05:00",
+    "protocol": "OUROBOROS v2.0",
+    "system": "Gahenax Core v1.1.1",
+    "_comment": "Phase-3 Riemann sweep designed to provide N>=10000 zeros for Mersenne spectral POC (Layer B power) and adversarial Layer C audit. Builds on Phase-1 [6340,6640] baseline.",
+    "scientific_objective": {
+        "primary": "Provide N_eff >= 10000 Riemann zeros in a single contiguous window for the Mersenne spectral POC (Layer B). Target: AUC(Mersenne_prime > control) statistically testable with Mann-Whitney, FDR-BH.",
+        "secondary": "Replicate and adversarially audit Layer C anomalies (k=10,11 at u=k*log(2)) across multiple sub-windows."
+    },
+    "dataset_spec": {
+        "T_start": 7000.0,
+        "T_end": 15000.0,
+        "delta_T": 8000.0,
+        "N_expected_approx": 11700,
+        "N_target_minimum": 10000,
+        "density_per_T": "~1.46 at T~7000-15000  [= log(T)/(2*pi)]",
+        "window_choice_rationale": "Avoids Phase-1 [6340,6640]. Long continuous block. No known structural anomalies at this scale. Enables Layer C sliding window with 3 non-overlapping sub-windows of 2666 T each.",
+        "output_dtype": "float64",
+        "precision_minimum_digits": 10,
+        "method": "mpmath.zetazero (dps=25) or equivalent certified algorithm"
+    },
+    "block_design": {
+        "n_blocks": 20,
+        "block_width_T": 400.0,
+        "blocks": [
+            {
+                "id": 0,
+                "T0": 7000,
+                "T1": 7400,
+                "N_expected": 580,
+                "probe": "ALPHA"
+            },
+            {
+                "id": 1,
+                "T0": 7400,
+                "T1": 7800,
+                "N_expected": 584,
+                "probe": "BRAVO"
+            },
+            {
+                "id": 2,
+                "T0": 7800,
+                "T1": 8200,
+                "N_expected": 587,
+                "probe": "CHARLIE"
+            },
+            {
+                "id": 3,
+                "T0": 8200,
+                "T1": 8600,
+                "N_expected": 590,
+                "probe": "DELTA"
+            },
+            {
+                "id": 4,
+                "T0": 8600,
+                "T1": 9000,
+                "N_expected": 594,
+                "probe": "ECHO"
+            },
+            {
+                "id": 5,
+                "T0": 9000,
+                "T1": 9400,
+                "N_expected": 597,
+                "probe": "FOXTROT"
+            },
+            {
+                "id": 6,
+                "T0": 9400,
+                "T1": 9800,
+                "N_expected": 600,
+                "probe": "GOLF"
+            },
+            {
+                "id": 7,
+                "T0": 9800,
+                "T1": 10200,
+                "N_expected": 603,
+                "probe": "HOTEL"
+            },
+            {
+                "id": 8,
+                "T0": 10200,
+                "T1": 10600,
+                "N_expected": 606,
+                "probe": "INDIA"
+            },
+            {
+                "id": 9,
+                "T0": 10600,
+                "T1": 11000,
+                "N_expected": 609,
+                "probe": "JULIET"
+            },
+            {
+                "id": 10,
+                "T0": 11000,
+                "T1": 11400,
+                "N_expected": 612,
+                "probe": "KILO"
+            },
+            {
+                "id": 11,
+                "T0": 11400,
+                "T1": 11800,
+                "N_expected": 615,
+                "probe": "LIMA"
+            },
+            {
+                "id": 12,
+                "T0": 11800,
+                "T1": 12200,
+                "N_expected": 617,
+                "probe": "MIKE"
+            },
+            {
+                "id": 13,
+                "T0": 12200,
+                "T1": 12600,
+                "N_expected": 620,
+                "probe": "NOVEMBER"
+            },
+            {
+                "id": 14,
+                "T0": 12600,
+                "T1": 13000,
+                "N_expected": 623,
+                "probe": "OSCAR"
+            },
+            {
+                "id": 15,
+                "T0": 13000,
+                "T1": 13400,
+                "N_expected": 626,
+                "probe": "PAPA"
+            },
+            {
+                "id": 16,
+                "T0": 13400,
+                "T1": 13800,
+                "N_expected": 629,
+                "probe": "QUEBEC"
+            },
+            {
+                "id": 17,
+                "T0": 13800,
+                "T1": 14200,
+                "N_expected": 632,
+                "probe": "ROMEO"
+            },
+            {
+                "id": 18,
+                "T0": 14200,
+                "T1": 14600,
+                "N_expected": 635,
+                "probe": "SIERRA"
+            },
+            {
+                "id": 19,
+                "T0": 14600,
+                "T1": 15000,
+                "N_expected": 638,
+                "probe": "TANGO"
+            }
+        ]
+    },
+    "block_contract": {
+        "required_outputs_per_block": [
+            "gammas_block_{id}.npy       -- float64 array, sorted ascending",
+            "manifest_block_{id}.json    -- see manifest_schema",
+            "telemetry_block_{id}.jsonl  -- one JSON line per event"
+        ],
+        "manifest_schema": {
+            "block_id": "int",
+            "probe": "string",
+            "T0": "float",
+            "T1": "float",
+            "N_found": "int",
+            "gamma_min": "float",
+            "gamma_max": "float",
+            "mean_gap": "float",
+            "sha256_npy": "string (hex)",
+            "method": "string",
+            "precision_dps": "int",
+            "wall_time_s": "float",
+            "status": "OK | PARTIAL | ERROR"
+        },
+        "telemetry_events": [
+            "BLOCK_START",
+            "PROGRESS_{n}",
+            "BLOCK_DONE",
+            "BLOCK_ERROR"
+        ]
+    },
+    "aggregator_contract": {
+        "script": "scripts/phase3_aggregator.py",
+        "outputs": [
+            "results/riemann/RIEMANN_GAMMAS_PHASE3.npy",
+            "results/riemann/PHASE3_MANIFEST.json",
+            "results/riemann/PHASE3_INTEGRITY_REPORT.json"
+        ],
+        "gate0_checks": [
+            "monotonicity: gammas[i+1] > gammas[i] for all i",
+            "no duplicates within 1e-6",
+            "mean_gap within 20% of theoretical log(T_mid)/(2*pi)",
+            "N_total >= N_target_minimum",
+            "sha256 of concatenated manifests matches stored hash"
+        ]
+    },
+    "spectral_analysis_contract": {
+        "script": "scripts/gates_phase3.py",
+        "random_seed": 42,
+        "window": "hann",
+        "B_null": 500,
+        "nul_method": "phase_randomization",
+        "mersenne_prime_k": [
+            2,
+            3,
+            5,
+            7,
+            13,
+            17,
+            19,
+            31,
+            61,
+            89,
+            107,
+            127
+        ],
+        "control_k": [
+            11,
+            23,
+            29,
+            37,
+            41,
+            43,
+            47,
+            53,
+            59,
+            67,
+            71,
+            73
+        ],
+        "z_thresh": 1.5,
+        "AUC_min": 0.60,
+        "layer_c_adversarial": {
+            "script": "scripts/layer_c_adversarial.py",
+            "target_k": [
+                10,
+                11,
+                29
+            ],
+            "n_windows": 3,
+            "window_types": [
+                "hann",
+                "tukey"
+            ],
+            "null_methods": [
+                "phase_randomization",
+                "block_permutation",
+                "gue_surrogate"
+            ],
+            "survival_threshold": "must survive >= 2 of 3 null methods in >= 2 of 3 windows"
+        }
+    },
+    "gates": {
+        "gate0_integrity": "aggregator_phase3.py -- must pass before any spectral analysis",
+        "gate1_sanity": "Layer A+: u=log(p) for p in {2,3,5,7,11,13,17,19}, z>1.5 for >=4/8",
+        "gate2_layer_b": "AUC(Mersenne_prime > control) >= 0.60 OR Mann-Whitney p_adj < 0.1",
+        "gate3_layer_c": "layer_c_adversarial.py: k=10,11,29 must survive adversarial protocol"
+    },
+    "parallel_strategy": {
+        "max_parallel_blocks": 20,
+        "early_gate1": "Run Gate 1 after blocks 0-4 complete (N~2900). If Gate 1 fails: ABORT.",
+        "failure_policy": "Block failure does not abort other blocks. Log and continue.",
+        "minimum_blocks_for_gate2": 14
+    },
+    "phase3_output_dir": "results/riemann/phase3/",
+    "ledger_dir": "ledger_riemann_phase3/",
+    "comparison_baseline": {
+        "phase1_file": "results/riemann/jules_phase1_full.jsonl",
+        "phase1_N": 332,
+        "phase1_T_range": [
+            6340.36,
+            6639.84
+        ],
+        "phase2_persistence": "results/riemann/persistence_test.json"
+    },
+    "falsifiability": {
+        "H0_layer_b": "AUC(Mersenne_prime > control) ~ 0.5 -- no discrimination",
+        "H1_layer_b": "AUC > 0.60 -- S(u) detects Mersenne prime fingerprints",
+        "archive_condition": "If AUC < 0.55 with N>=10000: hypothesis B is archived. Instrument confirmed as prime-detector (small p) only.",
+        "H0_layer_c": "Peaks at k=10,11,29 are window artefacts",
+        "H1_layer_c": "Peaks survive adversarial audit: real structure in u=k*log(2) spectrum"
+    }
+}
