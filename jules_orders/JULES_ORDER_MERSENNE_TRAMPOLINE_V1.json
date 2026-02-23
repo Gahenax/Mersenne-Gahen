@@ -1,0 +1,766 @@
+{
+  "order_id": "JO-2026-MERSENNE-TRAMPOLINE-V1",
+  "version": "1.0.0",
+  "created": "2026-02-23T02:00:00-05:00",
+  "protocol": "OUROBOROS v2.0 / TRAMPOLINE-CASCADE",
+  "system": "Gahenax Core v1.1.1",
+  "mission": {
+    "strategy": "TRAMPOLINE-DOMINO",
+    "description": "25 certified primes used simultaneously as launch pads. Phase A: 25 Anchor probes + 24 Gap probes run in parallel. Phase B: Frontier Domino-WAVE launches immediately alongside Phase A. Phase A calibration data sharpens Phase B Ghost Locus pre-filter in real time.",
+    "certified_primes_used": [
+      3,
+      5,
+      7,
+      13,
+      17,
+      19,
+      31,
+      61,
+      89,
+      107,
+      127,
+      521,
+      607,
+      1279,
+      2203,
+      2281,
+      3217,
+      4253,
+      4423,
+      9689,
+      9941,
+      11213,
+      19937,
+      21701,
+      23209
+    ],
+    "n_certified": 25,
+    "last_certified": 23209,
+    "frontier_target": [
+      23209,
+      100000
+    ],
+    "known_next_primes": [
+      44497,
+      86243,
+      110503,
+      132049,
+      216091
+    ]
+  },
+  "throughput_model": {
+    "serial_baseline": "1 probe at a time — weeks",
+    "trampoline_phase_a": "25 anchors + 21 gaps = 46 simultaneous probes",
+    "trampoline_phase_b": "16 frontier blocks (Domino-WAVE)",
+    "total_simultaneous": 62,
+    "effective_speedup": "~62x raw parallel speedup. Phase-A Ghost calibration adds additional filter gain on Phase-B ~40% fewer LL calls.",
+    "expected_time_all_phases": "Hours (Jules) vs Weeks (serial)"
+  },
+  "phase_a_anchors": {
+    "description": "Verify LL=0 for all 25 certified primes. Abort all if any fails.",
+    "n_anchors": 25,
+    "gate": "ALL anchors must return result=PRIME. One failure = implementation error.",
+    "probes": [
+      {
+        "probe_id": "ANCHOR_ALPHA_3",
+        "probe_type": "ANCHOR",
+        "p": 3,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_3) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_BRAVO_5",
+        "probe_type": "ANCHOR",
+        "p": 5,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_5) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_CHARLIE_7",
+        "probe_type": "ANCHOR",
+        "p": 7,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_7) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_DELTA_13",
+        "probe_type": "ANCHOR",
+        "p": 13,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_13) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_ECHO_17",
+        "probe_type": "ANCHOR",
+        "p": 17,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_17) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_FOXTROT_19",
+        "probe_type": "ANCHOR",
+        "p": 19,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_19) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_GOLF_31",
+        "probe_type": "ANCHOR",
+        "p": 31,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_31) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_HOTEL_61",
+        "probe_type": "ANCHOR",
+        "p": 61,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_61) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_INDIA_89",
+        "probe_type": "ANCHOR",
+        "p": 89,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_89) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_JULIET_107",
+        "probe_type": "ANCHOR",
+        "p": 107,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_107) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_KILO_127",
+        "probe_type": "ANCHOR",
+        "p": 127,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_127) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_LIMA_521",
+        "probe_type": "ANCHOR",
+        "p": 521,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_521) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_MIKE_607",
+        "probe_type": "ANCHOR",
+        "p": 607,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_607) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_NOVEMBER_1279",
+        "probe_type": "ANCHOR",
+        "p": 1279,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_1279) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_OSCAR_2203",
+        "probe_type": "ANCHOR",
+        "p": 2203,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_2203) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_PAPA_2281",
+        "probe_type": "ANCHOR",
+        "p": 2281,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_2281) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_QUEBEC_3217",
+        "probe_type": "ANCHOR",
+        "p": 3217,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_3217) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_ROMEO_4253",
+        "probe_type": "ANCHOR",
+        "p": 4253,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_4253) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_SIERRA_4423",
+        "probe_type": "ANCHOR",
+        "p": 4423,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_4423) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_TANGO_9689",
+        "probe_type": "ANCHOR",
+        "p": 9689,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_9689) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_UNIFORM_9941",
+        "probe_type": "ANCHOR",
+        "p": 9941,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_9941) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_VICTOR_11213",
+        "probe_type": "ANCHOR",
+        "p": 11213,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_11213) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_WHISKEY_19937",
+        "probe_type": "ANCHOR",
+        "p": 19937,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_19937) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_XRAY_21701",
+        "probe_type": "ANCHOR",
+        "p": 21701,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_21701) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      },
+      {
+        "probe_id": "ANCHOR_YANKEE_23209",
+        "probe_type": "ANCHOR",
+        "p": 23209,
+        "expected_result": "PRIME",
+        "purpose": "Sanity check: LL(M_23209) must return residue=0. Failure = implementation error, abort all probes.",
+        "ghost_locus_expected": "z >> 2.0 (known prime)"
+      }
+    ]
+  },
+  "phase_a_gaps": {
+    "description": "Search 24 gaps between consecutive certified primes.",
+    "n_gaps": 21,
+    "expected_result": "All gaps historically empty. Any prime found is a new discovery.",
+    "calibration_output": "Each gap probe records Ghost Locus z-scores for all tested p. This calibrates the threshold for Phase B.",
+    "largest_gaps": [
+      {
+        "p_lo": 11213,
+        "p_hi": 19937,
+        "gap": 8724
+      },
+      {
+        "p_lo": 4423,
+        "p_hi": 9689,
+        "gap": 5266
+      },
+      {
+        "p_lo": 19937,
+        "p_hi": 21701,
+        "gap": 1764
+      },
+      {
+        "p_lo": 21701,
+        "p_hi": 23209,
+        "gap": 1508
+      },
+      {
+        "p_lo": 9941,
+        "p_hi": 11213,
+        "gap": 1272
+      }
+    ],
+    "probes": [
+      {
+        "probe_id": "GAP_CHARLIE_7_13",
+        "probe_type": "GAP",
+        "p_lo": 8,
+        "p_hi": 12,
+        "gap_size": 6,
+        "anchor_lo": 7,
+        "anchor_hi": 13,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "CRITICAL",
+        "notes": "Gap between M_7 and M_13. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_DELTA_13_17",
+        "probe_type": "GAP",
+        "p_lo": 14,
+        "p_hi": 16,
+        "gap_size": 4,
+        "anchor_lo": 13,
+        "anchor_hi": 17,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "CRITICAL",
+        "notes": "Gap between M_13 and M_17. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_FOXTROT_19_31",
+        "probe_type": "GAP",
+        "p_lo": 20,
+        "p_hi": 30,
+        "gap_size": 12,
+        "anchor_lo": 19,
+        "anchor_hi": 31,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_19 and M_31. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_GOLF_31_61",
+        "probe_type": "GAP",
+        "p_lo": 32,
+        "p_hi": 60,
+        "gap_size": 30,
+        "anchor_lo": 31,
+        "anchor_hi": 61,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_31 and M_61. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_HOTEL_61_89",
+        "probe_type": "GAP",
+        "p_lo": 62,
+        "p_hi": 88,
+        "gap_size": 28,
+        "anchor_lo": 61,
+        "anchor_hi": 89,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_61 and M_89. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_INDIA_89_107",
+        "probe_type": "GAP",
+        "p_lo": 90,
+        "p_hi": 106,
+        "gap_size": 18,
+        "anchor_lo": 89,
+        "anchor_hi": 107,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_89 and M_107. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_JULIET_107_127",
+        "probe_type": "GAP",
+        "p_lo": 108,
+        "p_hi": 126,
+        "gap_size": 20,
+        "anchor_lo": 107,
+        "anchor_hi": 127,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_107 and M_127. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_KILO_127_521",
+        "probe_type": "GAP",
+        "p_lo": 128,
+        "p_hi": 520,
+        "gap_size": 394,
+        "anchor_lo": 127,
+        "anchor_hi": 521,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_127 and M_521. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_LIMA_521_607",
+        "probe_type": "GAP",
+        "p_lo": 522,
+        "p_hi": 606,
+        "gap_size": 86,
+        "anchor_lo": 521,
+        "anchor_hi": 607,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_521 and M_607. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_MIKE_607_1279",
+        "probe_type": "GAP",
+        "p_lo": 608,
+        "p_hi": 1278,
+        "gap_size": 672,
+        "anchor_lo": 607,
+        "anchor_hi": 1279,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_607 and M_1279. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_NOVEMBER_1279_2203",
+        "probe_type": "GAP",
+        "p_lo": 1280,
+        "p_hi": 2202,
+        "gap_size": 924,
+        "anchor_lo": 1279,
+        "anchor_hi": 2203,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_1279 and M_2203. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_OSCAR_2203_2281",
+        "probe_type": "GAP",
+        "p_lo": 2204,
+        "p_hi": 2280,
+        "gap_size": 78,
+        "anchor_lo": 2203,
+        "anchor_hi": 2281,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_2203 and M_2281. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_PAPA_2281_3217",
+        "probe_type": "GAP",
+        "p_lo": 2282,
+        "p_hi": 3216,
+        "gap_size": 936,
+        "anchor_lo": 2281,
+        "anchor_hi": 3217,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_2281 and M_3217. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_QUEBEC_3217_4253",
+        "probe_type": "GAP",
+        "p_lo": 3218,
+        "p_hi": 4252,
+        "gap_size": 1036,
+        "anchor_lo": 3217,
+        "anchor_hi": 4253,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_3217 and M_4253. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_ROMEO_4253_4423",
+        "probe_type": "GAP",
+        "p_lo": 4254,
+        "p_hi": 4422,
+        "gap_size": 170,
+        "anchor_lo": 4253,
+        "anchor_hi": 4423,
+        "method": "LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_4253 and M_4423. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_SIERRA_4423_9689",
+        "probe_type": "GAP",
+        "p_lo": 4424,
+        "p_hi": 9688,
+        "gap_size": 5266,
+        "anchor_lo": 4423,
+        "anchor_hi": 9689,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_4423 and M_9689. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_TANGO_9689_9941",
+        "probe_type": "GAP",
+        "p_lo": 9690,
+        "p_hi": 9940,
+        "gap_size": 252,
+        "anchor_lo": 9689,
+        "anchor_hi": 9941,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "NORMAL",
+        "notes": "Gap between M_9689 and M_9941. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_UNIFORM_9941_11213",
+        "probe_type": "GAP",
+        "p_lo": 9942,
+        "p_hi": 11212,
+        "gap_size": 1272,
+        "anchor_lo": 9941,
+        "anchor_hi": 11213,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_9941 and M_11213. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_VICTOR_11213_19937",
+        "probe_type": "GAP",
+        "p_lo": 11214,
+        "p_hi": 19936,
+        "gap_size": 8724,
+        "anchor_lo": 11213,
+        "anchor_hi": 19937,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_11213 and M_19937. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_WHISKEY_19937_21701",
+        "probe_type": "GAP",
+        "p_lo": 19938,
+        "p_hi": 21700,
+        "gap_size": 1764,
+        "anchor_lo": 19937,
+        "anchor_hi": 21701,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_19937 and M_21701. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      },
+      {
+        "probe_id": "GAP_XRAY_21701_23209",
+        "probe_type": "GAP",
+        "p_lo": 21702,
+        "p_hi": 23208,
+        "gap_size": 1508,
+        "anchor_lo": 21701,
+        "anchor_hi": 23209,
+        "method": "GHOST_PREFILTER+LL",
+        "expected_result": "EMPTY",
+        "priority": "HIGH",
+        "notes": "Gap between M_21701 and M_23209. Historically confirmed empty by GIMPS / direct enumeration. Running for completeness and Ghost Locus calibration data."
+      }
+    ]
+  },
+  "phase_b_frontier": {
+    "description": "Domino-WAVE beyond p=23209. Runs simultaneously with Phase A. Ghost threshold auto-calibrates from Phase A results.",
+    "n_blocks": 16,
+    "ghost_z_threshold_initial": 2.0,
+    "ghost_calibration_update": "After first 5 Phase-A anchors return: update ghost_z_threshold = mean(anchor_z) - 1.5*std(anchor_z). Broadcast update to all active Phase-B workers.",
+    "domino_cascade_rule": "Wave 0 (single block) completes -> triggers Wave 1 (2 blocks), etc. All waves already queued in Jules — no manual trigger.",
+    "blocks": [
+      {
+        "probe_id": "FRONTIER_W0_23209_28209",
+        "probe_type": "FRONTIER",
+        "wave": 0,
+        "p_start": 23209,
+        "p_end": 28209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "CRITICAL"
+      },
+      {
+        "probe_id": "FRONTIER_W1_28209_33209",
+        "probe_type": "FRONTIER",
+        "wave": 1,
+        "p_start": 28209,
+        "p_end": 33209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W1_33209_38209",
+        "probe_type": "FRONTIER",
+        "wave": 1,
+        "p_start": 33209,
+        "p_end": 38209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W2_38209_43209",
+        "probe_type": "FRONTIER",
+        "wave": 2,
+        "p_start": 38209,
+        "p_end": 43209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W2_43209_48209",
+        "probe_type": "FRONTIER",
+        "wave": 2,
+        "p_start": 43209,
+        "p_end": 48209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W2_48209_53209",
+        "probe_type": "FRONTIER",
+        "wave": 2,
+        "p_start": 48209,
+        "p_end": 53209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W2_53209_58209",
+        "probe_type": "FRONTIER",
+        "wave": 2,
+        "p_start": 53209,
+        "p_end": 58209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "HIGH"
+      },
+      {
+        "probe_id": "FRONTIER_W3_58209_63209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 58209,
+        "p_end": 63209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_63209_68209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 63209,
+        "p_end": 68209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_68209_73209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 68209,
+        "p_end": 73209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_73209_78209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 73209,
+        "p_end": 78209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_78209_83209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 78209,
+        "p_end": 83209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_83209_88209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 83209,
+        "p_end": 88209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_88209_93209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 88209,
+        "p_end": 93209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W3_93209_98209",
+        "probe_type": "FRONTIER",
+        "wave": 3,
+        "p_start": 93209,
+        "p_end": 98209,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      },
+      {
+        "probe_id": "FRONTIER_W4_98209_100000",
+        "probe_type": "FRONTIER",
+        "wave": 4,
+        "p_start": 98209,
+        "p_end": 100000,
+        "method": "GHOST_PREFILTER+LL",
+        "priority": "NORMAL"
+      }
+    ]
+  },
+  "gate_policy": {
+    "gate0_anchor": {
+      "trigger": "Phase A anchor completes",
+      "check": "LL residue == 0",
+      "pass": "Record calibration z-score. Continue.",
+      "fail": "HALT ALL probes. LL implementation is broken."
+    },
+    "gate1_gap": {
+      "trigger": "Any gap probe finds a prime",
+      "check": "Did we miss a Mersenne prime between known ones?",
+      "pass": "Discovery! Full FCD audit. Independent re-verification.",
+      "fail": "N/A (expected empty)"
+    },
+    "gate2_frontier": {
+      "trigger": "Any frontier block finds a prime",
+      "check": "New candidate via LL residue == 0",
+      "pass": "CRITICAL ESCALATION. Submit to GIMPS for global certification.",
+      "fail": "N/A"
+    },
+    "ghost_locus_gate": {
+      "trigger": "Phase-A returns >= 5 anchor z-scores",
+      "action": "Recompute ghost_z_threshold dynamically. Push updated threshold to all active Phase-B workers via shared config file."
+    }
+  },
+  "output_contract": {
+    "per_anchor": "anchor_result_{p}.json  +  anchor_telemetry_{p}.jsonl",
+    "per_gap": "gap_result_{p_lo}_{p_hi}.json  +  gap_telemetry_{p_lo}_{p_hi}.jsonl",
+    "per_frontier": "block_result_{probe_id}.json  +  block_telemetry_{probe_id}.jsonl",
+    "aggregator": "scripts/mersenne_trampoline_aggregator.py",
+    "output_dir": "results/mersenne/trampoline/",
+    "ledger_dir": "ledger_mersenne_trampoline/",
+    "calibration_file": "results/mersenne/trampoline/ghost_calibration.json"
+  },
+  "forbidden_claims": [
+    "A non-zero LL residue is a near-miss.",
+    "Ghost Locus z-score alone confirms primality.",
+    "PREFILTERED means composite — it means untested.",
+    "This replaces GIMPS global verification."
+  ]
+}
