@@ -1,0 +1,146 @@
+[
+  {
+    "p": 3,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0513017
+  },
+  {
+    "p": 5,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.051887
+  },
+  {
+    "p": 7,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.052372
+  },
+  {
+    "p": 9,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "205",
+    "timestamp": 1771723114.0528088
+  },
+  {
+    "p": 11,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "1736",
+    "timestamp": 1771723114.0534487
+  },
+  {
+    "p": 13,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0542166
+  },
+  {
+    "p": 15,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "20400",
+    "timestamp": 1771723114.054732
+  },
+  {
+    "p": 17,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0552156
+  },
+  {
+    "p": 21,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "840107",
+    "timestamp": 1771723114.0556183
+  },
+  {
+    "p": 23,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "6107895",
+    "timestamp": 1771723114.056024
+  },
+  {
+    "p": 25,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "8772568",
+    "timestamp": 1771723114.0565257
+  },
+  {
+    "p": 27,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "60611448",
+    "timestamp": 1771723114.0569427
+  },
+  {
+    "p": 29,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "458738443",
+    "timestamp": 1771723114.0573711
+  },
+  {
+    "p": 31,
+    "anchor": 19,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.057754
+  },
+  {
+    "p": 33,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "5238898821",
+    "timestamp": 1771723114.0581658
+  },
+  {
+    "p": 35,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "11960838285",
+    "timestamp": 1771723114.0588405
+  },
+  {
+    "p": 37,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "117093979072",
+    "timestamp": 1771723114.059558
+  },
+  {
+    "p": 39,
+    "anchor": 19,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "276971366821",
+    "timestamp": 1771723114.0608494
+  }
+]

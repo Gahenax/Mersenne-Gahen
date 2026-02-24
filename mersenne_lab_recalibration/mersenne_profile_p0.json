@@ -1,0 +1,8 @@
+{
+  "name": "mersenne_profile_p0",
+  "mode": "integrity-check",
+  "threads": 1,
+  "memory_mb": 512,
+  "timeout_sec": 300,
+  "goal": "Verify environment sanity and small exponent certification."
+}

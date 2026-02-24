@@ -1,0 +1,13 @@
+{
+  "probe_id": 11,
+  "probe_alpha": "V-1",
+  "range": [
+    750000000,
+    775000000
+  ],
+  "status": "ACTIVE",
+  "progress": 0.0,
+  "strategy": "TITAN-DOMINO-1B",
+  "active_power": 1,
+  "last_heartbeat": "2026-02-21T22:52:26.525893"
+}

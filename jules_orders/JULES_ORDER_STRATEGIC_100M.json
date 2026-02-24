@@ -1,0 +1,17 @@
+{
+    "order_id": "JO-2026-MAP-100M-STAGE-1",
+    "skill": "mersenne-prime-discovery",
+    "target": "LONGITUDINAL_MAPPING_TO_100M",
+    "parameters": {
+        "start_p": 23210,
+        "end_p": 100000000,
+        "block_size": 1000000,
+        "audit_mode": "DETERMINISTIC_LL",
+        "falsifiability_check": true,
+        "gpu_acceleration": "REQUIRED",
+        "checkpoint_sync": "DAILY"
+    },
+    "priority": "STRATEGIC",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Systematic longitudinal mapping of the Mersenne space. This is a multi-month operation. Results must be pushed to the decentralized ledger."
+}

@@ -1,0 +1,45 @@
+{
+  "config": {
+    "anchors": [
+      127,
+      521
+    ],
+    "controls_n": 50,
+    "include_controls": false,
+    "lsb_flag": 0.6,
+    "lsb_nbits": 256,
+    "out_dir": "results/mersenne/falsifiability/run_001",
+    "perm_block_size": 32,
+    "perm_reps": 3,
+    "radii_sweep": [
+      5
+    ],
+    "radius": 5,
+    "seed": 1337,
+    "spec_id": "GHOST_HUNTER_PREREG_0001",
+    "tolerance_H": 1e-12
+  },
+  "hardware": {
+    "argv": [
+      "tools/ghost_hunter_lab.py",
+      "run",
+      "--out",
+      "results/mersenne/falsifiability/run_001",
+      "--adapter",
+      "tools/mersenne_ghost_adapter.py",
+      "--anchors",
+      "127,521",
+      "--radius",
+      "5",
+      "--radii",
+      "5",
+      "--no-controls"
+    ],
+    "executable": "C:\\Users\\USUARIO\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "platform": "win32",
+    "python": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "run_id": "run_001",
+  "spec_id": "GHOST_HUNTER_PREREG_0001",
+  "started_at": "2026-02-21T18:24:30"
+}

@@ -1,0 +1,31 @@
+{
+    "order_id": "JO-2026-RIEMANN-DOMINO-P1",
+    "skill": "jules-heavy-compute",
+    "target": "EXPONENTIAL_RIEMANN_SURGE",
+    "parameters": {
+        "t_start": 6640.0,
+        "t_end": 10000.0,
+        "band_width": 100.0,
+        "precision": {
+            "alpha": 0.05,
+            "dps": 120
+        },
+        "strategy": {
+            "name": "DOMINO-WAVE",
+            "cascading_reinforcement": true,
+            "context_transfer": [
+                "mean_gap",
+                "baseline_r",
+                "residual_p95"
+            ],
+            "resource_reallocation": "NEXT_ACTIVE_CONTIGUOUS"
+        },
+        "governance": {
+            "ua_budget": 2000000,
+            "falsifiability_gate": "GATE_CLONE_V2"
+        }
+    },
+    "priority": "HIGH_SEISMIC",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Cascading Domino Sweep. When a probe (A-F) completes its band, it MUST immediately reinforce the next contiguous band to maximize performance wave. CalibState must flow with the wave."
+}

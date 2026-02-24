@@ -1,0 +1,32 @@
+{
+  "title": "Antigravity Parameter Recalibration: Signal Lab -> Mersenne Lab",
+  "version": "1.0.0",
+  "generated_utc": "2026-02-17T11:10:51+00:00",
+  "field_mapping": [
+    {
+      "current_field": "seed",
+      "mersenne_field": "p",
+      "meaning": "Critical exponent M_p = 2^p - 1."
+    },
+    {
+      "current_field": "dt",
+      "mersenne_field": "checkpoint_minutes",
+      "meaning": "Persistence frequency."
+    },
+    {
+      "current_field": "N",
+      "mersenne_field": "memory_mb",
+      "meaning": "Instrumental resolution / FFT stability."
+    },
+    {
+      "current_field": "ua_budget",
+      "mersenne_field": "max_wall_hours",
+      "meaning": "Compute budget guardrail."
+    },
+    {
+      "current_field": "case_id",
+      "mersenne_field": "evidence_id",
+      "meaning": "Unique audit trace ID."
+    }
+  ]
+}

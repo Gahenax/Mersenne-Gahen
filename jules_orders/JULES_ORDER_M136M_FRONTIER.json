@@ -1,0 +1,19 @@
+{
+    "order_id": "JO-2026-GH-52nd",
+    "skill": "mersenne-neighborhood-audit",
+    "target": "52nd_MERSENNE_FRONTIER",
+    "parameters": {
+        "anchors": [
+            136279841
+        ],
+        "radius": 1000,
+        "audit_depth": "deep_capture_2.0",
+        "gpu_acceleration": "REQUIRED",
+        "collision_threshold": 1e-15,
+        "verify_all_composites": true,
+        "description": "Scanning the immediate vicinity of M136279841 to locate potential skipped primes or spectral resonance echoes in the 41 million digit zone."
+    },
+    "priority": "URGENT",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Targeting the Luke Durant discovery zone. Focus on exponents where GIMPS reported single-pass success/failure without double-checking."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mersenne_profile_p2_verify",
+  "mode": "deterministic",
+  "threads": 1,
+  "memory_mb": 2048,
+  "method": "LL",
+  "error_check_level": 2,
+  "goal": "Lucas-Lehmer certification (Deterministic proof)."
+}

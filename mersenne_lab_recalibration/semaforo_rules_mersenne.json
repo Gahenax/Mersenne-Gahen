@@ -1,0 +1,12 @@
+{
+  "ruleset": "mersenne-governance-v1",
+  "states": {
+    "GREEN": "Hash audit valid + LL/PRP residue matches known database or second node verification.",
+    "YELLOW": "Test completed but unverified by second node. Pending Double-Check.",
+    "RED": "Hardware error detected (Roundoff error > 0.40) or Hash mismatch."
+  },
+  "transitions": {
+    "YELLOW_TO_GREEN": "Requires cross-verification from a different FFT implementation or architecture.",
+    "ANY_TO_RED": "Triggered by any bit-flip or consistency audit failure."
+  }
+}

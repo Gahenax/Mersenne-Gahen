@@ -1,0 +1,122 @@
+[
+  {
+    "p": 3,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0300217
+  },
+  {
+    "p": 5,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0305107
+  },
+  {
+    "p": 7,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0309362
+  },
+  {
+    "p": 9,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "205",
+    "timestamp": 1771723114.0313997
+  },
+  {
+    "p": 11,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "1736",
+    "timestamp": 1771723114.0318415
+  },
+  {
+    "p": 15,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "20400",
+    "timestamp": 1771723114.0321193
+  },
+  {
+    "p": 17,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.032525
+  },
+  {
+    "p": 19,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.0329785
+  },
+  {
+    "p": 21,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "840107",
+    "timestamp": 1771723114.033348
+  },
+  {
+    "p": 23,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "6107895",
+    "timestamp": 1771723114.0335932
+  },
+  {
+    "p": 25,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "8772568",
+    "timestamp": 1771723114.0339072
+  },
+  {
+    "p": 27,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "60611448",
+    "timestamp": 1771723114.0341754
+  },
+  {
+    "p": 29,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "458738443",
+    "timestamp": 1771723114.0349534
+  },
+  {
+    "p": 31,
+    "anchor": 13,
+    "is_prime": true,
+    "h_rigidity": 0.0,
+    "residue": "0",
+    "timestamp": 1771723114.035743
+  },
+  {
+    "p": 33,
+    "anchor": 13,
+    "is_prime": false,
+    "h_rigidity": 0.0,
+    "residue": "5238898821",
+    "timestamp": 1771723114.0365922
+  }
+]

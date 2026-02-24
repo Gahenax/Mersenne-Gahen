@@ -1,0 +1,9 @@
+{
+  "name": "mersenne_profile_p1_search",
+  "mode": "throughput",
+  "threads": 1,
+  "memory_mb": 2048,
+  "method": "PRP",
+  "error_check_level": 1,
+  "goal": "Broad search with probabilistic primality test."
+}

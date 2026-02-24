@@ -1,0 +1,13 @@
+{
+  "probe_id": 5,
+  "probe_alpha": "S-5",
+  "range": [
+    280000000,
+    300000000
+  ],
+  "status": "ACTIVE",
+  "progress": 0.0,
+  "strategy": "DOMINO-WAVE-500M",
+  "active_power": 1,
+  "last_heartbeat": "2026-02-21T22:50:16.722488"
+}

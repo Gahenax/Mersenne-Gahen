@@ -1,0 +1,19 @@
+{
+    "order_id": "JO-2026-GH-001",
+    "skill": "mersenne-neighborhood-audit",
+    "target": "HIGH_EXPONENTS_NEIGHBORHOODS",
+    "parameters": {
+        "anchors": [
+            11213,
+            19937,
+            21701,
+            23209
+        ],
+        "radius": 500,
+        "audit_depth": "deep_capture_2.0",
+        "collision_threshold": 1e-12
+    },
+    "priority": "HIGH",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Hunting for spectral echoes and skipped loci in GIMPS blind zones near certified giants."
+}
