@@ -124,9 +124,9 @@ class MultiProbeOrchestratorV3Domino:
 
 if __name__ == "__main__":
     orchestrator = MultiProbeOrchestratorV3Domino(
-        start_p=25000000, 
-        end_p=82589933, 
+        start_p=50000000000, 
+        end_p=300000000000, 
         probe_count=6, 
-        block_size_per_probe=10000000
+        block_size_per_probe=41666666667
     )
     orchestrator.execute_domino_sweep()
