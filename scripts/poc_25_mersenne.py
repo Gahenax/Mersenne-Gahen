@@ -1,3 +1,9 @@
+import sys
+import os
+# Setup relative src config loading for subdirectories
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+import src.config
+
 """
 poc_25_mersenne.py
 ==================
@@ -14,7 +20,7 @@ import json, math, os
 import numpy as np
 from scipy.special import erfc
 
-PROJECT = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
+PROJECT = str(src.config.PROJECT_ROOT)
 import sys; sys.path.insert(0, os.path.join(PROJECT, "scripts"))
 from mersenne_spectral_poc import (
     S_of_u, null_distribution, auc_score,

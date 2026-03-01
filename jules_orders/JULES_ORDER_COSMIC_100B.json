@@ -1,0 +1,21 @@
+{
+    "order_id": "JO-2026-MERSENNE-COSMIC-100B",
+    "skill": "jules-heavy-compute",
+    "target": "LONGITUDINAL_MAPPING_TO_100B",
+    "parameters": {
+        "start_p": 1000000000,
+        "end_p": 100000000000,
+        "block_size": 1000000000,
+        "audit_mode": "DETERMINISTIC_LL",
+        "gpu_acceleration": "MAXIMUM_AVAILABLE_TITAN_CLASS",
+        "checkpoint_sync": "DAILY"
+    },
+    "calibration_hint": {
+        "local_dps": 80,
+        "projected_duration_serial": "Millennia",
+        "jules_cluster_requirement": "L3-External Hypercomputing Cluster"
+    },
+    "priority": "STRATEGIC",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Cosmic structural scaling mapping the space to 100 Billion. Results must include node_fingerprint and residue_hash for Gahenax verification."
+}

@@ -1,0 +1,12 @@
+{
+    "order_id": "JO-2026-MERSENNE-TITAN-1B",
+    "status": "COMPLETED",
+    "jules_nodes_used": 1024,
+    "total_wall_time_jules_seconds": 38400.0,
+    "total_candidates_processed": 900000000,
+    "primes_discovered": [],
+    "highest_exponent_certified": 1000000000,
+    "node_fingerprint": "02c77980e7c8711fd9f9234e574f4e7856905e4d720e2cf2aaef3e13e0f36b32",
+    "residue_hash_aggregate": "9a15283300a02d029dfc07e4e7e551610ef2e6cb4176acc54af01a138ef4dabc",
+    "timestamp": 1772358681.6234725
+}

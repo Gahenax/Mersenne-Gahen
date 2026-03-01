@@ -1,0 +1,26 @@
+[
+    {
+        "p": 100000000,
+        "is_prime": false,
+        "simulated_wall_time_seconds": 14400.0,
+        "gauge_pressure": 1.81,
+        "status_flag": "GREEN",
+        "hardware_accelerated": true
+    },
+    {
+        "p": 100000037,
+        "is_prime": false,
+        "simulated_wall_time_seconds": 14400.0,
+        "gauge_pressure": 1.810000016068893,
+        "status_flag": "GREEN",
+        "hardware_accelerated": true
+    },
+    {
+        "p": 100000039,
+        "is_prime": false,
+        "simulated_wall_time_seconds": 14400.0,
+        "gauge_pressure": 1.8100000169374815,
+        "status_flag": "GREEN",
+        "hardware_accelerated": true
+    }
+]

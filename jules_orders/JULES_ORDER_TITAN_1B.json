@@ -1,0 +1,21 @@
+{
+    "order_id": "JO-2026-MERSENNE-TITAN-1B",
+    "skill": "jules-heavy-compute",
+    "target": "LONGITUDINAL_MAPPING_TO_1B",
+    "parameters": {
+        "start_p": 100000000,
+        "end_p": 1000000000,
+        "block_size": 10000000,
+        "audit_mode": "DETERMINISTIC_LL",
+        "gpu_acceleration": "MAXIMUM_AVAILABLE",
+        "checkpoint_sync": "HOURLY"
+    },
+    "calibration_hint": {
+        "local_dps": 80,
+        "projected_duration_serial": "Centuries",
+        "jules_cluster_requirement": "L2-External Supercomputing Cluster"
+    },
+    "priority": "STRATEGIC",
+    "callback_hook": "gahenax_ops.py",
+    "notes": "Systematic longitudinal mapping of the Mersenne space up to 1 Billion. Results must include node_fingerprint and residue_hash for Gahenax verification."
+}

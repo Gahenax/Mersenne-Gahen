@@ -1,0 +1,5 @@
+{"ts": 1772357454.9615629, "type": "HEALTH", "payload": {"probe": "INDIA", "band_id": 8, "p_start": 460000000, "p_end": 505000000, "status": "STARTING_SWEEP"}}
+{"ts": 1772357455.2642248, "type": "ACCELERATOR_WARMUP", "payload": {"status": "ACCELERATED", "injection_energy": "467.00 TeV", "cached_optimized": "YES"}}
+{"ts": 1772357456.2652917, "type": "GAUGE_PRESSURE", "payload": {"pressure": 1.7753212513775345, "status": "GREEN"}}
+{"ts": 1772357456.2663057, "type": "COLLISION_TEST", "payload": {"p": 460019937, "verdict": "STABLE", "strangelet_density": 0.4765625}}
+{"ts": 1772357456.7680297, "type": "HEALTH", "payload": {"probe": "INDIA", "band_id": 8, "status": "COMPLETED", "primes_found": 0, "total_candidates_scanned_simulated": 4500000, "duration_simulated_seconds": 250000.0}}

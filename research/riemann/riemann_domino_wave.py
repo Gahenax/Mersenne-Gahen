@@ -1,5 +1,12 @@
-# riemann_domino_wave.py
 from __future__ import annotations
+
+import sys
+import os
+# Setup relative src config loading for subdirectories
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+import src.config
+
+# riemann_domino_wave.py
 
 import os
 import json
@@ -13,10 +20,13 @@ from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed, wait, FIRST_COMPLETED
 
 # === CORE ENGINE PATHS ===
-PROJECT_ROOT = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
-ENGINE_ROOT = r"c:\Users\USUARIO\.gemini\antigravity\playground\calculo-avanzado-asistido"
+PROJECT_ROOT = str(src.config.PROJECT_ROOT)
+ENGINE_ROOT = str(src.config.ENGINE_ROOT)
+# Additionally, load the external legacy repo scripts where RIEMANN_ZERO_FILTER_UA_MACRO.py lives
+EXTERNAL_ENGINE = os.path.abspath(os.path.join(PROJECT_ROOT, "..", "calculo-avanzado-asistido", "src", "backend", "scripts"))
+
 import sys
-for p in [PROJECT_ROOT, ENGINE_ROOT, os.path.join(ENGINE_ROOT, "core")]:
+for p in [PROJECT_ROOT, ENGINE_ROOT, os.path.join(ENGINE_ROOT, "core"), EXTERNAL_ENGINE]:
     if p not in sys.path:
         sys.path.append(p)
 

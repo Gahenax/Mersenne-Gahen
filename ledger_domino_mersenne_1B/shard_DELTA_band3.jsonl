@@ -1,0 +1,5 @@
+{"ts": 1772357453.2183623, "type": "HEALTH", "payload": {"probe": "DELTA", "band_id": 3, "p_start": 235000000, "p_end": 280000000, "status": "STARTING_SWEEP"}}
+{"ts": 1772357453.5221813, "type": "ACCELERATOR_WARMUP", "payload": {"status": "ACCELERATED", "injection_energy": "242.00 TeV", "cached_optimized": "YES"}}
+{"ts": 1772357454.5232284, "type": "GAUGE_PRESSURE", "payload": {"pressure": 1.7753212513775345, "status": "GREEN"}}
+{"ts": 1772357454.5238538, "type": "COLLISION_TEST", "payload": {"p": 235019937, "verdict": "STABLE", "strangelet_density": 0.46484375}}
+{"ts": 1772357455.02487, "type": "HEALTH", "payload": {"probe": "DELTA", "band_id": 3, "status": "COMPLETED", "primes_found": 0, "total_candidates_scanned_simulated": 4500000, "duration_simulated_seconds": 250000.0}}

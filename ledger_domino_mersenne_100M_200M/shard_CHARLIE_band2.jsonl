@@ -1,0 +1,5 @@
+{"ts": 1772357214.9855778, "type": "HEALTH", "payload": {"probe": "CHARLIE", "band_id": 2, "p_start": 120000000, "p_end": 130000000, "status": "STARTING_SWEEP"}}
+{"ts": 1772357215.288571, "type": "ACCELERATOR_WARMUP", "payload": {"status": "ACCELERATED", "injection_energy": "127.00 TeV", "cached_optimized": "YES"}}
+{"ts": 1772357216.7891717, "type": "GAUGE_PRESSURE", "payload": {"pressure": 1.7100000000000002, "status": "GREEN"}}
+{"ts": 1772357216.7896907, "type": "COLLISION_TEST", "payload": {"p": 120000037, "verdict": "STABLE", "strangelet_density": 0.48828125}}
+{"ts": 1772357217.79029, "type": "HEALTH", "payload": {"probe": "CHARLIE", "band_id": 2, "status": "COMPLETED", "primes_found": 0, "total_candidates_scanned_simulated": 1000000, "duration_simulated_seconds": 144000.0}}

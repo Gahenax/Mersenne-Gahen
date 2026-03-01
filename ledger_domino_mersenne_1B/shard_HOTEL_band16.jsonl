@@ -1,0 +1,5 @@
+{"ts": 1772357456.7688425, "type": "HEALTH", "payload": {"probe": "HOTEL", "band_id": 16, "p_start": 820000000, "p_end": 865000000, "status": "STARTING_SWEEP"}}
+{"ts": 1772357457.0715582, "type": "ACCELERATOR_WARMUP", "payload": {"status": "ACCELERATED", "injection_energy": "827.00 TeV", "cached_optimized": "YES"}}
+{"ts": 1772357458.07256, "type": "GAUGE_PRESSURE", "payload": {"pressure": 1.7753212513775345, "status": "GREEN"}}
+{"ts": 1772357458.07256, "type": "COLLISION_TEST", "payload": {"p": 820019937, "verdict": "ANOMALOUS_DEBRIS", "strangelet_density": 0.55859375}}
+{"ts": 1772357458.5745234, "type": "HEALTH", "payload": {"probe": "HOTEL", "band_id": 16, "status": "COMPLETED", "primes_found": 0, "total_candidates_scanned_simulated": 4500000, "duration_simulated_seconds": 250000.0}}

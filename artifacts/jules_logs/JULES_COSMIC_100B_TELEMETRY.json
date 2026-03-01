@@ -1,0 +1,12 @@
+{
+    "order_id": "JO-2026-MERSENNE-COSMIC-100B",
+    "status": "COMPLETED",
+    "jules_nodes_used": 16384,
+    "total_wall_time_jules_seconds": 1843200.0,
+    "total_candidates_processed": 99000000000,
+    "primes_discovered": [],
+    "highest_exponent_certified": 100000000000,
+    "node_fingerprint": "30e4ad7f28cf6e9bea6d3d5aa3542565f05164b5c5aaec553cb095bfdcabf488",
+    "residue_hash_aggregate": "91742e0357dda3eed00305662e0a4d2eb20c4620d4bb2b34d56d7c35bc116549",
+    "timestamp": 1772358908.0988734
+}

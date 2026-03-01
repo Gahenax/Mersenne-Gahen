@@ -1,0 +1,5 @@
+{"ts": 1772357455.010538, "type": "HEALTH", "payload": {"probe": "JULIET", "band_id": 9, "p_start": 505000000, "p_end": 550000000, "status": "STARTING_SWEEP"}}
+{"ts": 1772357455.3137343, "type": "ACCELERATOR_WARMUP", "payload": {"status": "ACCELERATED", "injection_energy": "512.00 TeV", "cached_optimized": "YES"}}
+{"ts": 1772357456.3147438, "type": "GAUGE_PRESSURE", "payload": {"pressure": 1.7753212513775345, "status": "GREEN"}}
+{"ts": 1772357456.3152869, "type": "COLLISION_TEST", "payload": {"p": 505019937, "verdict": "STABLE", "strangelet_density": 0.51171875}}
+{"ts": 1772357456.816544, "type": "HEALTH", "payload": {"probe": "JULIET", "band_id": 9, "status": "COMPLETED", "primes_found": 0, "total_candidates_scanned_simulated": 4500000, "duration_simulated_seconds": 250000.0}}

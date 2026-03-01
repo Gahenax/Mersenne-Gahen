@@ -2,12 +2,12 @@
   "probe_id": 1,
   "probe_alpha": "A",
   "range": [
-    25000000,
-    35000000
+    100000000,
+    110000000
   ],
   "status": "COMPLETED",
   "progress": 1.0,
   "strategy": "DOMINO-REINFORCEMENT",
   "active_power": 1,
-  "last_heartbeat": "2026-02-21T22:19:13.484760"
+  "last_heartbeat": "2026-03-01T04:01:33.431766"
 }

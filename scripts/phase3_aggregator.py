@@ -1,3 +1,9 @@
+import sys
+import os
+# Setup relative src config loading for subdirectories
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+import src.config
+
 """
 phase3_aggregator.py
 ====================
@@ -29,7 +35,7 @@ except Exception:
 import argparse, hashlib, json, math, os, time
 import numpy as np
 
-PROJECT    = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
+PROJECT    = str(src.config.PROJECT_ROOT)
 SHARD_DIR  = os.path.join(PROJECT, "results", "riemann", "phase3")
 OUT_DIR    = os.path.join(PROJECT, "results", "riemann")
 ORDER_FILE = os.path.join(PROJECT, "jules_orders", "JULES_ORDER_RIEMANN_P3.json")
