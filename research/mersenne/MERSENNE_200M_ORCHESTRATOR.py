@@ -85,7 +85,7 @@ class Mersenne200MDeepProbeOrchestrator:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"✅ [SONDA-{alpha}] Sector Oceanico COMPLETO.")
+        print(f"[OK] [SONDA-{alpha}] Sector Oceanico COMPLETO.")
 
         # Domino Reinforcement (Cascading)
         next_idx = block_idx + 1
@@ -93,7 +93,7 @@ class Mersenne200MDeepProbeOrchestrator:
             with self.state_lock:
                 next_block = self.blocks[next_idx]
                 next_block["workers"] += block["workers"]
-                print(f"🌊 [DOMINO-200M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
+                print(f"[WAVE] [DOMINO-200M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
                 self.update_telemetry(next_idx)
 
     def execute_deep_sweep(self):

@@ -7,7 +7,7 @@ Constitución:   2.1.0
 Especificación: MULTIBLOCK_SPEC.md
 Registro:       state/block_X_state.json  (PER-BLOCK, sharded)
 
-IMPORTANTE — v1.1 (fix de concurrencia):
+IMPORTANTE -- v1.1 (fix de concurrencia):
   - Lock global eliminado → un Lock por bloque (_locks[bid])
   - Un archivo JSON por bloque (state/block_X_state.json)
   - BLOCK_REGISTRY.json solo se regenera para el scoreboard (lazy)
@@ -47,7 +47,7 @@ try:
     ENGINES_AVAILABLE = True
 except ImportError:
     ENGINES_AVAILABLE = False
-    print("[WARN] Engines not found — running in SIMULATION mode.")
+    print("[WARN] Engines not found -- running in SIMULATION mode.")
 
 # ── Constants ────────────────────────────────────────────────────────────────
 PROTOCOL_VERSION        = "MULTIBLOCK-W3-1.1.0"
@@ -106,7 +106,7 @@ def compute_apr_simple(audit_results: List[bool]) -> float:
 
 
 def compute_apr_weighted(audit_results: List[bool], lam: float = 0.95) -> float:
-    """§2: APR^(λ)_b — auditoría con decaimiento exponencial"""
+    """§2: APR^(λ)_b -- auditoría con decaimiento exponencial"""
     W = len(audit_results)
     if W == 0:
         return 1.0
@@ -235,7 +235,7 @@ class BlockState:
     done_reason:         Optional[str] = None
 
 
-# ── Thread-safe Sharded Registry (v1.1 — per-block locks) ───────────────────
+# ── Thread-safe Sharded Registry (v1.1 -- per-block locks) ───────────────────
 
 class BlockRegistry:
     """
@@ -334,7 +334,7 @@ class BlockRegistry:
         """Actualiza y persiste SOLO el bloque bid. No bloquea otros bloques."""
         acquired = self._locks[bid].acquire(timeout=LOCK_TTL_SECONDS)
         if not acquired:
-            # Log and continue — no crashear por lock timeout
+            # Log and continue -- no crashear por lock timeout
             return
         try:
             state = self._states[bid]
@@ -348,7 +348,7 @@ class BlockRegistry:
 
     def aggregate_registry(self):
         """Reconstruye BLOCK_REGISTRY.json desde los estados individuales.
-        Solo se llama en el scoreboard — lazy, no bloquea workers."""
+        Solo se llama en el scoreboard -- lazy, no bloquea workers."""
         data = {
             "version":                PROTOCOL_VERSION,
             "constitutional_version": CONSTITUTIONAL_VERSION,
@@ -419,12 +419,12 @@ class BlockWorker:
                 encoding="utf-8"
             )
             fh.setFormatter(logging.Formatter(
-                "%(asctime)s [Block-%(name)s] %(levelname)s — %(message)s"
+                "%(asctime)s [Block-%(name)s] %(levelname)s -- %(message)s"
             ))
             log.addHandler(fh)
             ch = logging.StreamHandler()
             ch.setFormatter(logging.Formatter(
-                "[Block-%(name)s] %(levelname)s — %(message)s"
+                "[Block-%(name)s] %(levelname)s -- %(message)s"
             ))
             log.addHandler(ch)
         return log
@@ -592,11 +592,11 @@ class BlockWorker:
 
         # ── Sanity check ───────────────────────────────────────────────────
         if not self._sanity_check():
-            self.logger.critical(f"Block {bid}: SANITY CHECK FAILED — M_127 not certified. LOCKING.")
+            self.logger.critical(f"Block {bid}: SANITY CHECK FAILED -- M_127 not certified. LOCKING.")
             self.registry.update_state(bid, status="LOCKED", color="RED")
             return
 
-        self.logger.info(f"Block {bid}: Sanity OK (M_127 ✅). Starting sweep.")
+        self.logger.info(f"Block {bid}: Sanity OK (M_127 [OK]). Starting sweep.")
         state = self.registry.get_state(bid)
         self.registry.update_state(bid,
             status="RUNNING",
@@ -654,7 +654,7 @@ class BlockWorker:
 
                 if evt_color == "RED":
                     window_passed = False
-                    self.logger.error(f"    🔴 RED at p={p}")
+                    self.logger.error(f"    [RED] RED at p={p}")
 
                 # ── Candidate processing (§3) ─────────────────────────────
                 if is_prime:
@@ -734,7 +734,7 @@ class BlockWorker:
                     status="DONE", done=True, done_reason=reason,
                     completed_at=datetime.now().isoformat()
                 )
-                self.logger.info(f"Block {bid}: ✅ DoD SATISFIED — {reason}")
+                self.logger.info(f"Block {bid}: [OK] DoD SATISFIED -- {reason}")
                 break
 
             # ── RED handling: freeze and forensics ────────────────────────
@@ -764,15 +764,15 @@ class BlockWorker:
 
 # ── Scoreboard ────────────────────────────────────────────────────────────────
 
-COLOR_ICON = {"GREEN": "🟢", "ORANGE": "🟠", "RED": "🔴", "YELLOW": "🟡"}
+COLOR_ICON = {"GREEN": "[GREEN]", "ORANGE": "[ORANGE]", "RED": "[RED]", "YELLOW": "[YELLOW]"}
 STATUS_ICON = {
     "PENDING":    "⏳",
     "RUNNING":    "🔄",
     "SCANNING":   "📡",
     "VALIDATING": "🔍",
-    "FORENSICS":  "🔬",
+    "FORENSICS":  "[FORENSICS]",
     "FROZEN":     "🧊",
-    "DONE":       "✅",
+    "DONE":       "[OK]",
     "LOCKED":     "🔒"
 }
 
@@ -782,7 +782,7 @@ def print_scoreboard(registry: BlockRegistry, configs: Dict[str, BlockConfig]):
     try:
         registry.aggregate_registry()
     except Exception:
-        pass  # Non-fatal — scoreboard continues even if disk write fails
+        pass  # Non-fatal -- scoreboard continues even if disk write fails
 
     W = 90
     now = datetime.now().strftime("%H:%M:%S")
@@ -875,7 +875,7 @@ class MultiBlockOrchestrator:
             blocks = list(self.BLOCK_CONFIGS.keys())
 
         print(f"\n{'='*90}")
-        print(f"  MERSENNE MULTIBLOCK ORCHESTRATOR — {PROTOCOL_VERSION}")
+        print(f"  MERSENNE MULTIBLOCK ORCHESTRATOR -- {PROTOCOL_VERSION}")
         print(f"  Blocks: {blocks} | Window: {window_size} | Budget UA: {budget_ua:,.0f}")
         print(f"  Registry: {REGISTRY_PATH}")
         print(f"  Mode: {'LIVE (engines)' if ENGINES_AVAILABLE else 'SIMULATION'}")
@@ -893,7 +893,7 @@ class MultiBlockOrchestrator:
                                                    thread_name_prefix="MBlock") as ex:
             futures = {bid: ex.submit(w.run) for bid, w in workers.items()}
             for bid in blocks:
-                print(f"  🚀 Block {bid} launched.")
+                print(f"  [LAUNCH] Block {bid} launched.")
 
             while True:
                 time.sleep(self.scoreboard_interval)
@@ -927,7 +927,7 @@ class MultiBlockOrchestrator:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="MERSENNE MULTIBLOCK ORCHESTRATOR — MULTIBLOCK-W3-1.0.0",
+        description="MERSENNE MULTIBLOCK ORCHESTRATOR -- MULTIBLOCK-W3-1.0.0",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Ejemplos:

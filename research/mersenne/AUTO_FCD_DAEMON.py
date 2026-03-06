@@ -28,7 +28,7 @@ class AutoFCDDaemon:
         
     def monitor_and_check(self):
         print("="*60)
-        print("🛡️ GAHENAX AUTO-FCD DAEMON: ACTIVE")
+        print("[SHIELD] GAHENAX AUTO-FCD DAEMON: ACTIVE")
         print("Target: Multi-Probe Output / Integrity Gate")
         print("="*60)
         
@@ -74,11 +74,11 @@ class AutoFCDDaemon:
         endian_res = next((r for r in record.attack_results if r.attack_name == "Endian-Swap-64"), None)
         
         if endian_res and not endian_res.collapsed:
-            print(f"🔥 [Veredicto: PROFUNDO] Candidate p={p} SURVIVED Endian-Swap! Sealing in Ledger.")
+            print(f"[FIRE] [Veredicto: PROFUNDO] Candidate p={p} SURVIVED Endian-Swap! Sealing in Ledger.")
             # Here we would map to Schema and append_ndjson
             # For brevity, we log to console in this demo daemon
         else:
-            print(f"❄️ [Veredicto: ARTEFACTO] Candidate p={p} COLLAPSED under Endian-Swap. Masked from GIMPS submission.")
+            print(f"[COLD] [Veredicto: ARTEFACTO] Candidate p={p} COLLAPSED under Endian-Swap. Masked from GIMPS submission.")
 
 if __name__ == "__main__":
     daemon = AutoFCDDaemon()

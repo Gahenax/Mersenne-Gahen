@@ -69,7 +69,7 @@ class Mersenne500MHyperOrchestrator:
             block["status"] = "ACTIVE"
             self.update_telemetry(block_idx)
         
-        print(f"🚀 [SONDA-{alpha}] Entrando en Espacio Hiper-Escalar [200M+]: [{block['range'][0]:,}, {block['range'][1]:,}]")
+        print(f"[LAUNCH] [SONDA-{alpha}] Entrando en Espacio Hiper-Escalar [200M+]: [{block['range'][0]:,}, {block['range'][1]:,}]")
         
         while block["progress"] < 1.0:
             time.sleep(1) 
@@ -85,7 +85,7 @@ class Mersenne500MHyperOrchestrator:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"✨ [SONDA-{alpha}] Sector Bloqueado y Limpio.")
+        print(f"[DONE] [SONDA-{alpha}] Sector Bloqueado y Limpio.")
 
         # Domino Reinforcement (Cascading)
         next_idx = block_idx + 1
@@ -93,7 +93,7 @@ class Mersenne500MHyperOrchestrator:
             with self.state_lock:
                 next_block = self.blocks[next_idx]
                 next_block["workers"] += block["workers"]
-                print(f"🌊 [DOMINO-500M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
+                print(f"[WAVE] [DOMINO-500M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
                 self.update_telemetry(next_idx)
 
     def execute_hyper_sweep(self):

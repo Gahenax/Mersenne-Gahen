@@ -147,8 +147,8 @@ def main():
     if ndjson_path.exists(): os.remove(ndjson_path) # Reiniciar para el demo
     append_ndjson(ndjson_path, records_to_save)
     
-    print(f"✅ Recalibración completada. Dataset: {ndjson_path}")
-    print(f"✅ Manifest generado: {analysis_dir / 'manifest.json'}")
+    print(f"[OK] Recalibración completada. Dataset: {ndjson_path}")
+    print(f"[OK] Manifest generado: {analysis_dir / 'manifest.json'}")
 
 if __name__ == "__main__":
     main()

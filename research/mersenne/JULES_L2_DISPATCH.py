@@ -3,6 +3,24 @@ import os
 import json
 import time
 import hashlib
+import psutil
+
+def check_hardware_telemetry():
+    """Hardware Telemetry Protocol: Ensure host health before exascale dispatch."""
+    cpu_percent = psutil.cpu_percent(interval=1.0)
+    mem = psutil.virtual_memory()
+    
+    print(f"[TELEMETRY] Host CPU Load: {cpu_percent}% | RAM Usage: {mem.percent}%")
+    
+    if cpu_percent > 85.0:
+        print("[CRITICAL] Host CPU is overloaded. Aborting JULES Exascale Dispatch to prevent thermal throttling.")
+        sys.exit(1)
+        
+    if mem.percent > 90.0:
+        print("[CRITICAL] Host Memory is critically low. Aborting JULES Dispatch.")
+        sys.exit(1)
+        
+    print("[TELEMETRY] Thermostat and Memory bounds are nominal. Authorization granted.")
 
 def jules_l2_dispatch():
     print("==================================================")
@@ -14,6 +32,9 @@ def jules_l2_dispatch():
     with open(order_path, "r") as f:
         order = json.load(f)
         
+    print(f"\n[JXP-HANDSHAKE] Verifying Hardware Telemetry...")
+    check_hardware_telemetry()
+
     print(f"\n[JXP-HANDSHAKE] Connecting to Jules L2-External Cluster...")
     time.sleep(1.0)
     print(f"[JXP] Connection Established. Uploading Order: {order['order_id']}")

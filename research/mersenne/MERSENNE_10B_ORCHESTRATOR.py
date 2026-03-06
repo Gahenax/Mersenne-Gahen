@@ -67,7 +67,7 @@ class Mersenne10BGalacticOrchestrator:
             block["status"] = "ACTIVE"
             self.update_telemetry(block_idx)
         
-        print(f"🌀 [GALACTIC-{alpha}] Mapeando Nebulosa: [{block['range'][0]:,}, {block['range'][1]:,}]")
+        print(f"[VORTEX] [GALACTIC-{alpha}] Mapeando Nebulosa: [{block['range'][0]:,}, {block['range'][1]:,}]")
         
         while block["progress"] < 1.0:
             time.sleep(0.5) # Warp speed simulation
@@ -86,7 +86,7 @@ class Mersenne10BGalacticOrchestrator:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"✨ [GALACTIC-{alpha}] Bloque Limpio. Espacio Recuperado.")
+        print(f"[DONE] [GALACTIC-{alpha}] Bloque Limpio. Espacio Recuperado.")
 
         # Mega Domino Reinforcement
         next_idx = block_idx + 1
@@ -96,7 +96,7 @@ class Mersenne10BGalacticOrchestrator:
                 next_block["workers"] += block["workers"]
                 # Print only every 5 reinforcements to avoid log spam
                 if next_idx % 5 == 0:
-                    print(f"🛸 [WARP-SURGE] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
+                    print(f"[WARP] [WARP-SURGE] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
                 self.update_telemetry(next_idx)
 
     def execute_galactic_sweep(self):

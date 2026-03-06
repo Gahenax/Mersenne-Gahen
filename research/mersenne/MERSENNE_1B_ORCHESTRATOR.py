@@ -69,7 +69,7 @@ class Mersenne1BillionOrchestrator:
             block["status"] = "ACTIVE"
             self.update_telemetry(block_idx)
         
-        print(f"🔥 [TITAN-{alpha}] Asaltando el Billon: [{block['range'][0]:,}, {block['range'][1]:,}]")
+        print(f"[FIRE] [TITAN-{alpha}] Asaltando el Billon: [{block['range'][0]:,}, {block['range'][1]:,}]")
         
         while block["progress"] < 1.0:
             time.sleep(1) 
@@ -85,7 +85,7 @@ class Mersenne1BillionOrchestrator:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"🥇 [TITAN-{alpha}] Sector del Billon CONQUISTADO.")
+        print(f"[GOLD] [TITAN-{alpha}] Sector del Billon CONQUISTADO.")
 
         # Domino Reinforcement
         next_idx = block_idx + 1
@@ -93,7 +93,7 @@ class Mersenne1BillionOrchestrator:
             with self.state_lock:
                 next_block = self.blocks[next_idx]
                 next_block["workers"] += block["workers"]
-                print(f"🌊 [TITAN-WAVE] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
+                print(f"[WAVE] [TITAN-WAVE] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
                 self.update_telemetry(next_idx)
 
     def execute_titan_sweep(self):

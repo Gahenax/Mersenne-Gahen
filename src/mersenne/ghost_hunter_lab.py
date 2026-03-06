@@ -569,9 +569,111 @@ def build_argparser() -> argparse.ArgumentParser:
 
     return p
 
+def agent_run(args: argparse.Namespace) -> None:
+    """Ejecución atómica para pipelines de orquestación con contrato estricto de salida."""
+    ensure_dir(args.out_dir)
+    
+    # 1. Setup Watchdog
+    def timeout_handler(signum, frame):
+        print(json.dumps({"error_type": "timeout", "details": f"Watchdog killed after {args.timeout}s"}), file=sys.stdout)
+        sys.exit(3)
+
+    if sys.platform != "win32":
+        import signal
+        signal.signal(signal.SIGALRM, timeout_handler)
+        signal.alarm(max(1, args.timeout - 5))
+
+    try:
+        # 2. Preregistration
+        prereg_path = os.path.join(args.out_dir, "prereg.json")
+        if not os.path.exists(prereg_path):
+            print(f"[DEBUG] Generando prereg default en {prereg_path}", file=sys.stderr)
+            spec = default_prereg("GHOST_HUNTER_AGENT_001")
+            write_json(prereg_path, dc.asdict(spec))
+        
+        # 3. Hash del prereg
+        with open(prereg_path, 'r', encoding='utf-8') as f:
+            prereg_content = json.load(f)
+        canonical = json.dumps(prereg_content, sort_keys=True)
+        prereg_hash = hashlib.sha256(canonical.encode()).hexdigest()[:16]
+
+        # 4. Cargar Adapter
+        try:
+            adapter = load_adapter(args.adapter)
+        except Exception as e:
+            print(json.dumps({"error_type": "infra", "details": f"Adapter error: {str(e)}"}), file=sys.stdout)
+            sys.exit(1)
+
+        # 5. Ejecutar Candidato
+        p = args.candidate
+        cfg = RunConfig(
+            out_dir=args.out_dir,
+            spec_id="AGENT_RUN",
+            anchors=[p],
+            radius=0,
+            radii_sweep=[],
+            seed=1337,
+            tolerance_H=1e-12,
+            lsb_nbits=256,
+            lsb_flag=0.60,
+            perm_block_size=32,
+            perm_reps=3,
+            include_controls=False,
+            controls_n=0,
+        )
+
+        print(f"[DEBUG] Corriendo candidato p={p}", file=sys.stderr)
+        try:
+            row, rb = run_one_point(adapter, p, tag="agent_anchor", cfg=cfg)
+            repr_rows = representation_suite(adapter, p, tag="agent_anchor", cfg=cfg, rb=rb)
+        except Exception as e:
+            print(json.dumps({"error_type": "math", "details": f"Execution error: {str(e)}"}), file=sys.stdout)
+            sys.exit(2)
+
+        # 6. Parseo a Schema Estricto (MersenneAuditOutput)
+        def eval_status(r_rows, marker: str) -> str:
+            matches = [r for r in r_rows if marker in r["repr"]]
+            if not matches:
+                return "Fail"
+            return "Pass" if all(r["H_is_zero"] for r in matches) else "Collapse"
+
+        output = {
+            "hypothesis_id": f"M_{p}",
+            "rotation_status": eval_status(repr_rows, "rotate_bits"),
+            "swap_status": eval_status(repr_rows, "swap_lsb_msb"),
+            "permutation_status": eval_status(repr_rows, "permute_blocks"),
+            "delegation_stdout": json.dumps({"anchor_H": row["H"]}),
+            "timestamp": now_iso(),
+            "prereg_hash": prereg_hash
+        }
+
+        # 7. Payload Único en STDOUT
+        print(json.dumps(output))
+        sys.exit(0)
+
+    except Exception as e:
+        # Fallback de seguridad no capturado
+        print(json.dumps({"error_type": "infra", "details": f"Unhandled error: {str(e)}"}), file=sys.stdout)
+        sys.exit(1)
+    finally:
+        if sys.platform != "win32":
+            signal.alarm(0)
+
 def main() -> None:
     ap = build_argparser()
+    
+    # Inyectar CLI explícito del Agent_run al Parser (esto es post-build)
+    sp_agent = ap._subparsers._group_actions[0].add_parser("agent_run", help="Ejecución atómica con contrato estricto de salida JSON.")
+    sp_agent.add_argument("--candidate", type=int, required=True, help="El exponente p a probar")
+    sp_agent.add_argument("--adapter", required=True, help="Ruta a adapter.py")
+    sp_agent.add_argument("--out-dir", required=True, help="Directorio de salida temporal")
+    sp_agent.add_argument("--timeout", type=int, default=300, help="Watchdog timeout en segundos para forzar exit code 3")
+
     args = ap.parse_args()
+
+    if args.cmd == "agent_run":
+        agent_run(args)
+        return
 
     if args.cmd == "prereg":
         ensure_dir(args.out)

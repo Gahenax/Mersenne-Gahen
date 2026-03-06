@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import time
+import argparse
 from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
 
 # Ensure we can import modules
@@ -111,12 +112,26 @@ class MersenneDominoOrchestrator:
         return {"status": "SUCCESS", "blocks_processed": len(completed)}
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="OMNICLI: Gahenax Mersenne Domino Wave Orchestrator")
+    parser.add_argument("--p-start", type=int, default=100000000, help="Start exponent (e.g. 100000000)")
+    parser.add_argument("--p-end", type=int, default=200000000, help="End exponent (e.g. 200000000)")
+    parser.add_argument("--bands", type=int, default=10, help="Number of deployment bands")
+    parser.add_argument("--probes", type=str, nargs="+", default=["ALPHA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"], help="List of probe names")
+    
+    args = parser.parse_args()
+
+    if args.p_start >= args.p_end:
+        parser.error("OmniCLI: --p-start must be strictly less than --p-end")
+
+    out_folder = f"ledger_domino_mersenne_{args.p_start}_{args.p_end}"
+    out_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", out_folder))
+
     o = MersenneDominoOrchestrator(
-        p_start=100000000, 
-        p_end=200000000,
-        probe_names=["ALPHA", "BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"],
-        bands_count=10,
-        out_dir=os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "ledger_domino_mersenne_100M_200M"))
+        p_start=args.p_start, 
+        p_end=args.p_end,
+        probe_names=args.probes,
+        bands_count=args.bands,
+        out_dir=out_dir
     )
     res = o.run_sweep()
     print("==================================================")
@@ -124,3 +139,4 @@ if __name__ == "__main__":
     print(f" Status: {res['status']}")
     print(f" Blocks Processed: {res['blocks_processed']}")
     print("==================================================")
+

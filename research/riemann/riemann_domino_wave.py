@@ -18,6 +18,7 @@ from dataclasses import dataclass, asdict
 from typing import Dict, List, Tuple, Optional, Any
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed, wait, FIRST_COMPLETED
+from research.riemann.sweep_memory import SweepMemory
 
 # === CORE ENGINE PATHS ===
 PROJECT_ROOT = str(src.config.PROJECT_ROOT)
@@ -209,7 +210,22 @@ class RiemannDominoOrchestrator:
         self.cfg = cfg or {}
         os.makedirs(out_dir, exist_ok=True)
 
-        self.bands = self.partition_t_line(t_start, t_end, band_width)
+        # Improvement #1: Sweep Memory
+        self.memory = SweepMemory(working_dir=os.path.dirname(os.path.abspath(__file__)))
+        self.explored_ranges = self.memory.load_explored_ranges()
+
+        all_bands = self.partition_t_line(t_start, t_end, band_width)
+        # Filter out already-covered bands
+        self.bands = []
+        skipped = 0
+        for b in all_bands:
+            if self.memory.is_band_covered(b.t0, b.t1, self.explored_ranges):
+                skipped += 1
+            else:
+                self.bands.append(b)
+        if skipped > 0:
+            print(f"[MEMORY] Skipped {skipped} already-explored bands.")
+
         self.calib = CalibState()
 
     def partition_t_line(self, t0, t1, width) -> List[Band]:
@@ -275,6 +291,65 @@ class RiemannDominoOrchestrator:
 
         return {"status": "SUCCESS", "bands_processed": len(completed_results), "total_zeros": self.calib.n_zeros}
 
+    def _run_post_sweep_audit(self, summary: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Improvement #2: Auto-run forensic pipeline after sweep.
+        Merges shards, runs forensic falsifier, and spectral gate.
+        """
+        try:
+            from research.riemann.riemann_spectrum_audit import merge_shards
+            from research.riemann.forensic_falsifier import run_forensic_audit
+            from research.riemann.spectral_gate import SpectralCamouflageGate
+        except ImportError:
+            print("[AUDIT] Forensic modules not available, skipping.")
+            return summary
+
+        merged_path = os.path.join(self.out_dir, "merged_zeros.jsonl")
+        data_file = merge_shards(self.out_dir, merged_path)
+
+        forensic_verdict = "NOT_RUN"
+        spectral_result = {}
+
+        if data_file:
+            print("\n[FORENSIC] Running Red Team audit...")
+            run_forensic_audit(data_file)
+            forensic_verdict = "AUDITED"
+
+            # Spectral Camouflage Gate
+            print("\n[SPECTRAL GATE] Running KS validation...")
+            zeros = []
+            with open(data_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    try:
+                        obj = json.loads(line)
+                        val = obj.get("t_est") or obj.get("T") or obj.get("refined_T")
+                        if val:
+                            zeros.append(float(val))
+                    except:
+                        continue
+
+            if zeros:
+                gate = SpectralCamouflageGate(ks_threshold=0.1)
+                spectral_result = gate.validate(zeros)
+                print(f"[SPECTRAL GATE] {spectral_result['status']}: {spectral_result['details']}")
+                forensic_verdict = f"AUDITED|SPECTRAL:{spectral_result['status']}"
+
+        # Save to sweep memory
+        self.memory.save_sweep_summary(
+            t_start=self.t_start,
+            t_end=self.t_end,
+            total_zeros=self.calib.n_zeros,
+            bands_processed=summary.get("bands_processed", 0),
+            forensic_verdict=forensic_verdict,
+            calib_r=spectral_result.get("mean_r", 0.0),
+            explored_ranges=self.explored_ranges,
+        )
+        print(f"[MEMORY] MEMORY.md updated.")
+
+        summary["forensic_verdict"] = forensic_verdict
+        summary["spectral_gate"] = spectral_result
+        return summary
+
 if __name__ == "__main__":
     # Test Run
     orch = RiemannDominoOrchestrator(
@@ -286,4 +361,5 @@ if __name__ == "__main__":
         cfg={"alpha": 0.5}
     )
     summary = orch.run_sweep()
+    summary = orch._run_post_sweep_audit(summary)
     print(f"DONE. Sweep complete: {summary}")

@@ -1,0 +1,65 @@
+{
+  "abort_conditions": {
+    "stop_if": [
+      "control_H_zero_rate >= 0.80 (efecto no específico, probable artefacto)",
+      "H siempre 0.0 para todo (métrica degenerada)"
+    ]
+  },
+  "controls": {
+    "kernel_swap": "Opcional: correr con implementación LL alternativa si disponible",
+    "negative_controls": [
+      "Vecindad alrededor de un primo grande NO-Mersenne (misma escala)",
+      "Vecindad alrededor de un compuesto grande NO-Mersenne (misma escala)",
+      "Compuestos aleatorios de longitud comparable (muestreo)"
+    ],
+    "radius_sweep": [
+      5,
+      10,
+      20,
+      50
+    ]
+  },
+  "created_at": "2026-03-02T13:35:48",
+  "hypothesis_minimal": "H₀′ (hipótesis mínima defendible): El observable de Rigidez de Hodge (H) no discrimina localmente entre un anclaje Mersenne certificado y sus vecinos inmediatos dentro de un radio finito; mientras que controles negativos (vecindad de compuestos no-Mersenne / aleatorios) no exhiben la misma tasa de H≈0.",
+  "invariances": {
+    "hardware": "Registrar CPU/GPU/OS/flags; repetir en hardware distinto si posible",
+    "representation_tests": [
+      "rotate_bits",
+      "swap_lsb_msb",
+      "permute_blocks"
+    ]
+  },
+  "metrics": {
+    "H": {
+      "decision": "H_is_zero = |H - 0| <= tolerance",
+      "description": "Rigidez de Hodge reportada por tu kernel",
+      "target_value": 0.0,
+      "tolerance": 1e-12
+    },
+    "lsb_corr": {
+      "decision": "flag if corr >= 0.60 (tunable)",
+      "description": "Proporción de bits iguales en LSB (nbits)",
+      "nbits": 256
+    },
+    "wall_time": {
+      "decision": "analyze variance vs controls",
+      "description": "Tiempo de cómputo del residuo (si disponible)"
+    }
+  },
+  "notes": "Prohibido lenguaje ontológico (zona/herencia/fantasma) en reportes externos. Hablar solo de insensibilidad local / continuidad estructural.",
+  "pass_fail": {
+    "primary": {
+      "anchor_H_zero_rate_min": 0.8,
+      "control_H_zero_rate_max": 0.3,
+      "min_total_samples_per_group": 50,
+      "name": "Diferencial de tasa H_zero (anclaje vs control)",
+      "verdict": "PASS if anchor_rate>=min and control_rate<=max else FAIL"
+    },
+    "secondary": {
+      "meaning": "Si H permanece ~0 incluso tras permutar/rotar bits, podría indicar que tu métrica H es insensible a representación, o que se está midiendo otra cosa. Esto NO invalida, pero fuerza re-interpretación.",
+      "name": "Invarianza bajo permutaciones",
+      "require_drop_under_permutation": true
+    }
+  },
+  "spec_id": "GHOST_HUNTER_AGENT_001"
+}

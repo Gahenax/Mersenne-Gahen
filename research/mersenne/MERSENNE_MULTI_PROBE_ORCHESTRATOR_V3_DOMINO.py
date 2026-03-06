@@ -91,7 +91,7 @@ class MultiProbeOrchestratorV3Domino:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"✅ [SONDA-{alpha}] Bloque COMPLETADO.")
+        print(f"[OK] [SONDA-{alpha}] Bloque COMPLETADO.")
 
         # Domino Effect: Reinforce next block
         next_idx = block_idx + 1
@@ -99,7 +99,7 @@ class MultiProbeOrchestratorV3Domino:
             with self.state_lock:
                 next_block = self.blocks[next_idx]
                 next_block["workers"] += block["workers"]
-                print(f"🌊 [DOMINO] Sonda-{alpha} refuerza a Sonda-{next_block['alpha']}. Poder actual en {next_block['alpha']}: {next_block['workers']}x")
+                print(f"[WAVE] [DOMINO] Sonda-{alpha} refuerza a Sonda-{next_block['alpha']}. Poder actual en {next_block['alpha']}: {next_block['workers']}x")
                 self.update_telemetry(next_idx)
 
     def execute_domino_sweep(self):

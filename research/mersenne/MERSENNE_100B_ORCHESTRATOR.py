@@ -70,7 +70,7 @@ class Mersenne100BIntergalacticOrchestrator:
         
         # Log limited to avoid spamming the console with 100 probes
         if block_idx % 20 == 0:
-            print(f"⚛️ [INTERGALACTIC-{alpha}] Asaltando el Hito 100B: [{block['range'][0]:,}, {block['range'][1]:,}]")
+            print(f"[ATOM] [INTERGALACTIC-{alpha}] Asaltando el Hito 100B: [{block['range'][0]:,}, {block['range'][1]:,}]")
         
         while block["progress"] < 1.0:
             time.sleep(0.1) # Hyper-simulation speed
@@ -92,7 +92,7 @@ class Mersenne100BIntergalacticOrchestrator:
                 next_block["workers"] += block["workers"]
                 # Report major surges
                 if next_block["workers"] % 25 == 0:
-                    print(f"☄️ [QUANTUM-SURGE] Poder de Ola alcanzado: {next_block['workers']}x")
+                    print(f"[COMET] [QUANTUM-SURGE] Poder de Ola alcanzado: {next_block['workers']}x")
                 self.update_telemetry(next_idx)
 
     def execute_intergalactic_sweep(self):
