@@ -54,14 +54,19 @@ def lucas_lehmer(p: int) -> bool:
 
 def ghost_locus_zscore(p: int) -> float:
     """
-    Stub for Ghost Locus pre-filter.
-    In production: compute S(u) at u=log(2^p - 1) using Phase-3 Riemann zeros.
-    Here: returns a simulated z-score (replace with real computation).
+    OEDA V4 GQRF: Computa la puntuación espectral de resonancia 
+    z-score basándose en métricas de Phase-3 Zeros y distorsión.
     """
-    # TODO: import from scripts.mersenne_spectral_poc import probe
-    # result = probe(p)
-    # return result["z"]
-    return 0.0  # conservative: 0 means "do not skip"
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("mersenne_spectral_poc", str(Path(__file__).parent / "mersenne_spectral_poc.py"))
+        spoc = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(spoc)
+        result = spoc.probe(p)
+        return result.get("z", 0.0)
+    except Exception as e:
+        print(f"  [Error GQRF] Fallo al cargar módulo Espectral: {e}")
+        return 0.0
 
 
 def run_block(
@@ -107,10 +112,33 @@ def run_block(
     candidates = sieve_primes(p_start, p_end)
     
     primes_found = []
-    for p in candidates:
-        if lucas_lehmer(p):
-            primes_found.append(p)
+    fad_rejected = 0       # TODO: To be integrated when Python FAD is ported
+    spectral_rejected = 0
+    ll_tested = 0
+
+    method_lower = method.lower()
     
+    if method_lower == "ll":
+        print(f"  [Python] Executing LL tests exclusively for {len(candidates)} candidates.")
+        for p in candidates:
+            ll_tested += 1
+            if lucas_lehmer(p):
+                primes_found.append(p)
+                
+    elif method_lower in ["spectral", "hybrid"]:
+        action = "Skipping LL" if method_lower == "spectral" else "LL testing survivors"
+        print(f"  [Python] Spectral filter active (Threshold={ghost_z_threshold}). {action}.")
+        
+        for p in candidates:
+            z = ghost_locus_zscore(p)
+            if z >= ghost_z_threshold:
+                if method_lower == "hybrid":
+                    ll_tested += 1
+                    if lucas_lehmer(p):
+                        primes_found.append(p)
+            else:
+                spectral_rejected += 1
+        
     wall_time = time.time() - t0
     result = {
         "block_id": block_id,
@@ -118,7 +146,9 @@ def run_block(
         "p_start": p_start,
         "p_end": p_end,
         "candidates_sieved": len(candidates),
-        "spectral_anomalies": 0,
+        "fad_rejected": fad_rejected,
+        "spectral_rejected": spectral_rejected,
+        "ll_tested": ll_tested,
         "primes_found": primes_found,
         "wall_time_s": round(wall_time, 3),
         "status": "DONE_PYTHON_FALLBACK",
@@ -149,7 +179,9 @@ def main():
         ghost_z_threshold=args.threshold,
     )
     print(f"[Block {args.block_id}] Done. Sieved={result.get('candidates_sieved', 0)} "
-          f"Anomalies={result.get('spectral_anomalies', 0)} "
+          f"FAD_Rej={result.get('fad_rejected', 0)} "
+          f"Spec_Rej={result.get('spectral_rejected', 0)} "
+          f"LL_Tested={result.get('ll_tested', 0)} "
           f"Primes={result['primes_found']} "
           f"Time={result['wall_time_s']:.1f}s")
 

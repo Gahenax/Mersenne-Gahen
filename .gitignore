@@ -1,7 +1,13 @@
-﻿.venv/
+# Rust/Cargo
+tools/mersenne-worker-rs/target/
+**/*.rs.bk
+
+# Telemetría y Resultados OEDA
+results/
+*.json
+*.jsonl
+
+# Python
 __pycache__/
-*.pyc
-logs/
-.ruff_cache/
-.pytest_cache/
-reports/
+*.py[cod]
+*$py.class

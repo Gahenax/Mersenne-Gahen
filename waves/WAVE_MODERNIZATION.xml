@@ -1,0 +1,47 @@
+<wave id="WAVE-M-001">
+  <name>Modernización Gahenax Mersenne</name>
+  <description>Migración a Rust, Orquestación GSD e Interoperabilidad MCP</description>
+  
+  <!-- Wave 0: Setup & Infrastructure -->
+  <task id="M-001-T0" type="auto">
+    <name>Preparación de Entorno</name>
+    <sigil>INFRA</sigil>
+    <action>Instalar Rust, Cargo y dependencias Python (fastmcp, pydantic).</action>
+    <verify>cargo --version && pip show fastmcp</verify>
+    <done>Entorno listo para compilación.</done>
+  </task>
+
+  <!-- Wave 1: Core Performance -->
+  <task id="M-001-T1" type="auto">
+    <name>Compilación Motor Rust</name>
+    <sigil>COMPUTE</sigil>
+    <files>
+      <file>OEDA_HodgeRigidity/tools/mersenne-worker-rs/Cargo.toml</file>
+      <file>OEDA_HodgeRigidity/tools/mersenne-worker-rs/src/main.rs</file>
+    </files>
+    <action>Compilar el worker en modo release para máxima eficiencia.</action>
+    <verify>cd OEDA_HodgeRigidity/tools/mersenne-worker-rs && cargo build --release</verify>
+    <done>Binario mersenne-worker-rs.exe generado.</done>
+  </task>
+
+  <!-- Wave 2: Intelligence & Interop -->
+  <task id="M-001-T2" type="auto">
+    <name>Despliegue de Servidor MCP</name>
+    <sigil>FEAT</sigil>
+    <files>
+      <file>OEDA_HodgeRigidity/scripts/mersenne_mcp_server.py</file>
+    </files>
+    <action>Implementar servidor MCP para telemetría y control.</action>
+    <verify>python scripts/mersenne_mcp_server.py --help</verify>
+    <done>Servidor MCP funcional.</done>
+  </task>
+
+  <!-- Wave 3: Integration -->
+  <task id="M-001-T3" type="auto">
+    <name>Refactorización de Coordinador</name>
+    <sigil>FIX</sigil>
+    <action>Actualizar el coordinador para usar el worker de Rust y GSD.</action>
+    <verify>python scripts/mersenne_domino_coordinator.py --test-wave-0</verify>
+    <done>Sistema integrado y validado.</done>
+  </task>
+</wave>
