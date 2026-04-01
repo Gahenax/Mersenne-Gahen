@@ -1,0 +1,10 @@
+{"p":23201,"action":"ANOMALY_COMPOSITE","spectral_score":1.141547758665311,"wall_time_ms":4734}
+{"p":23203,"action":"ANOMALY_COMPOSITE","spectral_score":1.159510900786902,"wall_time_ms":4698}
+{"p":23209,"action":"PRIME","spectral_score":1.1555411192528426,"wall_time_ms":6425}
+{"p":23227,"action":"ANOMALY_COMPOSITE","spectral_score":1.1452783965157014,"wall_time_ms":4753}
+{"p":23251,"action":"ANOMALY_COMPOSITE","spectral_score":1.2293211028559101,"wall_time_ms":4707}
+{"p":23269,"action":"ANOMALY_COMPOSITE","spectral_score":1.095206729292836,"wall_time_ms":6471}
+{"p":23279,"action":"ANOMALY_COMPOSITE","spectral_score":1.1673062878299807,"wall_time_ms":6352}
+{"p":23291,"action":"ANOMALY_COMPOSITE","spectral_score":1.13671803093617,"wall_time_ms":6351}
+{"p":23293,"action":"ANOMALY_COMPOSITE","spectral_score":1.1147129942481782,"wall_time_ms":4020}
+{"p":23297,"action":"ANOMALY_COMPOSITE","spectral_score":1.1646873517436134,"wall_time_ms":3991}

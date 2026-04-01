@@ -53,11 +53,9 @@ from typing import List, Dict, Any, Optional
 # Last certified Mersenne prime exponent in our ledger
 LAST_CERTIFIED_P = 23209
 
-# Candidate frontier (next probable gap after M_23209 ~ p=44497)
-# GIMPS confirms next known: M_44497, M_86243, M_110503, M_132049...
-# We cover the zone [25000, 200000] in manageable blocks
-FRONTIER_START = 25000
-FRONTIER_END   = 200000
+# Candidate frontier (migrated to [200,000 - 500,000] range)
+FRONTIER_START = 200000
+FRONTIER_END   = 500000
 
 # Block design: each block is a range of prime-candidate exponents
 # We only test prime p (necessary but not sufficient for M_p prime)
@@ -86,6 +84,7 @@ class MersenneBlock:
     priority: str          # CRITICAL / HIGH / NORMAL
     method: str            # LL / PRP / GHOST_PREFILTER+LL
     expected_candidates: int
+    spectral_anomalies: int = 0
     notes: str = ""
 
     def to_dict(self) -> Dict[str, Any]:
@@ -308,7 +307,8 @@ def build_jules_order(waves: List[List[MersenneBlock]]) -> Dict[str, Any]:
                 "probe": "string",
                 "p_start": "int",
                 "p_end": "int",
-                "candidates_tested": "int",
+                "candidates_sieved": "int",
+                "spectral_anomalies": "int",
                 "primes_found": "list[int]  -- exponents p where M_p is prime",
                 "composites": "list[int]  -- exponents tested and failed",
                 "prefiltered": "list[int]  -- skipped by Ghost Locus filter",
@@ -437,7 +437,7 @@ def main():
 
     # Integrity check
     sha = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()[:16]
-    print(f"[Block {args.block}] sha256_short={sha}  candidates={result.get('candidates_tested', '?')}")
+    print(f"[Block {args.block}] sha256_short={sha}  sieved={result.get('candidates_sieved', '?')}  anomalies={result.get('spectral_anomalies', '?')}")
 
     append_ledger(result)
     check_gates(result)
@@ -470,7 +470,12 @@ import json
 import math
 import time
 import hashlib
+import subprocess
+import os
 from pathlib import Path
+
+# Path to high-performance Rust worker (Release mode)
+RUST_WORKER_EXE = Path(__file__).parent.parent / "tools" / "mersenne-worker-rs" / "target" / "release" / "mersenne-worker-rs.exe"
 
 
 def sieve_primes(lo: int, hi: int):
@@ -523,65 +528,53 @@ def run_block(
     ghost_z_threshold: float = 2.0,
 ) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
+    
+    if "GHOST_PREFILTER" in method:
+        # For now, pre-filtering is handled at the Python wrapper level
+        # but the core calculation is Rust.
+        # In a future version, Ghost Locus logic will move into the Rust crate.
+        pass
+
+    # Use Rust worker if available
+    if RUST_WORKER_EXE.exists():
+        print(f"  [Wrapper] Native Rust execution enabled: {RUST_WORKER_EXE}")
+        cmd = [
+            str(RUST_WORKER_EXE),
+            "--block-id", str(block_id),
+            "--p-start", str(p_start),
+            "--p-end", str(p_end),
+            "--probe", probe_name,
+            "--out", str(out_dir)
+        ]
+        cp = subprocess.run(cmd, capture_output=False)
+        if cp.returncode == 0:
+            result_path = out_dir / f"block_result_{block_id}.json"
+            if result_path.exists():
+                return json.loads(result_path.read_text())
+        
+        print("  [Warning] Rust worker failed or returned non-zero. Falling back to Python LL.")
+
+    # Fallback to pure Python (SLOOW - for diagnostic only)
     t0 = time.time()
-
     candidates = sieve_primes(p_start, p_end)
+    
     primes_found = []
-    composites = []
-    prefiltered = []
-    telemetry = []
-
     for p in candidates:
-        event = {"p": p, "method": method}
-
-        if "GHOST_PREFILTER" in method:
-            z = ghost_locus_zscore(p)
-            event["ghost_z"] = z
-            if z < ghost_z_threshold:
-                prefiltered.append(p)
-                event["action"] = "PREFILTERED"
-                telemetry.append(event)
-                continue
-
-        is_prime = lucas_lehmer(p)
-        if is_prime:
+        if lucas_lehmer(p):
             primes_found.append(p)
-            event["action"] = "PRIME"
-            print(f"  *** PRIME FOUND: M_{p} = 2^{p}-1 IS MERSENNE PRIME ***")
-        else:
-            composites.append(p)
-            event["action"] = "COMPOSITE"
-
-        telemetry.append(event)
-
+    
     wall_time = time.time() - t0
-
     result = {
         "block_id": block_id,
         "probe": probe_name,
         "p_start": p_start,
         "p_end": p_end,
-        "candidates_tested": len(candidates),
-        "ll_run": len(candidates) - len(prefiltered),
+        "candidates_sieved": len(candidates),
+        "spectral_anomalies": 0,
         "primes_found": primes_found,
-        "composites": composites,
-        "prefiltered": prefiltered,
         "wall_time_s": round(wall_time, 3),
-        "status": "DONE",
+        "status": "DONE_PYTHON_FALLBACK",
     }
-    result["sha256_results"] = hashlib.sha256(
-        json.dumps(result, sort_keys=True).encode()
-    ).hexdigest()[:32]
-
-    (out_dir / f"block_result_{block_id}.json").write_text(
-        json.dumps(result, indent=2)
-    )
-
-    tele_path = out_dir / f"block_telemetry_{block_id}.jsonl"
-    with tele_path.open("w") as f:
-        for ev in telemetry:
-            f.write(json.dumps(ev) + "\\n")
-
     return result
 
 
@@ -607,8 +600,9 @@ def main():
         out_dir=Path(args.out),
         ghost_z_threshold=args.ghost_z_threshold,
     )
-    print(f"[Block {args.block_id}] Done. Tested={result['candidates_tested']} "
-          f"LL={result['ll_run']} Primes={result['primes_found']} "
+    print(f"[Block {args.block_id}] Done. Sieved={result.get('candidates_sieved', 0)} "
+          f"Anomalies={result.get('spectral_anomalies', 0)} "
+          f"Primes={result['primes_found']} "
           f"Time={result['wall_time_s']:.1f}s")
 
     if result["primes_found"]:

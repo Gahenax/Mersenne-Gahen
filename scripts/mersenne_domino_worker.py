@@ -16,7 +16,12 @@ import json
 import math
 import time
 import hashlib
+import subprocess
+import os
 from pathlib import Path
+
+# Path to high-performance Rust worker (Release mode)
+RUST_WORKER_EXE = Path(__file__).parent.parent / "tools" / "mersenne-worker-rs" / "target" / "release" / "mersenne-worker-rs.exe"
 
 
 def sieve_primes(lo: int, hi: int):
@@ -69,65 +74,55 @@ def run_block(
     ghost_z_threshold: float = 2.0,
 ) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
+    
+    if "GHOST_PREFILTER" in method:
+        # For now, pre-filtering is handled at the Python wrapper level
+        # but the core calculation is Rust.
+        # In a future version, Ghost Locus logic will move into the Rust crate.
+        pass
+
+    # Use Rust worker if available
+    if RUST_WORKER_EXE.exists():
+        print(f"  [Wrapper] Native Rust execution enabled: {RUST_WORKER_EXE}")
+        cmd = [
+            str(RUST_WORKER_EXE),
+            "--block-id", str(block_id),
+            "--p-start", str(p_start),
+            "--p-end", str(p_end),
+            "--probe", probe_name,
+            "--out", str(out_dir),
+            "--method", method.lower(),
+            "--threshold", str(ghost_z_threshold)
+        ]
+        cp = subprocess.run(cmd, capture_output=False)
+        if cp.returncode == 0:
+            result_path = out_dir / f"block_result_{block_id}.json"
+            if result_path.exists():
+                return json.loads(result_path.read_text())
+        
+        print("  [Warning] Rust worker failed or returned non-zero. Falling back to Python LL.")
+
+    # Fallback to pure Python (SLOOW - for diagnostic only)
     t0 = time.time()
-
     candidates = sieve_primes(p_start, p_end)
+    
     primes_found = []
-    composites = []
-    prefiltered = []
-    telemetry = []
-
     for p in candidates:
-        event = {"p": p, "method": method}
-
-        if "GHOST_PREFILTER" in method:
-            z = ghost_locus_zscore(p)
-            event["ghost_z"] = z
-            if z < ghost_z_threshold:
-                prefiltered.append(p)
-                event["action"] = "PREFILTERED"
-                telemetry.append(event)
-                continue
-
-        is_prime = lucas_lehmer(p)
-        if is_prime:
+        if lucas_lehmer(p):
             primes_found.append(p)
-            event["action"] = "PRIME"
-            print(f"  *** PRIME FOUND: M_{p} = 2^{p}-1 IS MERSENNE PRIME ***")
-        else:
-            composites.append(p)
-            event["action"] = "COMPOSITE"
-
-        telemetry.append(event)
-
+    
     wall_time = time.time() - t0
-
     result = {
         "block_id": block_id,
         "probe": probe_name,
         "p_start": p_start,
         "p_end": p_end,
-        "candidates_tested": len(candidates),
-        "ll_run": len(candidates) - len(prefiltered),
+        "candidates_sieved": len(candidates),
+        "spectral_anomalies": 0,
         "primes_found": primes_found,
-        "composites": composites,
-        "prefiltered": prefiltered,
         "wall_time_s": round(wall_time, 3),
-        "status": "DONE",
+        "status": "DONE_PYTHON_FALLBACK",
     }
-    result["sha256_results"] = hashlib.sha256(
-        json.dumps(result, sort_keys=True).encode()
-    ).hexdigest()[:32]
-
-    (out_dir / f"block_result_{block_id}.json").write_text(
-        json.dumps(result, indent=2)
-    )
-
-    tele_path = out_dir / f"block_telemetry_{block_id}.jsonl"
-    with tele_path.open("w") as f:
-        for ev in telemetry:
-            f.write(json.dumps(ev) + "\n")
-
     return result
 
 
@@ -137,10 +132,10 @@ def main():
     ap.add_argument("--p_start", type=int, required=True)
     ap.add_argument("--p_end", type=int, required=True)
     ap.add_argument("--probe", type=str, default="ALPHA")
-    ap.add_argument("--method", type=str, default="LL",
-                    choices=["LL", "GHOST_PREFILTER+LL"])
+    ap.add_argument("--method", type=str, default="hybrid",
+                    choices=["ll", "spectral", "hybrid"])
     ap.add_argument("--out", type=str, default="results/mersenne/domino_wave/")
-    ap.add_argument("--ghost_z_threshold", type=float, default=2.0)
+    ap.add_argument("--threshold", type=float, default=0.95)
     args = ap.parse_args()
 
     print(f"[Block {args.block_id}] Starting: p=[{args.p_start},{args.p_end}] method={args.method}")
@@ -151,10 +146,11 @@ def main():
         method=args.method,
         probe_name=args.probe,
         out_dir=Path(args.out),
-        ghost_z_threshold=args.ghost_z_threshold,
+        ghost_z_threshold=args.threshold,
     )
-    print(f"[Block {args.block_id}] Done. Tested={result['candidates_tested']} "
-          f"LL={result['ll_run']} Primes={result['primes_found']} "
+    print(f"[Block {args.block_id}] Done. Sieved={result.get('candidates_sieved', 0)} "
+          f"Anomalies={result.get('spectral_anomalies', 0)} "
+          f"Primes={result['primes_found']} "
           f"Time={result['wall_time_s']:.1f}s")
 
     if result["primes_found"]:

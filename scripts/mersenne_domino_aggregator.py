@@ -50,7 +50,7 @@ def main():
 
     # Integrity check
     sha = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()[:16]
-    print(f"[Block {args.block}] sha256_short={sha}  candidates={result.get('candidates_tested', '?')}")
+    print(f"[Block {args.block}] sha256_short={sha}  sieved={result.get('candidates_sieved', '?')}  anomalies={result.get('spectral_anomalies', '?')}")
 
     append_ledger(result)
     check_gates(result)

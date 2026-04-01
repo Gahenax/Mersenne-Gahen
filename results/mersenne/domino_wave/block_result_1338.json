@@ -1,0 +1,11 @@
+{
+  "block_id": 1338,
+  "probe": "ALPHA",
+  "p_start": 200000,
+  "p_end": 200050,
+  "candidates_sieved": 7,
+  "spectral_anomalies": 7,
+  "primes_found": [],
+  "wall_time_s": 654.6490458,
+  "timestamp": "SystemTime { intervals: 134194677356131093 }"
+}
