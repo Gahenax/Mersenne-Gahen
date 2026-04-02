@@ -1,13 +1,14 @@
-# Rust/Cargo
+# Rust/Cargo — binarios compilados (pesados, no se commitean)
 tools/mersenne-worker-rs/target/
 **/*.rs.bk
 
-# Telemetría y Resultados OEDA
+# Telemetría y resultados operativos (no se commitean)
 results/
-*.json
 *.jsonl
+block_result_*.json
+block_telemetry_*.json
 
-# Python
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class

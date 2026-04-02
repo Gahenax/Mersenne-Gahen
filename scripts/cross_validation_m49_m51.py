@@ -26,7 +26,7 @@ def run_cross_validation():
             "--block_id", str(4900 + i), # 4900, 4901, 4902 para tracking
             "--p_start", str(wave["start"]),
             "--p_end", str(wave["end"]),
-            "--method", "hybrid",
+            "--method", "spectral",
             "--threshold", "0.85",
             "--out", str(out_dir)
         ]
