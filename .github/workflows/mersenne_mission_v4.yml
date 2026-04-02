@@ -1,0 +1,151 @@
+# .github/workflows/mersenne_mission_v4.yml
+# OEDA V4 — Misión Espacio Profundo 136M
+# Ejecuta el barrido Domino-Wave sobre la frontera de los 136 Millones
+# usando la Arquitectura Zero-Debt: FAD (Rust) + GQRF (Riemann) + LL
+
+name: 🔭 Mersenne Mission V4 — Frontera 136M
+
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths:
+      - "scripts/jules_orders/JULES_ORDER_MERSENNE_V4_136M.json"
+      - "scripts/mersenne_domino_worker.py"
+      - "tools/mersenne-worker-rs/src/**"
+  workflow_dispatch:   # Trigger manual desde GitHub UI
+
+jobs:
+  # ── Fase 0: Compilar el Worker Nativo Rust ───────────────────
+  build-rust-worker:
+    name: 🔧 Build Rust Worker (FAD + GQRF)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            tools/mersenne-worker-rs/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('tools/mersenne-worker-rs/Cargo.lock') }}
+
+      - name: Build release binary
+        run: cargo build --release
+        working-directory: tools/mersenne-worker-rs
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mersenne-worker-rs
+          path: tools/mersenne-worker-rs/target/release/mersenne-worker-rs
+          retention-days: 1
+
+  # ── Fase 1: Wave 0 (Bloque Semilla CRÍTICO) ──────────────────
+  wave-0-seed:
+    name: 🌱 Wave 0 — Bloque Semilla [136,000,001–136,002,001]
+    runs-on: ubuntu-latest
+    needs: build-rust-worker
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Rust worker
+        uses: actions/download-artifact@v4
+        with:
+          name: mersenne-worker-rs
+          path: tools/mersenne-worker-rs/target/release/
+
+      - name: Set executable permission
+        run: chmod +x tools/mersenne-worker-rs/target/release/mersenne-worker-rs
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run Wave 0 — Block 0 (CRITICAL)
+        run: |
+          python scripts/mersenne_domino_worker.py \
+            --block_id 0 \
+            --p_start 136000001 \
+            --p_end 136002001 \
+            --method hybrid \
+            --threshold 0.98 \
+            --probe ALPHA \
+            --out results/mersenne/domino_wave/
+
+      - name: Upload Wave-0 results
+        uses: actions/upload-artifact@v4
+        with:
+          name: wave-0-results
+          path: results/mersenne/domino_wave/
+          retention-days: 7
+
+  # ── Fase 2: Wave 1–3 en Paralelo (Fan-Out Domino) ────────────
+  wave-parallel:
+    name: ⚡ Wave ${{ matrix.wave }} — Block ${{ matrix.block_id }}
+    runs-on: ubuntu-latest
+    needs: wave-0-seed
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { wave: 1, block_id: 1,  p_start: 136002001, p_end: 136004001, probe: BRAVO }
+          - { wave: 1, block_id: 2,  p_start: 136004001, p_end: 136006001, probe: CHARLIE }
+          - { wave: 2, block_id: 3,  p_start: 136006001, p_end: 136008001, probe: DELTA }
+          - { wave: 2, block_id: 4,  p_start: 136008001, p_end: 136010001, probe: ECHO }
+          - { wave: 2, block_id: 5,  p_start: 136010001, p_end: 136012001, probe: FOXTROT }
+          - { wave: 2, block_id: 6,  p_start: 136012001, p_end: 136014001, probe: GOLF }
+          - { wave: 3, block_id: 7,  p_start: 136014001, p_end: 136016001, probe: HOTEL }
+          - { wave: 3, block_id: 8,  p_start: 136016001, p_end: 136018001, probe: INDIA }
+          - { wave: 3, block_id: 9,  p_start: 136018001, p_end: 136020001, probe: JULIET }
+          - { wave: 3, block_id: 10, p_start: 136020001, p_end: 136022001, probe: KILO }
+          - { wave: 3, block_id: 11, p_start: 136022001, p_end: 136024001, probe: LIMA }
+          - { wave: 3, block_id: 12, p_start: 136024001, p_end: 136026001, probe: MIKE }
+          - { wave: 3, block_id: 13, p_start: 136026001, p_end: 136028001, probe: NOVEMBER }
+          - { wave: 3, block_id: 14, p_start: 136028001, p_end: 136030001, probe: OSCAR }
+          - { wave: 3, block_id: 15, p_start: 136030001, p_end: 136032001, probe: PAPA }
+          - { wave: 3, block_id: 16, p_start: 136032001, p_end: 136034001, probe: QUEBEC }
+          - { wave: 3, block_id: 17, p_start: 136034001, p_end: 136036001, probe: ROMEO }
+          - { wave: 3, block_id: 18, p_start: 136036001, p_end: 136038001, probe: SIERRA }
+          - { wave: 3, block_id: 19, p_start: 136038001, p_end: 136040001, probe: TANGO }
+          - { wave: 3, block_id: 20, p_start: 136040001, p_end: 136042001, probe: UNIFORM }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Rust worker
+        uses: actions/download-artifact@v4
+        with:
+          name: mersenne-worker-rs
+          path: tools/mersenne-worker-rs/target/release/
+
+      - name: Set executable permission
+        run: chmod +x tools/mersenne-worker-rs/target/release/mersenne-worker-rs
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run Block ${{ matrix.block_id }} — Wave ${{ matrix.wave }}
+        run: |
+          python scripts/mersenne_domino_worker.py \
+            --block_id ${{ matrix.block_id }} \
+            --p_start ${{ matrix.p_start }} \
+            --p_end ${{ matrix.p_end }} \
+            --method hybrid \
+            --threshold 0.98 \
+            --probe ${{ matrix.probe }} \
+            --out results/mersenne/domino_wave/
+
+      - name: Upload block results
+        uses: actions/upload-artifact@v4
+        with:
+          name: block-${{ matrix.block_id }}-results
+          path: results/mersenne/domino_wave/
+          retention-days: 7
