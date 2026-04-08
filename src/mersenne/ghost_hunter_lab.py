@@ -44,6 +44,8 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Tuple, Union
 # Utilities
 # ----------------------------
 
+HEX_CHARS = frozenset("0123456789abcdefABCDEF")
+
 def now_iso() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
 
@@ -74,7 +76,7 @@ def to_bytes(residue: Union[int, bytes, str]) -> bytes:
         # Accept hex string or decimal-ish; store as utf-8 for stability
         s = residue.strip()
         # If looks like hex, normalize:
-        if all(c in "0123456789abcdefABCDEF" for c in s) and len(s) >= 2:
+        if all(c in HEX_CHARS for c in s) and len(s) >= 2:
             try:
                 return bytes.fromhex(s)
             except Exception:
