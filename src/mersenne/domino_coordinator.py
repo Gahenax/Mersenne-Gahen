@@ -507,10 +507,12 @@ def ghost_locus_zscore(p: int) -> float:
     In production: compute S(u) at u=log(2^p - 1) using Phase-3 Riemann zeros.
     Here: returns a simulated z-score (replace with real computation).
     """
-    # TODO: import from scripts.mersenne_spectral_poc import probe
-    # result = probe(p)
-    # return result["z"]
-    return 0.0  # conservative: 0 means "do not skip"
+    try:
+        from scripts.mersenne_spectral_poc import probe
+        res = probe(p)
+        return res["z"]
+    except (ImportError, KeyError):
+        return 0.0  # conservative: 0 means "do not skip"
 
 
 def run_block(

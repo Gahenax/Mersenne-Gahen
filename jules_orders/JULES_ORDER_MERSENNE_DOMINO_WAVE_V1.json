@@ -5,7 +5,7 @@
   "protocol": "OUROBOROS v2.0 / DOMINO-WAVE",
   "system": "Gahenax Core v1.1.1",
   "mission": {
-    "objective": "Exponential-speedup Mersenne prime search via Domino-WAVE cascade. Cover exponent range [200000, 500000]. Each wave is launched immediately \u2014 no waiting for prior wave completion.",
+    "objective": "Exponential-speedup Mersenne prime search via Domino-WAVE cascade. Cover exponent range [25000, 200000]. Each wave is launched immediately \u2014 no waiting for prior wave completion.",
     "last_certified_p": 23209,
     "last_certified_M": "M_23209 = 2^23209 - 1",
     "next_known_primes": [
@@ -18,18 +18,18 @@
     "strategy": "DOMINO-WAVE: Wave 0 \u2192 seeds 1 probe, each wave doubles workers, all run in parallel"
   },
   "wave_architecture": {
-    "n_waves": 7,
+    "n_waves": 6,
     "max_parallel_per_wave": 20,
-    "total_blocks": 60,
-    "total_expected_candidates": 23539,
+    "total_blocks": 35,
+    "total_expected_candidates": 15230,
     "domino_rule": "When block B_i completes: immediately push results and trigger Block B_(i + n_active_wave) in Jules queue. Do NOT wait for sibling blocks in same wave.",
     "wave_summary": [
       {
         "wave": 0,
         "n_blocks": 1,
         "p_range": [
-          200000,
-          205000
+          25000,
+          30000
         ],
         "priority": "CRITICAL",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
@@ -38,8 +38,8 @@
         "wave": 1,
         "n_blocks": 2,
         "p_range": [
-          205000,
-          215000
+          30000,
+          40000
         ],
         "priority": "HIGH",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
@@ -48,8 +48,8 @@
         "wave": 2,
         "n_blocks": 4,
         "p_range": [
-          215000,
-          235000
+          40000,
+          60000
         ],
         "priority": "HIGH",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
@@ -58,8 +58,8 @@
         "wave": 3,
         "n_blocks": 8,
         "p_range": [
-          235000,
-          275000
+          60000,
+          100000
         ],
         "priority": "NORMAL",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
@@ -68,28 +68,18 @@
         "wave": 4,
         "n_blocks": 16,
         "p_range": [
-          275000,
-          355000
+          100000,
+          180000
         ],
         "priority": "NORMAL",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
       },
       {
         "wave": 5,
-        "n_blocks": 20,
+        "n_blocks": 4,
         "p_range": [
-          355000,
-          455000
-        ],
-        "priority": "NORMAL",
-        "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
-      },
-      {
-        "wave": 6,
-        "n_blocks": 9,
-        "p_range": [
-          455000,
-          500000
+          180000,
+          200000
         ],
         "priority": "NORMAL",
         "cascade_trigger": "After ALL Wave-N blocks complete, Wave-(N+1) is already running. No gate needed \u2014 pure parallel cascade."
@@ -112,8 +102,7 @@
       "probe": "string",
       "p_start": "int",
       "p_end": "int",
-      "candidates_sieved": "int",
-      "spectral_anomalies": "int",
+      "candidates_tested": "int",
       "primes_found": "list[int]  -- exponents p where M_p is prime",
       "composites": "list[int]  -- exponents tested and failed",
       "prefiltered": "list[int]  -- skipped by Ghost Locus filter",
@@ -145,722 +134,387 @@
     {
       "block_id": 0,
       "wave": 0,
-      "p_start": 200000,
-      "p_end": 205000,
+      "p_start": 25000,
+      "p_end": 30000,
       "probe_name": "ALPHA",
       "priority": "CRITICAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 409,
-      "spectral_anomalies": 0,
-      "notes": "Wave 0 probe. Cascade triggers blocks 205000..210000 upon completion."
+      "method": "LL",
+      "expected_candidates": 489,
+      "notes": "Wave 0 probe. Cascade triggers blocks 30000..35000 upon completion."
     },
     {
       "block_id": 1,
       "wave": 1,
-      "p_start": 205000,
-      "p_end": 210000,
+      "p_start": 30000,
+      "p_end": 35000,
       "probe_name": "BRAVO",
       "priority": "HIGH",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 408,
-      "spectral_anomalies": 0,
-      "notes": "Wave 1 probe. Cascade triggers blocks 210000..215000 upon completion."
+      "method": "LL",
+      "expected_candidates": 481,
+      "notes": "Wave 1 probe. Cascade triggers blocks 35000..40000 upon completion."
     },
     {
       "block_id": 2,
       "wave": 1,
-      "p_start": 210000,
-      "p_end": 215000,
+      "p_start": 35000,
+      "p_end": 40000,
       "probe_name": "CHARLIE",
       "priority": "HIGH",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 407,
-      "spectral_anomalies": 0,
-      "notes": "Wave 1 probe. Cascade triggers blocks 215000..220000 upon completion."
+      "method": "LL",
+      "expected_candidates": 474,
+      "notes": "Wave 1 probe. Cascade triggers blocks 40000..45000 upon completion."
     },
     {
       "block_id": 3,
       "wave": 2,
-      "p_start": 215000,
-      "p_end": 220000,
+      "p_start": 40000,
+      "p_end": 45000,
       "probe_name": "DELTA",
       "priority": "HIGH",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 406,
-      "spectral_anomalies": 0,
-      "notes": "Wave 2 probe. Cascade triggers blocks 220000..225000 upon completion."
+      "method": "LL",
+      "expected_candidates": 469,
+      "notes": "Wave 2 probe. Cascade triggers blocks 45000..50000 upon completion."
     },
     {
       "block_id": 4,
       "wave": 2,
-      "p_start": 220000,
-      "p_end": 225000,
+      "p_start": 45000,
+      "p_end": 50000,
       "probe_name": "ECHO",
       "priority": "HIGH",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 406,
-      "spectral_anomalies": 0,
-      "notes": "Wave 2 probe. Cascade triggers blocks 225000..230000 upon completion."
+      "method": "LL",
+      "expected_candidates": 464,
+      "notes": "Wave 2 probe. Cascade triggers blocks 50000..55000 upon completion."
     },
     {
       "block_id": 5,
       "wave": 2,
-      "p_start": 225000,
-      "p_end": 230000,
+      "p_start": 50000,
+      "p_end": 55000,
       "probe_name": "FOXTROT",
       "priority": "HIGH",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 405,
-      "spectral_anomalies": 0,
-      "notes": "Wave 2 probe. Cascade triggers blocks 230000..235000 upon completion."
+      "method": "LL",
+      "expected_candidates": 460,
+      "notes": "Wave 2 probe. Cascade triggers blocks 55000..60000 upon completion."
     },
     {
       "block_id": 6,
       "wave": 2,
-      "p_start": 230000,
-      "p_end": 235000,
+      "p_start": 55000,
+      "p_end": 60000,
       "probe_name": "GOLF",
       "priority": "HIGH",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 404,
-      "spectral_anomalies": 0,
-      "notes": "Wave 2 probe. Cascade triggers blocks 235000..240000 upon completion."
+      "expected_candidates": 456,
+      "notes": "Wave 2 probe. Cascade triggers blocks 60000..65000 upon completion."
     },
     {
       "block_id": 7,
       "wave": 3,
-      "p_start": 235000,
-      "p_end": 240000,
+      "p_start": 60000,
+      "p_end": 65000,
       "probe_name": "HOTEL",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 403,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 240000..245000 upon completion."
+      "expected_candidates": 452,
+      "notes": "Wave 3 probe. Cascade triggers blocks 65000..70000 upon completion."
     },
     {
       "block_id": 8,
       "wave": 3,
-      "p_start": 240000,
-      "p_end": 245000,
+      "p_start": 65000,
+      "p_end": 70000,
       "probe_name": "INDIA",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 403,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 245000..250000 upon completion."
+      "expected_candidates": 449,
+      "notes": "Wave 3 probe. Cascade triggers blocks 70000..75000 upon completion."
     },
     {
       "block_id": 9,
       "wave": 3,
-      "p_start": 245000,
-      "p_end": 250000,
+      "p_start": 70000,
+      "p_end": 75000,
       "probe_name": "JULIET",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 402,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 250000..255000 upon completion."
+      "expected_candidates": 446,
+      "notes": "Wave 3 probe. Cascade triggers blocks 75000..80000 upon completion."
     },
     {
       "block_id": 10,
       "wave": 3,
-      "p_start": 250000,
-      "p_end": 255000,
+      "p_start": 75000,
+      "p_end": 80000,
       "probe_name": "KILO",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 401,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 255000..260000 upon completion."
+      "expected_candidates": 444,
+      "notes": "Wave 3 probe. Cascade triggers blocks 80000..85000 upon completion."
     },
     {
       "block_id": 11,
       "wave": 3,
-      "p_start": 255000,
-      "p_end": 260000,
+      "p_start": 80000,
+      "p_end": 85000,
       "probe_name": "LIMA",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 401,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 260000..265000 upon completion."
+      "expected_candidates": 441,
+      "notes": "Wave 3 probe. Cascade triggers blocks 85000..90000 upon completion."
     },
     {
       "block_id": 12,
       "wave": 3,
-      "p_start": 260000,
-      "p_end": 265000,
+      "p_start": 85000,
+      "p_end": 90000,
       "probe_name": "MIKE",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 400,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 265000..270000 upon completion."
+      "expected_candidates": 439,
+      "notes": "Wave 3 probe. Cascade triggers blocks 90000..95000 upon completion."
     },
     {
       "block_id": 13,
       "wave": 3,
-      "p_start": 265000,
-      "p_end": 270000,
+      "p_start": 90000,
+      "p_end": 95000,
       "probe_name": "NOVEMBER",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 400,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 270000..275000 upon completion."
+      "expected_candidates": 437,
+      "notes": "Wave 3 probe. Cascade triggers blocks 95000..100000 upon completion."
     },
     {
       "block_id": 14,
       "wave": 3,
-      "p_start": 270000,
-      "p_end": 275000,
+      "p_start": 95000,
+      "p_end": 100000,
       "probe_name": "OSCAR",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 399,
-      "spectral_anomalies": 0,
-      "notes": "Wave 3 probe. Cascade triggers blocks 275000..280000 upon completion."
+      "expected_candidates": 435,
+      "notes": "Wave 3 probe. Cascade triggers blocks 100000..105000 upon completion."
     },
     {
       "block_id": 15,
       "wave": 4,
-      "p_start": 275000,
-      "p_end": 280000,
+      "p_start": 100000,
+      "p_end": 105000,
       "probe_name": "PAPA",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 398,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 280000..285000 upon completion."
+      "expected_candidates": 433,
+      "notes": "Wave 4 probe. Cascade triggers blocks 105000..110000 upon completion."
     },
     {
       "block_id": 16,
       "wave": 4,
-      "p_start": 280000,
-      "p_end": 285000,
+      "p_start": 105000,
+      "p_end": 110000,
       "probe_name": "QUEBEC",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 398,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 285000..290000 upon completion."
+      "expected_candidates": 431,
+      "notes": "Wave 4 probe. Cascade triggers blocks 110000..115000 upon completion."
     },
     {
       "block_id": 17,
       "wave": 4,
-      "p_start": 285000,
-      "p_end": 290000,
+      "p_start": 110000,
+      "p_end": 115000,
       "probe_name": "ROMEO",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 397,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 290000..295000 upon completion."
+      "expected_candidates": 429,
+      "notes": "Wave 4 probe. Cascade triggers blocks 115000..120000 upon completion."
     },
     {
       "block_id": 18,
       "wave": 4,
-      "p_start": 290000,
-      "p_end": 295000,
+      "p_start": 115000,
+      "p_end": 120000,
       "probe_name": "SIERRA",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 397,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 295000..300000 upon completion."
+      "expected_candidates": 428,
+      "notes": "Wave 4 probe. Cascade triggers blocks 120000..125000 upon completion."
     },
     {
       "block_id": 19,
       "wave": 4,
-      "p_start": 295000,
-      "p_end": 300000,
+      "p_start": 120000,
+      "p_end": 125000,
       "probe_name": "TANGO",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 396,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 300000..305000 upon completion."
+      "expected_candidates": 426,
+      "notes": "Wave 4 probe. Cascade triggers blocks 125000..130000 upon completion."
     },
     {
       "block_id": 20,
       "wave": 4,
-      "p_start": 300000,
-      "p_end": 305000,
+      "p_start": 125000,
+      "p_end": 130000,
       "probe_name": "UNIFORM",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 396,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 305000..310000 upon completion."
+      "expected_candidates": 425,
+      "notes": "Wave 4 probe. Cascade triggers blocks 130000..135000 upon completion."
     },
     {
       "block_id": 21,
       "wave": 4,
-      "p_start": 305000,
-      "p_end": 310000,
+      "p_start": 130000,
+      "p_end": 135000,
       "probe_name": "VICTOR",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 395,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 310000..315000 upon completion."
+      "expected_candidates": 423,
+      "notes": "Wave 4 probe. Cascade triggers blocks 135000..140000 upon completion."
     },
     {
       "block_id": 22,
       "wave": 4,
-      "p_start": 310000,
-      "p_end": 315000,
+      "p_start": 135000,
+      "p_end": 140000,
       "probe_name": "WHISKEY",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 395,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 315000..320000 upon completion."
+      "expected_candidates": 422,
+      "notes": "Wave 4 probe. Cascade triggers blocks 140000..145000 upon completion."
     },
     {
       "block_id": 23,
       "wave": 4,
-      "p_start": 315000,
-      "p_end": 320000,
+      "p_start": 140000,
+      "p_end": 145000,
       "probe_name": "XRAY",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 394,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 320000..325000 upon completion."
+      "expected_candidates": 421,
+      "notes": "Wave 4 probe. Cascade triggers blocks 145000..150000 upon completion."
     },
     {
       "block_id": 24,
       "wave": 4,
-      "p_start": 320000,
-      "p_end": 325000,
+      "p_start": 145000,
+      "p_end": 150000,
       "probe_name": "YANKEE",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 394,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 325000..330000 upon completion."
+      "expected_candidates": 420,
+      "notes": "Wave 4 probe. Cascade triggers blocks 150000..155000 upon completion."
     },
     {
       "block_id": 25,
       "wave": 4,
-      "p_start": 325000,
-      "p_end": 330000,
+      "p_start": 150000,
+      "p_end": 155000,
       "probe_name": "ZULU",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 393,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 330000..335000 upon completion."
+      "expected_candidates": 418,
+      "notes": "Wave 4 probe. Cascade triggers blocks 155000..160000 upon completion."
     },
     {
       "block_id": 26,
       "wave": 4,
-      "p_start": 330000,
-      "p_end": 335000,
+      "p_start": 155000,
+      "p_end": 160000,
       "probe_name": "APEX",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 393,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 335000..340000 upon completion."
+      "expected_candidates": 417,
+      "notes": "Wave 4 probe. Cascade triggers blocks 160000..165000 upon completion."
     },
     {
       "block_id": 27,
       "wave": 4,
-      "p_start": 335000,
-      "p_end": 340000,
+      "p_start": 160000,
+      "p_end": 165000,
       "probe_name": "BLADE",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 392,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 340000..345000 upon completion."
+      "expected_candidates": 416,
+      "notes": "Wave 4 probe. Cascade triggers blocks 165000..170000 upon completion."
     },
     {
       "block_id": 28,
       "wave": 4,
-      "p_start": 340000,
-      "p_end": 345000,
+      "p_start": 165000,
+      "p_end": 170000,
       "probe_name": "COMET",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 392,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 345000..350000 upon completion."
+      "expected_candidates": 415,
+      "notes": "Wave 4 probe. Cascade triggers blocks 170000..175000 upon completion."
     },
     {
       "block_id": 29,
       "wave": 4,
-      "p_start": 345000,
-      "p_end": 350000,
+      "p_start": 170000,
+      "p_end": 175000,
       "probe_name": "DAGGER",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 391,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 350000..355000 upon completion."
+      "expected_candidates": 414,
+      "notes": "Wave 4 probe. Cascade triggers blocks 175000..180000 upon completion."
     },
     {
       "block_id": 30,
       "wave": 4,
-      "p_start": 350000,
-      "p_end": 355000,
+      "p_start": 175000,
+      "p_end": 180000,
       "probe_name": "EMBER",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 391,
-      "spectral_anomalies": 0,
-      "notes": "Wave 4 probe. Cascade triggers blocks 355000..360000 upon completion."
+      "expected_candidates": 413,
+      "notes": "Wave 4 probe. Cascade triggers blocks 180000..185000 upon completion."
     },
     {
       "block_id": 31,
       "wave": 5,
-      "p_start": 355000,
-      "p_end": 360000,
+      "p_start": 180000,
+      "p_end": 185000,
       "probe_name": "FLARE",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 391,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 360000..365000 upon completion."
+      "expected_candidates": 412,
+      "notes": "Wave 5 probe. Cascade triggers blocks 185000..190000 upon completion."
     },
     {
       "block_id": 32,
       "wave": 5,
-      "p_start": 360000,
-      "p_end": 365000,
+      "p_start": 185000,
+      "p_end": 190000,
       "probe_name": "GHOST",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 390,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 365000..370000 upon completion."
+      "expected_candidates": 411,
+      "notes": "Wave 5 probe. Cascade triggers blocks 190000..195000 upon completion."
     },
     {
       "block_id": 33,
       "wave": 5,
-      "p_start": 365000,
-      "p_end": 370000,
+      "p_start": 190000,
+      "p_end": 195000,
       "probe_name": "HYDRA",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 390,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 370000..375000 upon completion."
+      "expected_candidates": 410,
+      "notes": "Wave 5 probe. Cascade triggers blocks 195000..200000 upon completion."
     },
     {
       "block_id": 34,
       "wave": 5,
-      "p_start": 370000,
-      "p_end": 375000,
+      "p_start": 195000,
+      "p_end": 200000,
       "probe_name": "IRIS",
       "priority": "NORMAL",
       "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 389,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 375000..380000 upon completion."
-    },
-    {
-      "block_id": 35,
-      "wave": 5,
-      "p_start": 375000,
-      "p_end": 380000,
-      "probe_name": "JOLT",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 389,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 380000..385000 upon completion."
-    },
-    {
-      "block_id": 36,
-      "wave": 5,
-      "p_start": 380000,
-      "p_end": 385000,
-      "probe_name": "KNIFE",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 388,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 385000..390000 upon completion."
-    },
-    {
-      "block_id": 37,
-      "wave": 5,
-      "p_start": 385000,
-      "p_end": 390000,
-      "probe_name": "LUNAR",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 388,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 390000..395000 upon completion."
-    },
-    {
-      "block_id": 38,
-      "wave": 5,
-      "p_start": 390000,
-      "p_end": 395000,
-      "probe_name": "MAGMA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 388,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 395000..400000 upon completion."
-    },
-    {
-      "block_id": 39,
-      "wave": 5,
-      "p_start": 395000,
-      "p_end": 400000,
-      "probe_name": "NOVA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 387,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 400000..405000 upon completion."
-    },
-    {
-      "block_id": 40,
-      "wave": 5,
-      "p_start": 400000,
-      "p_end": 405000,
-      "probe_name": "ALPHA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 387,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 405000..410000 upon completion."
-    },
-    {
-      "block_id": 41,
-      "wave": 5,
-      "p_start": 405000,
-      "p_end": 410000,
-      "probe_name": "BRAVO",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 387,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 410000..415000 upon completion."
-    },
-    {
-      "block_id": 42,
-      "wave": 5,
-      "p_start": 410000,
-      "p_end": 415000,
-      "probe_name": "CHARLIE",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 386,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 415000..420000 upon completion."
-    },
-    {
-      "block_id": 43,
-      "wave": 5,
-      "p_start": 415000,
-      "p_end": 420000,
-      "probe_name": "DELTA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 386,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 420000..425000 upon completion."
-    },
-    {
-      "block_id": 44,
-      "wave": 5,
-      "p_start": 420000,
-      "p_end": 425000,
-      "probe_name": "ECHO",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 385,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 425000..430000 upon completion."
-    },
-    {
-      "block_id": 45,
-      "wave": 5,
-      "p_start": 425000,
-      "p_end": 430000,
-      "probe_name": "FOXTROT",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 385,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 430000..435000 upon completion."
-    },
-    {
-      "block_id": 46,
-      "wave": 5,
-      "p_start": 430000,
-      "p_end": 435000,
-      "probe_name": "GOLF",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 385,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 435000..440000 upon completion."
-    },
-    {
-      "block_id": 47,
-      "wave": 5,
-      "p_start": 435000,
-      "p_end": 440000,
-      "probe_name": "HOTEL",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 384,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 440000..445000 upon completion."
-    },
-    {
-      "block_id": 48,
-      "wave": 5,
-      "p_start": 440000,
-      "p_end": 445000,
-      "probe_name": "INDIA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 384,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 445000..450000 upon completion."
-    },
-    {
-      "block_id": 49,
-      "wave": 5,
-      "p_start": 445000,
-      "p_end": 450000,
-      "probe_name": "JULIET",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 384,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 450000..455000 upon completion."
-    },
-    {
-      "block_id": 50,
-      "wave": 5,
-      "p_start": 450000,
-      "p_end": 455000,
-      "probe_name": "KILO",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 383,
-      "spectral_anomalies": 0,
-      "notes": "Wave 5 probe. Cascade triggers blocks 455000..460000 upon completion."
-    },
-    {
-      "block_id": 51,
-      "wave": 6,
-      "p_start": 455000,
-      "p_end": 460000,
-      "probe_name": "LIMA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 383,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 460000..465000 upon completion."
-    },
-    {
-      "block_id": 52,
-      "wave": 6,
-      "p_start": 460000,
-      "p_end": 465000,
-      "probe_name": "MIKE",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 383,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 465000..470000 upon completion."
-    },
-    {
-      "block_id": 53,
-      "wave": 6,
-      "p_start": 465000,
-      "p_end": 470000,
-      "probe_name": "NOVEMBER",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 382,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 470000..475000 upon completion."
-    },
-    {
-      "block_id": 54,
-      "wave": 6,
-      "p_start": 470000,
-      "p_end": 475000,
-      "probe_name": "OSCAR",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 382,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 475000..480000 upon completion."
-    },
-    {
-      "block_id": 55,
-      "wave": 6,
-      "p_start": 475000,
-      "p_end": 480000,
-      "probe_name": "PAPA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 382,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 480000..485000 upon completion."
-    },
-    {
-      "block_id": 56,
-      "wave": 6,
-      "p_start": 480000,
-      "p_end": 485000,
-      "probe_name": "QUEBEC",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 382,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 485000..490000 upon completion."
-    },
-    {
-      "block_id": 57,
-      "wave": 6,
-      "p_start": 485000,
-      "p_end": 490000,
-      "probe_name": "ROMEO",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 381,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 490000..495000 upon completion."
-    },
-    {
-      "block_id": 58,
-      "wave": 6,
-      "p_start": 490000,
-      "p_end": 495000,
-      "probe_name": "SIERRA",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 381,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 495000..500000 upon completion."
-    },
-    {
-      "block_id": 59,
-      "wave": 6,
-      "p_start": 495000,
-      "p_end": 500000,
-      "probe_name": "TANGO",
-      "priority": "NORMAL",
-      "method": "GHOST_PREFILTER+LL",
-      "expected_candidates": 381,
-      "spectral_anomalies": 0,
-      "notes": "Wave 6 probe. Cascade triggers blocks 500000..505000 upon completion."
+      "expected_candidates": 410,
+      "notes": "Wave 5 probe. Cascade triggers blocks 200000..205000 upon completion."
     }
   ],
   "output_dir": "results/mersenne/domino_wave/",
@@ -880,7 +534,7 @@
     "ghost_prefilter_savings": "~40% fewer LL calls for p > 50k"
   },
   "falsifiability": {
-    "H0": "No Mersenne primes exist in [200000, 500000] beyond known ones.",
+    "H0": "No Mersenne primes exist in [25000, 200000] beyond known ones.",
     "H1": "At least one new M_p is prime in this range.",
     "protocol": "Discovery requires: LL residue = 0 (certified), independent re-run on different hardware, submission to GIMPS for global confirmation.",
     "forbidden_claims": [
