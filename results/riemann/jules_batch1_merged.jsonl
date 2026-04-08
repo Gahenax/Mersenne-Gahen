@@ -1,4 +1,3 @@
-{"t_est": 1.0}
 {"t_est": 6340.408778518928, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 0, "rigidity_h": null}
 {"t_est": 6340.999229653007, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 1, "rigidity_h": null}
 {"t_est": 6341.953018540636, "bracket": [0, 0], "method": "bracketing_scan_v1", "residual": 0.0, "band_id": 0, "probe": "ALPHA", "seq": 2, "rigidity_h": null}
