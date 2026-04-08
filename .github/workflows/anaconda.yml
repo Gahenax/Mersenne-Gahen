@@ -1,0 +1,48 @@
+# .github/workflows/anaconda.yml
+# Inyectado por Antigravity (Protocolo: github-actions-anaconda)
+# Justificación: Hodge-Rigidity contiene matrices de variación (VHS) y librerías científicas de alta precisión geométrica.
+# Manejar esto con pip estándar causa cuellos de botella al compilar C/C++. Conda Forge delegará limpiamente.
+
+name: Python Package using Anaconda
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up conda environment
+      uses: conda-incubator/setup-miniconda@v3
+      with:
+        auto-update-conda: true
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      shell: bash -el {0}
+      run: |
+        conda install pytest flake8 numpy scipy sympy networkx mpmath polars pandas plotly python-kaleido
+        pip install fastmcp
+        if [ -f environment.yml ]; then conda env update --file environment.yml --name base; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Lint with flake8
+      shell: bash -el {0}
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=15 --max-line-length=127 --statistics
+
+    - name: Verify Chronos Simulators
+      shell: bash -el {0}
+      run: |
+        pytest lab/
