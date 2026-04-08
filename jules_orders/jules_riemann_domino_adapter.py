@@ -1,22 +1,27 @@
-import sys
-import os
-# Setup relative src config loading for subdirectories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-import src.config
-
-
 import os
 import sys
 from pathlib import Path
 
+# Setup robust pathing - identify project root
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+import src.config
+
 # Jules Environment Configuration
-PROJECT_ROOT = Path(__file__).parent.parent
-sys.path.append(str(PROJECT_ROOT))
-JULES_PLAYGROUND = Path(str(src.config.ENGINE_ROOT))
-sys.path.append(str(JULES_PLAYGROUND))
-sys.path.append(str(JULES_PLAYGROUND / "core"))
+JULES_PLAYGROUND = Path(src.config.ENGINE_ROOT)
+if str(JULES_PLAYGROUND) not in sys.path:
+    sys.path.append(str(JULES_PLAYGROUND))
+if str(JULES_PLAYGROUND / "core") not in sys.path:
+    sys.path.append(str(JULES_PLAYGROUND / "core"))
 
 # Import our local orchestrator
+# Ensure the research/riemann directory is in sys.path if not already
+RIEMANN_DIR = PROJECT_ROOT / "research" / "riemann"
+if str(RIEMANN_DIR) not in sys.path:
+    sys.path.append(str(RIEMANN_DIR))
+
 from riemann_domino_wave import RiemannDominoOrchestrator
 
 def run_jules_domino_cascade(t0, t1, probes=6):
