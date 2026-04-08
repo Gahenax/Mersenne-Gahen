@@ -16,6 +16,7 @@ import json
 import time
 import math
 import hashlib
+import tempfile
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
@@ -252,9 +253,9 @@ def recalibrate_policy_from_ledger(
 
 def main():
     html = fetch_recent_results_html()
-    raw_snapshot_path = f"recent_results_snapshot_{int(time.time())}.html"
-    with open(raw_snapshot_path, "w", encoding="utf-8") as f:
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", prefix="recent_results_snapshot_", suffix=".html", delete=False) as f:
         f.write(html)
+        raw_snapshot_path = f.name
 
     events = parse_recent_results(html)
     safe_write_jsonl("gimps_recent_events.jsonl", events)
