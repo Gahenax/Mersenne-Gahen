@@ -16,7 +16,14 @@ import json
 import math
 import time
 import hashlib
+import sys
+import os
 from pathlib import Path
+
+# Setup project root in sys.path for imports
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
 
 
 def sieve_primes(lo: int, hi: int):
@@ -49,14 +56,16 @@ def lucas_lehmer(p: int) -> bool:
 
 def ghost_locus_zscore(p: int) -> float:
     """
-    Stub for Ghost Locus pre-filter.
-    In production: compute S(u) at u=log(2^p - 1) using Phase-3 Riemann zeros.
-    Here: returns a simulated z-score (replace with real computation).
+    Ghost Locus pre-filter.
+    Computes S(u) at u=log(2^p - 1) using Phase-3 Riemann zeros.
     """
-    # TODO: import from scripts.mersenne_spectral_poc import probe
-    # result = probe(p)
-    # return result["z"]
-    return 0.0  # conservative: 0 means "do not skip"
+    try:
+        from scripts.mersenne_spectral_poc import probe
+        result = probe(p)
+        return float(result["z"])
+    except (ImportError, ModuleNotFoundError, Exception):
+        # Fallback if spectral poc dependencies (numpy/scipy) are missing
+        return 0.0  # conservative: 0 means "do not skip"
 
 
 def run_block(

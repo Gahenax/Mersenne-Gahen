@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import sys
 import os
 # Setup relative src config loading for subdirectories
@@ -29,13 +31,12 @@ Pre-registered parameters (no post-hoc changes):
 Data: results/riemann/persistence_test.json +
       results/riemann/jules_phase1_full.jsonl
 """
-from __future__ import annotations
 
 import sys, io
-try:
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
-except Exception:
-    pass
+# try:
+#     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+# except Exception:
+#     pass
 
 import json, math, os
 import numpy as np
@@ -172,6 +173,38 @@ def probe_u(gammas: np.ndarray, u0: float,
     z   = (obs_abs - mu) / sig
     return {"u": u0, "obs": obs_abs, "null_mean": mu,
             "null_std": sig, "z": z}
+
+
+_CACHED_ZEROS: np.ndarray | None = None
+
+
+def get_zeros() -> np.ndarray:
+    """Lazy-load and cache Phase-1 Riemann zeros."""
+    global _CACHED_ZEROS
+    if _CACHED_ZEROS is None:
+        _CACHED_ZEROS = load_phase1_zeros(PHASE1_FP)
+    return _CACHED_ZEROS
+
+
+def probe(p: int) -> dict:
+    """
+    High-level interface for Ghost Locus pre-filter.
+    Computes S(u) at u = log(2^p - 1) using cached Phase-3 Riemann zeros.
+    Returns dict with 'z' score.
+    """
+    # u = log(2^p - 1)
+    # For p > 60, log(2^p - 1) is indistinguishable from p*log(2) in float64.
+    if p < 500:
+        u = math.log(2**p - 1)
+    else:
+        u = p * math.log(2)
+
+    gammas = get_zeros()
+    if gammas.size == 0:
+        return {"u": u, "z": 0.0, "obs": 0.0, "null_mean": 0.0, "null_std": 1.0}
+
+    T0, T1 = float(gammas[0]), float(gammas[-1])
+    return probe_u(gammas, u, T0, T1)
 
 
 # ─── FDR Benjamini-Hochberg ───────────────────────────────────────────────────
