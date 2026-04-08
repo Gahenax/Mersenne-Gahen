@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 import os
 # Setup relative src config loading for subdirectories
@@ -29,7 +30,6 @@ Pre-registered parameters (no post-hoc changes):
 Data: results/riemann/persistence_test.json +
       results/riemann/jules_phase1_full.jsonl
 """
-from __future__ import annotations
 
 import sys, io
 try:
@@ -172,6 +172,18 @@ def probe_u(gammas: np.ndarray, u0: float,
     z   = (obs_abs - mu) / sig
     return {"u": u0, "obs": obs_abs, "null_mean": mu,
             "null_std": sig, "z": z}
+
+
+_GLOBAL_GAMMAS = None
+
+def probe(p: int) -> dict:
+    """Convenience wrapper for single-p probe using Phase 1 zeros."""
+    global _GLOBAL_GAMMAS
+    if _GLOBAL_GAMMAS is None:
+        _GLOBAL_GAMMAS = load_phase1_zeros(PHASE1_FP)
+    T0, T1 = float(_GLOBAL_GAMMAS[0]), float(_GLOBAL_GAMMAS[-1])
+    u0 = math.log(2**p - 1)
+    return probe_u(_GLOBAL_GAMMAS, u0, T0, T1)
 
 
 # ─── FDR Benjamini-Hochberg ───────────────────────────────────────────────────

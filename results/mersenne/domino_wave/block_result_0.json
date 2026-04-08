@@ -1,0 +1,18 @@
+{
+  "block_id": 0,
+  "probe": "ALPHA",
+  "p_start": 2,
+  "p_end": 5,
+  "candidates_tested": 3,
+  "ll_run": 0,
+  "primes_found": [],
+  "composites": [],
+  "prefiltered": [
+    2,
+    3,
+    5
+  ],
+  "wall_time_s": 0.212,
+  "status": "DONE",
+  "sha256_results": "e54f4a819d05b22299f0fba43ce5b711"
+}
