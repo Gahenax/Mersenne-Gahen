@@ -38,6 +38,21 @@ def run_spectral_analysis(data_file):
     print("\nStarting Spectral Analysis...")
     subprocess.run(["python", "scripts/analyze_spectral_stats.py", data_file])
 
+def ensure_safe_path(path, allowed_dir=None):
+    """
+    Ensure the path is within the allowed directory to prevent path traversal.
+    Defaults to the current working directory.
+    """
+    if allowed_dir is None:
+        allowed_dir = os.getcwd()
+
+    base_dir = os.path.abspath(allowed_dir)
+    target_path = os.path.abspath(path)
+
+    if not target_path.startswith(base_dir + os.sep) and target_path != base_dir:
+        raise ValueError(f"Access denied: Path '{path}' is outside the allowed directory.")
+    return target_path
+
 import argparse
 
 if __name__ == "__main__":
@@ -45,6 +60,17 @@ if __name__ == "__main__":
     parser.add_argument("--ledger-dir", default="./artifacts/jules_logs", help="Directory containing shard files")
     parser.add_argument("--out", default="results/riemann/jules_batch1_merged.jsonl", help="Output merged file")
     args = parser.parse_args()
+
+    # Security check: Prevent path traversal
+    try:
+        # Require ledger_dir to be within the project root
+        ensure_safe_path(args.ledger_dir)
+        # Require output to be specifically within the 'results' directory for extra security
+        os.makedirs("results", exist_ok=True)
+        ensure_safe_path(args.out, allowed_dir="results")
+    except ValueError as e:
+        print(f"Security Error: {e}")
+        exit(1)
 
     os.makedirs(os.path.dirname(args.out), exist_ok=True) if os.path.dirname(args.out) else None
     
