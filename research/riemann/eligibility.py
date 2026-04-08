@@ -1,6 +1,8 @@
 # eligibility.py
 from __future__ import annotations
-import json, random, hashlib
+import json
+import random
+import hashlib
 from dataclasses import dataclass
 from typing import Set, Dict, Any, Optional
 

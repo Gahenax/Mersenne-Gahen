@@ -1,9 +1,3 @@
-import sys
-import os
-# Setup relative src config loading for subdirectories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-import src.config
-
 """
 poc_25_mersenne.py
 ==================
@@ -14,13 +8,16 @@ Uses the statistic S(u) = sum_gamma w(gamma)*exp(i*gamma*u) with
 phase-randomization null, on the Phase-1 dataset (N=332).
 """
 from __future__ import annotations
-import sys, io
+import sys
+import io
 
-import json, math, os
+import json
+import math
+import os
 import numpy as np
 from scipy.special import erfc
 
-PROJECT = str(src.config.PROJECT_ROOT)
+PROJECT = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
 import sys; sys.path.insert(0, os.path.join(PROJECT, "scripts"))
 from mersenne_spectral_poc import (
     S_of_u, null_distribution, auc_score,

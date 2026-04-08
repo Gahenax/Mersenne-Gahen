@@ -1,9 +1,3 @@
-import sys
-import os
-# Setup relative src config loading for subdirectories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-import src.config
-
 """
 layer_c_adversarial.py
 ======================
@@ -29,16 +23,19 @@ Pre-registered parameters (not changed post-hoc):
 """
 from __future__ import annotations
 
-import sys, io
+import sys
+import io
 try:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 except Exception:
     pass
 
-import json, math, os
+import json
+import math
+import os
 import numpy as np
 
-PROJECT    = str(src.config.PROJECT_ROOT)
+PROJECT    = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
 PHASE3_NPY = os.path.join(PROJECT, "results", "riemann", "RIEMANN_GAMMAS_PHASE3.npy")
 PHASE1_FP  = os.path.join(PROJECT, "results", "riemann", "jules_phase1_full.jsonl")
 

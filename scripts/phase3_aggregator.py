@@ -1,9 +1,3 @@
-import sys
-import os
-# Setup relative src config loading for subdirectories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-import src.config
-
 """
 phase3_aggregator.py
 ====================
@@ -26,16 +20,22 @@ after just 4-5 blocks.
 """
 from __future__ import annotations
 
-import sys, io
+import sys
+import io
 try:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 except Exception:
     pass
 
-import argparse, hashlib, json, math, os, time
+import argparse
+import hashlib
+import json
+import math
+import os
+import time
 import numpy as np
 
-PROJECT    = str(src.config.PROJECT_ROOT)
+PROJECT    = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis"
 SHARD_DIR  = os.path.join(PROJECT, "results", "riemann", "phase3")
 OUT_DIR    = os.path.join(PROJECT, "results", "riemann")
 ORDER_FILE = os.path.join(PROJECT, "jules_orders", "JULES_ORDER_RIEMANN_P3.json")
@@ -327,7 +327,8 @@ def _generate_local_demo(shard_dir: str, specs: list[dict]) -> None:
         print("  mpmath not available for demo generation.")
         return
 
-    import hashlib, time as _time
+    import hashlib
+    import time as _time
     for spec in specs:
         bid = spec["id"]
         T0, T1 = spec["T0"], spec["T1"]

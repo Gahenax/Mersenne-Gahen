@@ -79,12 +79,12 @@ class MultiProbeOrchestratorV2:
             # Simple simulation: pick a sub-range in the 75M-82M area
             sub_start = 75000000 + (helper_id * 500000)
             sub_end = sub_start + 500000
-            print(f"[LAUNCH] [CONVERGENCIA] Sonda-{helper_alpha} se une a FOXTROT en sub-bloque: [{sub_start:,}, {sub_end:,}]")
+            print(f"🚀 [CONVERGENCIA] Sonda-{helper_alpha} se une a FOXTROT en sub-bloque: [{sub_start:,}, {sub_end:,}]")
             
         self.update_telemetry(helper_id, sub_start, sub_end, "CONVERGED_FOXTROT", 0.1)
         time.sleep(2) # Processing help
         self.update_telemetry(helper_id, sub_start, sub_end, "FOXTROT_SUB_COMPLETE", 1.0)
-        print(f"[OK] [CONVERGENCIA] Sonda-{helper_alpha} completo tarea de apoyo en FOXTROT.")
+        print(f"✅ [CONVERGENCIA] Sonda-{helper_alpha} completo tarea de apoyo en FOXTROT.")
 
     def execute_synchronized_sweep(self):
         print("="*75)

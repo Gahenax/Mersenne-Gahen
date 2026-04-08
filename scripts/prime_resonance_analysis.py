@@ -12,7 +12,9 @@ In the zero spectrum, each prime p induces oscillations with period:
 Unfolding converts this to frequency in cycles/zero:
   f_p = 1/(T_p/mean_gap_T)  =  mean_gap_T * log(p) / (2*pi)
 """
-import json, math, os
+import json
+import math
+import os
 import numpy as np
 from scipy import stats as sp_stats
 from pathlib import Path

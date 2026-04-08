@@ -10,6 +10,11 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.append(str(PROJECT_ROOT))
 
+# Add the research/mersenne folder where MERSENNE_PROBE_V1 resides
+MERSENNE_PROBE_DIR = PROJECT_ROOT / "research" / "mersenne"
+if str(MERSENNE_PROBE_DIR) not in sys.path:
+    sys.path.append(str(MERSENNE_PROBE_DIR))
+
 from antigravity.core.contracts import AntigravityModule, ExecutionResult, Auditable, HodgeAuditable
 from antigravity.core.roles import Simulator
 from MERSENNE_PROBE_V1 import MersenneEngine

@@ -1,0 +1,15 @@
+{
+    "skill":  "mersenne-interceptor-v3",
+    "callback_hook":  "gahenax_ops.py",
+    "priority":  "CRITICAL",
+    "order_id":  "JO-DEEP-SPACE-136M-HYBRID-DELEGATED",
+    "target":  "M136M_FRONTIER_AUDIT",
+    "parameters":  {
+                       "p_end":  136280841,
+                       "p_start":  136278841,
+                       "priority":  "DEEP_SPACE_CERTIFICATION",
+                       "method":  "hybrid",
+                       "threshold":  0.95,
+                       "notes":  "Full Delegation to Jules. Spectral filtering (0.95) + Automatic LL for anomalies at 136M. Local Silence Protocol active."
+                   }
+}

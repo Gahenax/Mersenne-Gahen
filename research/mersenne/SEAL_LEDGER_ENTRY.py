@@ -1,9 +1,3 @@
-import sys
-import os
-# Setup relative src config loading for subdirectories
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-import src.config
-
 import json
 from datetime import datetime
 
@@ -19,7 +13,7 @@ entry = {
     "protocol": "I(p)-Rigidity-Calibrated-v1.1"
 }
 
-ledger_path = str(src.config.PROJECT_ROOT / "results/mersenne/cert_ledger_seismic.jsonl")
+ledger_path = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis\results\mersenne\cert_ledger_seismic.jsonl"
 
 with open(ledger_path, "a", encoding="utf-8") as f:
     f.write(json.dumps(entry) + "\n")

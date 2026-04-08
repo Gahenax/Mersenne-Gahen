@@ -5,7 +5,10 @@ MERSENNE TRAMPOLINE AGGREGATOR
 Called after each probe completes.
 Handles anchors, gaps, and frontier blocks.
 """
-import json, argparse, hashlib, sys
+import json
+import argparse
+import hashlib
+import sys
 from pathlib import Path
 
 OUT   = Path("results/mersenne/trampoline")
@@ -37,18 +40,18 @@ def process_anchor(result):
     z = result.get("ghost_z", 0.0)
     c = load_calib()
     c["z_scores"].append({"p": p, "z": z})
-    c["n_anchors"] += 1
-    if c["n_anchors"] >= 5:
+    c['n_anchors'] += 1
+    if c['n_anchors'] >= 5:
         zs = [x["z"] for x in c["z_scores"]]
         import statistics
         mu    = statistics.mean(zs)
         sigma = statistics.stdev(zs) if len(zs) > 1 else 1.0
         new_thresh = max(1.5, mu - 1.5 * sigma)
-        c["threshold"] = round(new_thresh, 4)
-        print(f"  [Ghost calibration] New threshold = {c["threshold"]:.4f}"
+        c['threshold'] = round(new_thresh, 4)
+        print(f"  [Ghost calibration] New threshold = {c['threshold']:.4f}"
               f"  (mean_z={mu:.3f}, sigma={sigma:.3f})")
     save_calib(c)
-    print(f"  [Anchor M_{p}] OK. z={z:.3f}  calibration_n={c["n_anchors"]}")
+    print(f"  [Anchor M_{p}] OK. z={z:.3f}  calibration_n={c['n_anchors']}")
 
 def process_gap(result):
     """Gate 1: if any prime found, escalate."""

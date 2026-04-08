@@ -28,7 +28,7 @@ class NaviSentinel:
 
     def update_semaphore_table(self, p, status, residue_hash, veredicto):
         lines = self.log_file.read_text(encoding="utf-8").splitlines()
-        new_row = f"| {p} | {2**(p/1000):.1f}e{int(p*0.301)} | {'[GREEN] GREEN' if status=='GREEN' else '[YELLOW] YELLOW'} | {residue_hash[:8]}... | {veredicto} |"
+        new_row = f"| {p} | {2**(p/1000):.1f}e{int(p*0.301)} | {'🟢 GREEN' if status=='GREEN' else '🟡 YELLOW'} | {residue_hash[:8]}... | {veredicto} |"
         
         # Insercion inteligente antes del final de la tabla
         for i, line in enumerate(lines):
@@ -48,7 +48,7 @@ class NaviSentinel:
             print(f"SYNC_ERROR: {e}")
 
     def run_autopilot(self):
-        self.log_to_markdown("[LAUNCH] **NAVI AUTOPILOT ACTIVATED**. Sentinel mode initiated.")
+        self.log_to_markdown("🚀 **NAVI AUTOPILOT ACTIVATED**. Sentinel mode initiated.")
         self.git_sync("Navi Sentinel: Autopilot activated.")
         
         current_p = self.start_p
@@ -70,7 +70,7 @@ class NaviSentinel:
                     status = res["status"]
                     r_hash = res.get("residue_hash", "N/A")
                     
-                    self.log_to_markdown(f"[OK] **CERTIFICATION COMPLETE** for M_{p}. Status: {status}")
+                    self.log_to_markdown(f"✅ **CERTIFICATION COMPLETE** for M_{p}. Status: {status}")
                     self.update_semaphore_table(p, status, r_hash, "Navi Autopilot Discovery")
                     self.git_sync(f"Navi Sentinel: M_{p} verified as {status}")
             else:

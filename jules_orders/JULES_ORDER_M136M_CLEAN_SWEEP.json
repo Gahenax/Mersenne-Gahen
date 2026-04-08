@@ -1,0 +1,15 @@
+{
+    "skill":  "mersenne-interceptor-v3",
+    "callback_hook":  "autonomous_manager.py",
+    "priority":  "HIGH",
+    "order_id":  "JO-CLEAN-SWEEP-136M-001",
+    "target":  "M136M_GLOBAL_RADAR",
+    "parameters":  {
+                       "p_end":  136280841,
+                       "p_start":  136278841,
+                       "priority":  "RADAR_SWEEP",
+                       "method":  "spectral",
+                       "threshold":  0.95,
+                       "notes":  "Phase A: Global Spectral Radar Sweep around M136279841. Reactive C-Layer triggered by Manager."
+                   }
+}

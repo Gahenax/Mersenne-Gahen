@@ -500,7 +500,9 @@ def run_fleet(
 # CLI: run directly on Phase-1 data
 # -----------------------------
 if __name__ == "__main__":
-    import json, os, sys
+    import json
+    import os
+    import sys
 
     FULL_JSONL = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis\results\riemann\jules_phase1_full.jsonl"
     LEDGER     = r"c:\Users\USUARIO\OneDrive\Desktop\Tesis\ledger_riemann_phase1"

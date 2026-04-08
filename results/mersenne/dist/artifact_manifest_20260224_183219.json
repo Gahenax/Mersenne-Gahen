@@ -1,0 +1,44 @@
+{
+    "dataset_name": "OEDA_Mersenne_Dataset_300B_20260224_183219",
+    "built_at_utc": "2026-02-24T18:32:19.388513",
+    "total_files": 6,
+    "total_simulated_exponents_claimed": 250000000000,
+    "origin": "SIMULATED (Software Stress-Test)",
+    "master_archive": {
+        "file": "OEDA_Mersenne_Dataset_300B_20260224_183219.zip",
+        "size_bytes": 3191,
+        "sha256": "d8618b50bbe430e4d4ce866652d1e2a617a7465f455a440551a10efac1a22870"
+    },
+    "components": [
+        {
+            "filename": "telemetry_sonda_1.json",
+            "size_bytes": 257,
+            "sha256": "3b347461d2d90fcf9193d4eb8b62466107ae87510916c504b9e25ea81fb3ed94"
+        },
+        {
+            "filename": "telemetry_sonda_2.json",
+            "size_bytes": 258,
+            "sha256": "e8099bdda888b4338afe5630c047c0fb7d5e9e15350ae6165c5f608b7f6e3073"
+        },
+        {
+            "filename": "telemetry_sonda_3.json",
+            "size_bytes": 259,
+            "sha256": "a4118aa80e1421669e44fd10caac5bf919aaa2cf2a4bb1cd25a43ec7b01819ff"
+        },
+        {
+            "filename": "telemetry_sonda_4.json",
+            "size_bytes": 259,
+            "sha256": "bd51753dde30850b1f75c3370aa1bcdb88eb7fc02211e7680300b4dca62d364d"
+        },
+        {
+            "filename": "telemetry_sonda_5.json",
+            "size_bytes": 259,
+            "sha256": "84750f626582c9f10e6cbb60825eaa23cb22402379df48d3750001f4b1305f50"
+        },
+        {
+            "filename": "telemetry_sonda_6.json",
+            "size_bytes": 259,
+            "sha256": "a3f28606b8b6cc44170a00e47bde1bd5a949968025f2eb455f820f0ee8768b34"
+        }
+    ]
+}

@@ -86,7 +86,7 @@ class Mersenne100MFrontierOrchestrator:
             block["status"] = "COMPLETED"
             self.update_telemetry(block_idx)
         
-        print(f"[OK] [SONDA-{alpha}] Sector 100M COMPLETO.")
+        print(f"✅ [SONDA-{alpha}] Sector 100M COMPLETO.")
 
         # Domino Reinforcement
         next_idx = block_idx + 1
@@ -94,7 +94,7 @@ class Mersenne100MFrontierOrchestrator:
             with self.state_lock:
                 next_block = self.blocks[next_idx]
                 next_block["workers"] += block["workers"]
-                print(f"[WAVE] [DOMINO-100M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
+                print(f"🌊 [DOMINO-100M] Sonda-{alpha} impulsa a Sonda-{next_block['alpha']} ({next_block['workers']}x power)")
                 self.update_telemetry(next_idx)
 
     def execute_frontier_sweep(self):

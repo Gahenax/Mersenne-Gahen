@@ -26,7 +26,7 @@ def compute_ll_residue(p: int) -> Union[int, bytes, str]:
     """
     Usa el Lucas-Lehmer real del motor Antigravity.
     """
-    print(f"  [ADAPTER] Computing LL for p={p}...", file=sys.stderr)
+    print(f"  [ADAPTER] Computing LL for p={p}...")
     is_prime, residue, duration, h_rigidity = engine.lucas_lehmer(p)
     return residue
 
