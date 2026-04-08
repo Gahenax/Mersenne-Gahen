@@ -36,7 +36,7 @@ def merge_shards(input_dir, output_file):
 def run_spectral_analysis(data_file):
     if not data_file: return
     print("\nStarting Spectral Analysis...")
-    subprocess.run(["python", "scripts/analyze_spectral_stats.py", data_file])
+    subprocess.run(["python", "scripts/analyze_spectral_stats.py", os.path.abspath(data_file)])
 
 import argparse
 
