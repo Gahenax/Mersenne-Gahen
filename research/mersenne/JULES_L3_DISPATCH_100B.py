@@ -52,7 +52,7 @@ async def jules_l3_dispatch_async():
         order = json.load(f)
         
     print(f"\n[JXP-HANDSHAKE] Escalating to Jules L3-External Hypercluster...")
-    time.sleep(1.0)
+    await asyncio.sleep(1.0)
     print(f"[JXP] Uplink Secured. Uploading Order: {order['order_id']}")
     print(f"[JXP] Target: {order['target']} | P_Range: [{order['parameters']['start_p']:,} - {order['parameters']['end_p']:,}]")
     print(f"[JXP] Requested Acceleration: {order['parameters']['gpu_acceleration']}")
