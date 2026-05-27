@@ -103,7 +103,10 @@ class MersenneWarpMinerV2:
                 print(f"   [PRIORITY] Verifying {len(candidates_found)} signals with isolation...")
                 for p in sorted(candidates_found):
                     # Fusible #1 Fix: Isolated proof dir per candidate/job
-                    isolated_mc = MissionControl(self.artifact_root / f"verify_{p}_{int(time.time())}")
+                    isolated_mc = MissionControl(
+                        profile_dir=self.mc.profile_dir,
+                        artifact_dir=self.artifact_root / f"verify_{p}_{int(time.time())}"
+                    )
                     isolated_mc.execute_p2_verify(p)
             
             # AB-Calibration Gate
