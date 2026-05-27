@@ -8,13 +8,14 @@ from pathlib import Path
 from MERSENNE_PROBE_V1 import MersenneEngine
 
 class MissionControl:
-    def __init__(self, recalibration_dir):
-        self.recalibration_dir = Path(recalibration_dir)
+    def __init__(self, profile_dir, artifact_dir=None):
+        self.profile_dir = Path(profile_dir)
+        self.artifact_dir = Path(artifact_dir) if artifact_dir else self.profile_dir
         self.profiles = {}
         self.load_profiles()
 
     def load_profiles(self):
-        for p_file in self.recalibration_dir.glob("mersenne_profile_*.json"):
+        for p_file in self.profile_dir.glob("mersenne_profile_*.json"):
             with open(p_file, "r") as f:
                 data = json.load(f)
                 self.profiles[data["name"]] = data
@@ -25,7 +26,10 @@ class MissionControl:
         print(f"  - Mode: {profile['mode']}")
         print(f"  - Goal: {profile['goal']}")
         
-        engine = MersenneEngine(fault_injection=fault_injection)
+        # Ensure artifact directory exists
+        self.artifact_dir.mkdir(parents=True, exist_ok=True)
+
+        engine = MersenneEngine(fault_injection=fault_injection, artifact_base=self.artifact_dir)
         is_prime, residue, dt, roundoff_error = engine.lucas_lehmer(p)
         
         # Semaforo Rules check
@@ -46,7 +50,7 @@ class MissionControl:
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         }
         
-        out_file = f"evidence_p{p}.json"
+        out_file = self.artifact_dir / f"evidence_p{p}.json"
         with open(out_file, "w") as f:
             json.dump(evidence, f, indent=2)
             
